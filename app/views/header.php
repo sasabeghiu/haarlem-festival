@@ -27,7 +27,7 @@
           <a class="nav-link" href="/home/about">About</a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="/article">Food</a>
+          <a class="nav-link" href="/food">Food</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/home/about">History</a>
@@ -43,4 +43,4 @@
   </div>
 </nav>
 
-<div class="container">
+<div class="container-fluid">
