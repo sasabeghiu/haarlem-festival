@@ -33,7 +33,10 @@
           <a class="nav-link" href="/home/about">History</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/artist">Dance</a>
+          <a class="nav-link" href="/artist">Music-Artist</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/venue">Music-Venue</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/home/about">Jazz</a>

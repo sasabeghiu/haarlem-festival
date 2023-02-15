@@ -10,7 +10,8 @@ class ArtistController
         $this->artistService = new ArtistService();
     }
 
-    public function index(){
+    public function index()
+    {
         $model = $this->artistService->getAll();
 
         require __DIR__ . '/../views/music/artist.php';
