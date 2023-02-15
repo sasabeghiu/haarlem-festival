@@ -4,10 +4,10 @@ class Music_Event
     //change types 
     private int $id;
     private string $type;
-    private string $artist;
-    private string $venue;
+    private int $artist;
+    private int $venue;
     private int $ticket_price;
-    private int $ticket_available;
+    private int $tickets_available;
     private string $datetime;
     private string $description;
 
@@ -114,9 +114,9 @@ class Music_Event
     /**
      * Get the value of ticket_available
      */
-    public function getTicket_available()
+    public function getTickets_available()
     {
-        return $this->ticket_available;
+        return $this->tickets_available;
     }
 
     /**
@@ -124,9 +124,9 @@ class Music_Event
      *
      * @return  self
      */
-    public function setTicket_available($ticket_available)
+    public function setTickets_available($tickets_available)
     {
-        $this->ticket_available = $ticket_available;
+        $this->tickets_available = $tickets_available;
 
         return $this;
     }
