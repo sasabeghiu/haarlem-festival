@@ -30,7 +30,7 @@
           <a class="nav-link" href="/article">Food</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/home/about">History</a>
+          <a class="nav-link" href="/history">History</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/article">Dance</a>

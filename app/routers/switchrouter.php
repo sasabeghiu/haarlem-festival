@@ -13,10 +13,11 @@ class SwitchRouter {
                 $controller->index();
                 break;
                
-            case 'home/about': 
-                    require __DIR__ . '/controllers/homecontroller.php';
-                    $controller = new HomeController();
-                    $controller->about();
+            case 'history':
+            case 'history/index':
+                    require __DIR__ . '/controllers/historycontroller';
+                    $controller = new HistoryController();
+                    $controller->index();
                     break;
 
             default: 
