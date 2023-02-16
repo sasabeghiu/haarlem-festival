@@ -3,4 +3,4 @@ $type = "mysql";
 $servername = "mysql";
 $username = "root";
 $password = "secret123";
-$database = "haarlemfestival";
+$database = "developmentdb";
