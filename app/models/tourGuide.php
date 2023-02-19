@@ -10,7 +10,7 @@ class tourGuide implements JsonSerializable {
     public int $id;
     public string $name;
     public string $description;
-    public string $image;
+    public ?int $image;
 
     /**
      * @return int
@@ -61,17 +61,17 @@ class tourGuide implements JsonSerializable {
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getImage(): string
+    public function getImage(): ?int
     {
         return $this->image;
     }
 
     /**
-     * @param string $image
+     * @param ?int $image
      */
-    public function setImage(string $image): void
+    public function setImage(?int $image): void
     {
         $this->image = $image;
     }

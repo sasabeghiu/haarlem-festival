@@ -23,7 +23,7 @@ class TourGuideRepository extends Repository
         try {
             $stmt = $this->connection->prepare("INSERT into tourguide (id, name, description, image) VALUES (?,?,?,?)");
 
-            $stmt->execute([$tourguides->getId(), $tourguides->getName(), $tourguides->getDescription()]);
+            $stmt->execute([$tourguides->getId(), $tourguides->getName(), $tourguides->getDescription(), $tourguides->getImage()]);
 
         }catch (PDOException $e){
             echo $e;
