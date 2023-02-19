@@ -1,2 +1,2 @@
 <?php
-echo "deleted successful";
+header('Location: /user/index');

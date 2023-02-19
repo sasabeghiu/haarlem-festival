@@ -26,4 +26,10 @@ class UserService
         $repository = new UserRepository();
         return $repository->deleteById($id);
     }
+
+    public function SaveUser(User $user)
+    {
+        $repository = new UserRepository();
+        return $repository->save($user);
+    }
 }
