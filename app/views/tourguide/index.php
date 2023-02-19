@@ -22,8 +22,28 @@ include __DIR__ . '/../footer.php';
 </div>
 
 <div class="mt-2 container mx-auto" style="max-width: 1000px;">
-    <div id="guideContainer" class="mt-3">
+    <div class="mt-3">
+        <div class="card col-12 p-0 my-4">
+            <div class="row" style="border: 0;">
+
+            </div>
+        </div>
+        <?php
+        foreach($model as $tourguides) {
+            ?>
+            <div class="card col-12 p-0 my-4">
+                <div class="row" style="border: 0;">
+
+                    <h4><?= ucfirst($tourguides->getName())?></h4>
+                    <small>Description: <?= $tourguides->getDescription()?></small>
+
+                </div>
+            </div>
+            <?php
+        }
+        ?>
         <!--<script>getTourGuides()</script>-->
+        <!--keep as well the id which is id=getContainer-->
     </div>
 </div>
 
