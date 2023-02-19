@@ -5,4 +5,5 @@ class Restaurant {
     public string $cuisine;
     public string $description;
     public string $location;
+    public int $stars;
 }
