@@ -18,11 +18,11 @@ class UserRepository extends Repository
         }
     }
 
-    public function findByUsername($username)
+    public function getById($id)
     {
-        $query = 'SELECT * FROM  WHERE username = :username';
-        $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue(':email', $username);
+        $query = 'SELECT * FROM user WHERE id = :id';
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindValue(':id', $id);
         $stmt->execute();
         $row = $stmt->fetch();
 
@@ -36,5 +36,25 @@ class UserRepository extends Repository
         $user->setPassword($row['password']);
 
         return $user;
+    }
+
+    public function save(User $user)
+    {
+        if ($user->getId()) {
+            // Update existing user
+            $query = 'UPDATE users SET username = :username, password = :password WHERE id = :id';
+            $stmt = $this->prepare($query);
+            $stmt->bindValue(':username', $user->getUsername());
+            $stmt->bindValue(':password', $user->getPassword());
+            $stmt->bindValue(':id', $user->getId());
+            $stmt->execute();
+        } else {
+            // Insert new user
+            $query = 'INSERT INTO user (username, password) VALUES (:username, :password)';
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(':username', $user->getUsername());
+            $stmt->bindValue(':password', $user->getPassword());
+            $stmt->execute();
+        }
     }
 }

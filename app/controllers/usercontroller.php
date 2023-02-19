@@ -24,7 +24,7 @@ class UserController
     }
     public function edit()
     {
-        //$model = $this->userService->getAll();
+        $user = $this->userService->getById($_GET['userId']);
 
         require __DIR__ . '/../views/cms/user/edit.php';
     }

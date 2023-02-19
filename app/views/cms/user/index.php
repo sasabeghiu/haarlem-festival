@@ -1,5 +1,6 @@
 <?php
 include(__DIR__ . "/../../header.php");
+
 ?>
 <br />
 <div class="card">
@@ -24,9 +25,11 @@ include(__DIR__ . "/../../header.php");
                             <td scope="row"><?php echo $user->getId(); ?></td>
                             <td><?php echo $user->getUsername(); ?></td>
                             <td>****</td>
+                            <td><?php echo $user->getEmail(); ?></td>
+                            <td><?php echo $user->getRole(); ?></td>
                             <td>
                                 <input name="editbtn" id="editbtn" class="btn btn-info" type="button" value="Edit" onclick="location='user/edit?userId=<?php echo $user->getId(); ?>'">
-                                <input name="deletebtn" id="deletebtn" class="btn btn-danger" type="button" value="Delete" onclick="location='user/delete'">
+                                <input name="deletebtn" id="deletebtn" class="btn btn-danger" type="button" value="Delete" onclick="location='user/edit?userId=<?php echo $user->getId(); ?>'">
                             </td>
                         </tr>
                     <?php } ?>
