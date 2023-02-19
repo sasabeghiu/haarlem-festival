@@ -8,7 +8,7 @@ include(__DIR__ . "/../../header.php");
         Edit User
     </div>
     <div class="card-body">
-        <form action="/user/create" method="post" enctype="multipart/form-data" id="create-form">
+        <form action="/user/edit" method="post" enctype="multipart/form-data" id="edit-form">
             <div class="mb-3">
                 <label for="username" class="form-label">Id: <?php echo $user->getId(); ?></label>
             </div>
@@ -18,11 +18,11 @@ include(__DIR__ . "/../../header.php");
             </div>
             <div class="mb-3">
                 <label for="pass" class="form-label">Password:</label>
-                <input type="password" class="form-control" name="pass" id="pass">
+                <input type="password" class="form-control" name="pass" id="pass" placeholder="********">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" name="email" id="email">
+                <input type="email" class="form-control" name="email" id="email" placeholder="<?php echo $user->getEmail(); ?>">
             </div>
             <div class="mb-3">
                 <label for="roles" class="form-label">Role:</label>

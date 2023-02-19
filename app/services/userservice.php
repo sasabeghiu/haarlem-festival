@@ -20,4 +20,10 @@ class UserService
         $repository = new UserRepository();
         return $repository->getById($id);
     }
+
+    public function deleteById($id)
+    {
+        $repository = new UserRepository();
+        return $repository->deleteById($id);
+    }
 }

@@ -28,4 +28,12 @@ class UserController
 
         require __DIR__ . '/../views/cms/user/edit.php';
     }
+    /*
+    public function delete()
+    {
+        $user = $this->userService->deleteById($_GET['userId']);
+
+        require __DIR__ . '/../views/cms/user/delete.php';
+    }
+    */
 }
