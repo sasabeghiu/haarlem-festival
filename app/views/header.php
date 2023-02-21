@@ -13,7 +13,7 @@
 
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand" href="/">MVC demo</a>
+      <a class="navbar-brand" href="/">Haarlem Festival</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,32 +22,53 @@
           <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
           </li>
-          <!-- <li class="nav-item">
-          <a class="nav-link" href="/article">Articles</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/home/about">About</a>
-        </li> -->
+          <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Food
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="">Restaurants</a>
+              <a class="dropdown-item" href="">Recipes</a>
+            </div>
+          </div>
+
+          <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              History
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">Events</a>
+            </div>
+          </div>
+          <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dance
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">Artists</a>
+              <a class="dropdown-item" href="/user/index">Venues</a>
+              <a class="dropdown-item" href="#">Events</a>
+            </div>
+          </div>
+          <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Jazz
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">Artists</a>
+              <a class="dropdown-item" href="/user/index">Venues</a>
+              <a class="dropdown-item" href="#">Events</a>
+            </div>
+          </div>
           <li class="nav-item">
-            <a class="nav-link" href="/article">Food</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/home/about">History</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/article">Dance</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/home/about">Jazz</a>
+            <a class="nav-link" href="/">Profile</a>
           </li>
           <div class="dropdown show">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               CMS
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Profile</a>
               <a class="dropdown-item" href="/user/index">Users</a>
-              <a class="dropdown-item" href="#">Accounts</a>
             </div>
           </div>
         </ul>
@@ -55,4 +76,4 @@
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container-fluid">

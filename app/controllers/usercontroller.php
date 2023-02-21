@@ -19,7 +19,7 @@ class UserController
     }
     public function create()
     {
-        //$model = $this->userService->getAll();
+        $user = $this->userService->saveUser($_POST[]);
 
         require __DIR__ . '/../views/cms/user/create.php';
     }

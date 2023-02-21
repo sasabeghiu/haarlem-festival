@@ -33,7 +33,7 @@ class UserService
         return $repository->deleteById($id);
     }
 
-    public function SaveUser(User $user)
+    public function saveUser(User $user)
     {
         $repository = new UserRepository();
         return $repository->save($user);
