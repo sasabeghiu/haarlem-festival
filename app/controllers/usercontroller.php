@@ -13,6 +13,7 @@ class UserController
     public function index()
     {
         $model = $this->userService->getAll();
+        $roles = $this->userService->getRoles();
 
         require __DIR__ . '/../views/cms/user/index.php';
     }
@@ -25,6 +26,7 @@ class UserController
     public function edit()
     {
         $user = $this->userService->getById($_GET['userId']);
+        $roles = $this->userService->getRoles();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             print_r($_POST);
@@ -41,6 +43,7 @@ class UserController
 
     public function delete()
     {
+        $this->userService->deleteById($_GET['userId']);
         $user = $this->userService->deleteById($_GET['userId']);
         header('Location: /user/index');
 

@@ -15,6 +15,12 @@ class UserService
         return $repository->getAll();
     }
 
+    public function getRoles()
+    {
+        $repository = new UserRepository();
+        return $repository->getRoles();
+    }
+
     public function getById($id)
     {
         $repository = new UserRepository();

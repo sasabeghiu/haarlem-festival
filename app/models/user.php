@@ -5,7 +5,7 @@ class User
     private int $id;
     private string $username;
     private string $password;
-    private string $role;
+    private int $roleId;
     private string $email;
 
     // Getters and setters generated using https://docs.devsense.com/en/vscode/editor/code-actions
@@ -65,20 +65,20 @@ class User
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getRole(): string
+    public function getRole(): int
     {
-        return $this->role;
+        return $this->roleId;
     }
 
     /**
-     * @param string $role
+     * @param int $roleId
      * @return self
      */
-    public function setRole(string $role): self
+    public function setRole(int $roleId): self
     {
-        $this->role = $role;
+        $this->roleId = $roleId;
         return $this;
     }
 
