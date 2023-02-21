@@ -18,10 +18,22 @@ class UserRepository extends Repository
         }
     }
 
+    function getRoles()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM roles");
+            $stmt->execute();
+            $roles = $stmt->fetchAll();
+
+            return $roles;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     public function getById($id)
     {
-        $query = 'SELECT * FROM user WHERE id = :id';
-        $stmt = $this->connection->prepare($query);
+        $stmt = $this->connection->prepare('SELECT * FROM user WHERE id = :id');
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $row = $stmt->fetch();
@@ -34,8 +46,8 @@ class UserRepository extends Repository
         $user->setId($row['id']);
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
-        $user->setEmail($row['role']);
-        $user->setRole($row['email']);
+        $user->setEmail($row['email']);
+        $user->setRole($row['roleId']);
 
         return $user;
     }

@@ -1,6 +1,6 @@
 <?php
 include(__DIR__ . "/../../header.php");
-
+print_r($roles);
 
 ?>
 <div class="card">
@@ -27,8 +27,14 @@ include(__DIR__ . "/../../header.php");
             <div class="mb-3">
                 <label for="roles" class="form-label">Role:</label>
                 <select name="roles" id="roles">
-                    <option value="admin">Customer</option>
-                    <option value="user">Admin</option>
+                    <?php foreach ($roles as $role) {
+                        if ($role['id'] == $user->getRole()) {
+                            echo "<option selected value='$role[id]'>$role[name]</option>";
+                        } else {
+                            echo "<option value='$role[id]'>$role[name]</option>";
+                        }
+                    }
+                    ?>
                 </select>
             </div>
             <button type="submit" class="btn btn-success">Edit</button>
