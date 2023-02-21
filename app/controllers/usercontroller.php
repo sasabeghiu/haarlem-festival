@@ -18,7 +18,7 @@ class UserController
     }
     public function create()
     {
-        //$model = $this->userService->getAll();
+        $user = $this->userService->saveUser($_POST[]);
 
         require __DIR__ . '/../views/cms/user/create.php';
     }
@@ -30,10 +30,10 @@ class UserController
             print_r($_POST);
             $user = new User();
             $user->setId($_POST['id']);
-            $user->setUsername('username');
-            $user->setPassword('password');
-            $user->setEmail('role');
-            $user->setRole('email');
+            $user->setUsername($_POST['username']);
+            $user->setPassword($_POST['password']);
+            $user->setEmail($_POST['email']);
+            $user->setRole($_POST['role ']);
         }
 
         require __DIR__ . '/../views/cms/user/edit.php';
@@ -42,6 +42,7 @@ class UserController
     public function delete()
     {
         $user = $this->userService->deleteById($_GET['userId']);
+        header('Location: /user/index');
 
         require __DIR__ . '/../views/cms/user/delete.php';
     }

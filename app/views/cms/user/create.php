@@ -1,8 +1,4 @@
 <?php
-if (isset($_POST)) {
-}
-?>
-<?php
 include(__DIR__ . "/../../header.php");
 ?>
 <div class="card">
