@@ -28,17 +28,20 @@ class UserController
         $user = $this->userService->getById($_GET['userId']);
         $roles = $this->userService->getRoles();
 
+        require __DIR__ . '/../views/cms/user/edit.php';
+    }
+
+    public function save()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             print_r($_POST);
-            $user = new User();
-            $user->setId($_POST['id']);
-            $user->setUsername('username');
-            $user->setPassword('password');
-            $user->setEmail('role');
-            $user->setRole('email');
+            $newUser = new User();
+            $newUser->setId($_GET['userId']);
+            $newUser->setUsername('username');
+            $newUser->setPassword('password');
+            $newUser->setEmail('role');
+            $newUser->setRole('email');
         }
-
-        require __DIR__ . '/../views/cms/user/edit.php';
     }
 
     public function delete()

@@ -1,6 +1,5 @@
 <?php
 include(__DIR__ . "/../../header.php");
-print_r($roles);
 
 ?>
 <div class="card">
@@ -8,7 +7,7 @@ print_r($roles);
         Edit User
     </div>
     <div class="card-body">
-        <form action="/user/edit" method="post" enctype="multipart/form-data" id="edit-form">
+        <form action="/user/save?userId=<?php echo $user->getId(); ?>" method="post" enctype="multipart/form-data" id="edit-form">
             <div class="mb-3">
                 <label for="username" class="form-label">Id: <?php echo $user->getId(); ?></label>
             </div>
