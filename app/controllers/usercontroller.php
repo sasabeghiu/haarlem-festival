@@ -44,8 +44,6 @@ class UserController
     public function delete()
     {
         $this->userService->deleteById($_GET['userId']);
-        $user = $this->userService->deleteById($_GET['userId']);
-        header('Location: /user/index');
 
         require __DIR__ . '/../views/cms/user/delete.php';
     }
