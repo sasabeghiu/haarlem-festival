@@ -19,7 +19,7 @@ class UserController
     }
     public function create()
     {
-        $user = $this->userService->saveUser($_POST[]);
+        $roles = $this->userService->getRoles();
 
         require __DIR__ . '/../views/cms/user/create.php';
     }
@@ -34,13 +34,17 @@ class UserController
     public function save()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            print_r($_POST);
             $newUser = new User();
-            $newUser->setId($_GET['userId']);
-            $newUser->setUsername('username');
-            $newUser->setPassword('password');
-            $newUser->setEmail('role');
-            $newUser->setRole('email');
+            $hashedPass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $newUser->setId(isset($_POST['id']) ? $_POST['id'] : 0);
+            $newUser->setUsername(isset($_POST['username']) ? $_POST['username'] : null); //check if information was sent, if so it assigns the value, otherwise sets to null 
+            $newUser->setPassword(isset($_POST['password']) ? $hashedPass : null);
+            $newUser->setEmail(isset($_POST['email']) ? $_POST['email'] : null);
+            $newUser->setRole(isset($_POST['role']) ? $_POST['role'] : null);
+
+            if ($this->userService->saveUser($newUser)) {
+                $this->index();
+            }
         }
     }
 

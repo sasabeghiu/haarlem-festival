@@ -54,25 +54,32 @@ class UserRepository extends Repository
 
     public function save(User $user)
     {
-        if ($user->getId()) {
-            // Update existing user
-            $query = 'UPDATE users SET username = :username, password = :password, role = :role, email = :email WHERE id = :id';
-            $stmt = $this->connection->prepare($query);
-            $stmt->bindValue(':username', $user->getUsername());
-            $stmt->bindValue(':password', $user->getPassword());
-            $stmt->bindValue(':role', $user->getRole());
-            $stmt->bindValue(':email', $user->getEmail());
-            $stmt->bindValue(':id', $user->getId());
-            $stmt->execute();
-        } else {
-            // Insert new user
-            $query = 'INSERT INTO user (username, password, role, email) VALUES (:username, :password, :role, :email)';
-            $stmt = $this->connection->prepare($query);
-            $stmt->bindValue(':username', $user->getUsername());
-            $stmt->bindValue(':password', $user->getPassword());
-            $stmt->bindValue(':role', $user->getRole());
-            $stmt->bindValue(':email', $user->getEmail());
-            $stmt->execute();
+        try {
+            if (!$user->getId() == 0) {
+                // Update existing user
+                $query = 'UPDATE user SET username = :username, password = :password, roleId = :roleId, email = :email WHERE id = :id';
+                $stmt = $this->connection->prepare($query);
+                $stmt->bindValue(':username', $user->getUsername());
+                $stmt->bindValue(':password', $user->getPassword());
+                $stmt->bindValue(':roleId', $user->getRole());
+                $stmt->bindValue(':email', $user->getEmail());
+                $stmt->bindValue(':id', $user->getId());
+                $stmt->execute();
+            } else {
+                // Insert new user
+                $query = 'INSERT INTO user (username, password, roleId, email) VALUES (:username, :password, :roleId, :email)';
+                $stmt = $this->connection->prepare($query);
+                $stmt->bindValue(':username', $user->getUsername());
+                $stmt->bindValue(':password', $user->getPassword());
+                $stmt->bindValue(':roleId', $user->getRole());
+                $stmt->bindValue(':email', $user->getEmail());
+                $stmt->execute();
+            }
+        } catch (PDOException $e) {
+            echo ($e);
+        }
+        if ($stmt) {
+            return true;
         }
     }
 

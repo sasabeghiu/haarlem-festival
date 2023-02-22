@@ -7,25 +7,26 @@ include(__DIR__ . "/../../header.php");
         Edit User
     </div>
     <div class="card-body">
-        <form action="/user/save?userId=<?php echo $user->getId(); ?>" method="post" enctype="multipart/form-data" id="edit-form">
+        <form action="/user/save" method="post" enctype="multipart/form-data" id="edit-form">
             <div class="mb-3">
-                <label for="username" class="form-label">Id: <?php echo $user->getId(); ?></label>
+                <label for="id" class="form-label">Id: <?php echo $user->getId(); ?></label>
+                <input type="hidden" name="id" value="<?php echo $user->getId(); ?>">
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo $user->getUsername(); ?>">
+                <input type="text" class="form-control" name="username" id="username" value="<?php echo $user->getUsername(); ?>">
             </div>
             <div class="mb-3">
-                <label for="pass" class="form-label">Password:</label>
-                <input type="password" class="form-control" name="pass" id="pass" placeholder="********">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" name="password" id="password" value="<?php echo $user->getPassword(); ?>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="<?php echo $user->getEmail(); ?>">
+                <input type="email" class="form-control" name="email" id="email" value="<?php echo $user->getEmail(); ?>">
             </div>
             <div class="mb-3">
-                <label for="roles" class="form-label">Role:</label>
-                <select name="roles" id="roles">
+                <label for="role" class="form-label">Role:</label>
+                <select name="role" id="role">
                     <?php foreach ($roles as $role) {
                         if ($role['id'] == $user->getRole()) {
                             echo "<option selected value='$role[id]'>$role[name]</option>";

@@ -24,12 +24,12 @@ include(__DIR__ . "/../../header.php");
                         <tr class="">
                             <td scope="row"><?php echo $user->getId(); ?></td>
                             <td><?php echo $user->getUsername(); ?></td>
-                            <td>****</td>
+                            <td>********</td>
                             <td><?php echo $user->getEmail(); ?></td>
                             <td><?php echo $user->getRole();  ?></td>
                             <td>
-                                <input name="editbtn" id="editbtn" class="btn btn-info" type="button" value="Edit" onclick="location='edit?userId=<?php echo $user->getId(); ?>'">
-                                <input name="deletebtn" id="deletebtn" class="btn btn-danger" type="button" value="Delete" onclick="location='/delete?userId=<?php echo $user->getId(); ?>'">
+                                <input name="editbtn" id="editbtn" class="btn btn-info" type="button" value="Edit" onclick="location='/user/edit?userId=<?php echo $user->getId(); ?>'">
+                                <input name="deletebtn" id="deletebtn" class="btn btn-danger" type="button" value="Delete" onclick="location='/user/delete?userId=<?php echo $user->getId(); ?>'">
                             </td>
                         </tr>
                     <?php } ?>
