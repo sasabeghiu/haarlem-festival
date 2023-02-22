@@ -7,7 +7,12 @@ class VenueRepository extends Repository
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT venue.id, venue.name, venue.description, venue.type, images.image FROM venue JOIN images ON venue.image=images.id");
+            $stmt = $this->connection->prepare("SELECT venue.id, venue.name, venue.description, venue.type, img1.image AS image, img2.image AS headerImg  
+            FROM venue 
+            JOIN images as img1 
+            ON venue.image=img1.id
+            JOIN images as img2
+            ON venue.headerImg=img2.id");
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Venue');
@@ -22,7 +27,13 @@ class VenueRepository extends Repository
     function getOne($id)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT venue.id, venue.name, venue.description, venue.type, images.image FROM venue JOIN images ON venue.image=images.id WHERE venue.id = :id");
+            $stmt = $this->connection->prepare("SELECT venue.id, venue.name, venue.description, venue.type, img1.image AS image, img2.image AS headerImg  
+            FROM venue 
+            JOIN images as img1 
+            ON venue.image=img1.id
+            JOIN images as img2
+            ON venue.headerImg=img2.id 
+            WHERE venue.id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
@@ -39,8 +50,8 @@ class VenueRepository extends Repository
     function addVenue($venue)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO venue (name, description, type, image) VALUES (?,?,?,?)");
-            $stmt->execute([$venue->getName(), $venue->getDescription(), $venue->getType(), $venue->getImage()]);
+            $stmt = $this->connection->prepare("INSERT INTO venue (name, description, type, image, headerImg) VALUES (?,?,?,?,?)");
+            $stmt->execute([$venue->getName(), $venue->getDescription(), $venue->getType(), $venue->getImage(), $venue->getHeaderImg()]);
             $venue->setId($this->connection->lastInsertId());
 
             return $this->getOne($venue->getId());
@@ -53,8 +64,8 @@ class VenueRepository extends Repository
     function updateVenue($venue, $id)
     {
         try {
-            $stmt = $this->connection->prepare("UPDATE venue SET name = ?, description = ?, type = ?, image = ? WHERE id = ?");
-            $stmt->execute([$venue->getName(), $venue->getDescription(), $venue->getType(), $venue->getImage(), $id]);
+            $stmt = $this->connection->prepare("UPDATE venue SET name = ?, description = ?, type = ?, image = ?, headerImg = ? WHERE id = ?");
+            $stmt->execute([$venue->getName(), $venue->getDescription(), $venue->getType(), $venue->getImage(), $venue->getHeaderImg(), $id]);
         } catch (PDOException $e) {
             echo $e;
         }

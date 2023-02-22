@@ -48,6 +48,7 @@ class VenueController
             $description = htmlspecialchars($_POST["description"]);
             $type = htmlspecialchars($_POST["type"]);
             $image = htmlspecialchars($_POST["image"]);
+            $headerImg = htmlspecialchars($_POST["headerImg"]);
 
             $venue = new Venue();
 
@@ -55,6 +56,7 @@ class VenueController
             $venue->setDescription($description);
             $venue->setType($type);
             $venue->setImage($image);
+            $venue->setHeaderImg($headerImg);
 
             $this->venueService->addVenue($venue);
 
@@ -75,6 +77,7 @@ class VenueController
             $description = htmlspecialchars($_POST["changedDescription"]);
             $type = htmlspecialchars($_POST["changedType"]);
             $image = htmlspecialchars($_POST["changedImage"]);
+            $headerImg = htmlspecialchars($_POST["changedHeaderImage"]);
 
             $venue = new Venue();
 
@@ -82,6 +85,7 @@ class VenueController
             $venue->setDescription($description);
             $venue->setType($type);
             $venue->setImage($image);
+            $venue->setHeaderImg($headerImg);
 
             $this->venueService->updateVenue($venue, $_GET["updateID"]);
 

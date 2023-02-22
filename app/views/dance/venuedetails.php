@@ -4,8 +4,8 @@ include __DIR__ . '/../header.php';
 
 <!-- change image to $model->getHeaderImg() and display full size-->
 <div style="position: relative; text-align: center; color: white;">
-<img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getImage()); ?>" width="50%">
-    <div style="position: absolute; bottom: 8px; left: 480px;">
+    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getHeaderImg()); ?>" width="100%" height="auto">
+    <div style="position: absolute; bottom: 8px; left: 16px;">
         <h4 style="display:inline;"> Dance </h5>
             <h1 style="display:inline;"> <?= $model->getName() ?></h1>
     </div>
@@ -20,7 +20,7 @@ include __DIR__ . '/../header.php';
                 <p><?= $model->getDescription() ?></p>
             </div>
             <div class="col-sm-4">
-                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getImage()); ?>" class="product-card img" height="200px">
+                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getImage()); ?>" class="img-thumbnail">
             </div>
         </div>
 

@@ -6,6 +6,7 @@ class Venue
     private string $description;
     private string $type;
     private string $image;
+    private string $headerImg;
 
     /**
      * Get the value of id
@@ -103,6 +104,26 @@ class Venue
     public function setImage($image)
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of headerImg
+     */ 
+    public function getHeaderImg()
+    {
+        return $this->headerImg;
+    }
+
+    /**
+     * Set the value of headerImg
+     *
+     * @return  self
+     */ 
+    public function setHeaderImg($headerImg)
+    {
+        $this->headerImg = $headerImg;
 
         return $this;
     }

@@ -50,6 +50,9 @@ class ArtistController
             $type = htmlspecialchars($_POST["type"]);
             $headerImg = htmlspecialchars($_POST["headerImg"]);
             $thumbnailImg = htmlspecialchars($_POST["thumbnailImg"]);
+            $logo = htmlspecialchars($_POST["logo"]);
+            $spotify = htmlspecialchars($_POST["spotify"]);
+            $image = htmlspecialchars($_POST["image"]);
 
             $artist = new Artist();
 
@@ -58,6 +61,9 @@ class ArtistController
             $artist->setType($type);
             $artist->setHeaderImg($headerImg);
             $artist->setThumbnailImg($thumbnailImg);
+            $artist->setLogo($logo);
+            $artist->setSpotify($spotify);
+            $artist->setImage($image);
 
             $this->artistService->addArtist($artist);
 
@@ -79,6 +85,9 @@ class ArtistController
             $type = htmlspecialchars($_POST["changedType"]);
             $headerImg = htmlspecialchars($_POST["changedHeaderImg"]);
             $thumbnailImg = htmlspecialchars($_POST["changedThumbnailImg"]);
+            $logo = htmlspecialchars($_POST["changedLogo"]);
+            $spotify = htmlspecialchars($_POST["changedSpotify"]);
+            $image = htmlspecialchars($_POST["changedImage"]);
 
             $artist = new Artist();
 
@@ -87,6 +96,9 @@ class ArtistController
             $artist->setType($type);
             $artist->setHeaderImg($headerImg);
             $artist->setThumbnailImg($thumbnailImg);
+            $artist->setLogo($logo);
+            $artist->setSpotify($spotify);
+            $artist->setImage($image);
 
             $this->artistService->updateArtist($artist, $_GET["updateID"]);
 

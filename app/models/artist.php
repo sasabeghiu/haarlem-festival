@@ -7,6 +7,9 @@ class Artist
     private string $type;
     private string $headerImg;
     private string $thumbnailImg;
+    private string $logo;
+    private string $spotify;
+    private string $image;
 
     /**
      * Get the value of id
@@ -124,6 +127,66 @@ class Artist
     public function setThumbnailImg($thumbnailImg)
     {
         $this->thumbnailImg = $thumbnailImg;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of logo
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set the value of logo
+     *
+     * @return  self
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of spotify
+     */
+    public function getSpotify()
+    {
+        return $this->spotify;
+    }
+
+    /**
+     * Set the value of spotify
+     *
+     * @return  self
+     */
+    public function setSpotify($spotify)
+    {
+        $this->spotify = $spotify;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set the value of image
+     *
+     * @return  self
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }
