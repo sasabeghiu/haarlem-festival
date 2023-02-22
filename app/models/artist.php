@@ -5,8 +5,8 @@ class Artist
     private string $name;
     private string $description;
     private string $type;
-    private int $headerImg;
-    private int $thumbnailImg;
+    private string $headerImg;
+    private string $thumbnailImg;
 
     /**
      * Get the value of id

@@ -19,4 +19,19 @@ class VenueService
     {
         return $this->venueRepository->getOne($id);
     }
+
+    public function addVenue($venue)
+    {
+        return $this->venueRepository->addVenue($venue);
+    }
+
+    public function updateVenue($venue, $id)
+    {
+        return $this->venueRepository->updateVenue($venue, $id);
+    }
+
+    public function deleteVenue($id)
+    {
+        return $this->venueRepository->deleteVenue($id);
+    }
 }

@@ -19,4 +19,19 @@ class ArtistService
     {
         return $this->artistRepository->getOne($id);
     }
+
+    public function addArtist($artist)
+    {
+        return $this->artistRepository->addArtist($artist);
+    }
+
+    public function updateArtist($artist, $id)
+    {
+        return $this->artistRepository->updateArtist($artist, $id);
+    }
+
+    public function deleteArtist($id)
+    {
+        return $this->artistRepository->deleteArtist($id);
+    }
 }

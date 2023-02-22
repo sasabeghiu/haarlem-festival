@@ -8,10 +8,10 @@ include __DIR__ . '/../header.php';
             <?php
             foreach ($model as $venue) {
             ?>
-                <div class="col">
+                <div class="col mb-3">
                     <div class="card shadow-sm">
                         <a href="/venue/venuedetails?id=<?= $venue->getId() ?>">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Wikipedia_space_ibiza%2803%29.jpg" class="product-card img" height="270px">
+                            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($venue->getImage()); ?>" class="product-card img" height="200px">
                             <div class="card-body text-light bg-dark">
                                 <p class="card-text fw-bold text-center"><?= $venue->getName() ?></p>
                             </div>

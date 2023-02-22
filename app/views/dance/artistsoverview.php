@@ -8,10 +8,10 @@ include __DIR__ . '/../header.php';
             <?php
             foreach ($model as $artist) {
             ?>
-                <div class="col">
+                <div class="col mb-3">
                     <div class="card shadow-sm">
                         <a href="/artist/artistdetails?id=<?= $artist->getId() ?>">
-                            <img src="https://thumbs.dreamstime.com/b/dj-icon-design-illustration-eps-graphic-68127680.jpg" class="product-card img" height="400px">
+                            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($artist->getThumbnailImg()); ?>" class="product-card img" width="300px">
                             <div class="card-body text-light bg-dark">
                                 <p class="card-text fw-bold text-center"><?= $artist->getName() ?></p>
                             </div>
