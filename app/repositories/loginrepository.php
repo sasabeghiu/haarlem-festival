@@ -5,10 +5,24 @@ class LoginRepository extends Repository
 {
     public function login($username, $password)
     {
-        $user = $this->getByUsername($username);
+        //
+    }
 
-        if (password_verify($password, $user->getPassword())) {
-            return true;
+    public function register($username, $password, $email)
+    {
+        try {
+            // Insert new user
+            $query = 'INSERT INTO user (username, password, roleId, email) VALUES (:username, :password, :roleId, :email)';
+            $stmt = $this->connection->prepare($query);
+            $stmt->bindValue(':username', $username);
+            $stmt->bindValue(':password', $password);
+            $stmt->bindValue(':roleId', 2); //default user is customer
+            $stmt->bindValue(':email', $email);
+            if ($stmt->execute()) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            print_r($e);
         }
         return false;
     }

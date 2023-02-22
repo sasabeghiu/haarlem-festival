@@ -1,8 +1,11 @@
+<?php
+
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Login</title>
+    <title>Register</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,51 +15,41 @@
 </head>
 
 <body>
-    <header>
-        <!-- place navbar here -->
-    </header>
     <main class="container">
         <div class="row">
             <div class="col-md-4">
-
             </div>
             <div class="col-md-4">
                 <br />
                 <div class="card">
                     <div class="card-header">
-                        Login
+                        Register
                     </div>
                     <div class="card-body">
-                        <?php if (isset($message)) { ?>
-                            <div class="alert alert-danger" role="alert">
-                                <strong><?php echo $message; ?></strong>
-                            </div>
-                        <?php } ?>
-                        <form action="/login/login" method="post">
+                        <form action="/login/register" method="post" enctype="multipart/form-data" id="register-form">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" name="username" id="username" aria-describedby="username" placeholder="enter your username">
+                                <label for="username" class="form-label">Username:</label>
+                                <input type="text" class="form-control" name="username" id="username">
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" name="password" id="password" aria-describedby="password" placeholder="enter your password">
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" class="form-control" name="password" id="password">
                             </div>
-                            <div class="row mb-3">
-                                <div class="col"><button type="submit" class="btn btn-primary">Login</button></div>
-                                <div class="col"><a name="" id="" class="btn btn-secondary" href="/login/display" role="button">Register</a></div>
-
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" name="email" id="email">
                             </div>
+                            <button type="submit" class="btn btn-success">Register</button>
+                            <a name="" id="" class="btn btn-primary" href="/login/index" role="button">Cancel</a>
 
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
 
     </main>
-    <footer>
-        <!-- place footer here -->
-    </footer>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

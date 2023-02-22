@@ -14,4 +14,16 @@ class LoginService
         $repository = new LoginRepository();
         return $repository->login($username, $password);
     }
+
+    public function register($username, $password, $email)
+    {
+        $repository = new LoginRepository();
+        return $repository->register($username, $password, $email);
+    }
+
+    public function getPassByUsername($username)
+    {
+        $repository = new LoginRepository();
+        return $repository->getByUsername($username)->getPassword();
+    }
 }
