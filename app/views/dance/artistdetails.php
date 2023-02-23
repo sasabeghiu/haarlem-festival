@@ -28,59 +28,25 @@ include __DIR__ . '/../header.php';
             <p><img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getImage()); ?>" width="1500px" class="img-fluid"></p>
         </div>
 
-        <h2 class="mt-3">Albums and singles</h2>
+        <h2 class="mt-3">Albums and Singles</h2>
         <div class="row" style="display:flex; justify-content:center;">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-                <div class="col mb-3">
-                    <div class="card shadow-sm">
-                        <a href="/artist/artistdetails?id=">
-                            <img src="https://thumbs.dreamstime.com/b/dj-icon-design-illustration-eps-graphic-68127680.jpg" class="product-card img" height="180px">
-                            <div class="card-footer text-light bg-dark">
-                                <p class="card-text fw-bold text-center">test></p>
-                            </div>
-                        </a>
+                <?php
+                foreach ($test as $album) {
+                ?>
+                    <div class="col mb-3">
+                        <div class="card shadow-sm">
+                            <a href="<?= $album->getLink() ?>" target="_blank">
+                                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($album->getImage()); ?>" class="img-fluid">
+                                <div class="card-body text-light bg-dark">
+                                    <p class="card-text fw-bold text-center"><?= $album->getName() ?></p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card shadow-sm">
-                        <a href="/artist/artistdetails?id=">
-                            <img src="https://thumbs.dreamstime.com/b/dj-icon-design-illustration-eps-graphic-68127680.jpg" class="product-card img" height="180px">
-                            <div class="card-footer text-light bg-dark">
-                                <p class="card-text fw-bold text-center">test></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card shadow-sm">
-                        <a href="/artist/artistdetails?id=">
-                            <img src="https://thumbs.dreamstime.com/b/dj-icon-design-illustration-eps-graphic-68127680.jpg" class="product-card img" height="180px">
-                            <div class="card-footer text-light bg-dark">
-                                <p class="card-text fw-bold text-center">test></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card shadow-sm">
-                        <a href="/artist/artistdetails?id=">
-                            <img src="https://thumbs.dreamstime.com/b/dj-icon-design-illustration-eps-graphic-68127680.jpg" class="product-card img" height="180px">
-                            <div class="card-footer text-light bg-dark">
-                                <p class="card-text fw-bold text-center">test></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card shadow-sm">
-                        <a href="/artist/artistdetails?id=">
-                            <img src="https://thumbs.dreamstime.com/b/dj-icon-design-illustration-eps-graphic-68127680.jpg" class="product-card img" height="180px">
-                            <div class="card-footer text-light bg-dark">
-                                <p class="card-text fw-bold text-center">test></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
 

@@ -10,7 +10,7 @@ include __DIR__ . '/../header.php';
 
     .filterbtn {
         width: 100px;
-        height: 100px;
+        height: 50px;
     }
 </style>
 <div class="album py-5">
@@ -41,19 +41,20 @@ include __DIR__ . '/../header.php';
             ?>
                 <div class="col mb-3">
                     <div class="card shadow-sm">
-                        <a href="#">
-                            <p class="card-text fw-bold text-center"><?= $event->getArtist() ?></p>
-                            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($event->getImage()); ?>" height="200px">
-                            <div class="card-body text-light bg-dark">
-                                <p class="card-text fw-bold text-center">Time: <?php echo $formated; ?></p>
-                                <p class="card-text fw-bold text-center">Location: <?= $event->getVenue() ?></p>
-                                <p class="card-text fw-bold text-center">Price: <?= $event->getTicket_price() ?> &euro;</p>
-                                <p class="card-text fw-bold text-center">Stock: <?= $event->getTickets_available() ?></p>
-                            </div>
-                            <p class="text-center"><a href="/artist/artistdetails?name=<?= $event->getArtist() ?>">Discover more</a></p>
+                        <div class="card-header text-light bg-dark">
+                            <p class="card-text text-center"><?= $event->getName() ?></p>
+                            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($event->getImage()); ?>" class="mx-auto d-block img-fluid">
+                        </div>
+                        <div class="card-body text-light bg-dark">
+                            <p class="card-text">Time: <?php echo $formated; ?></p>
+                            <p class="card-text">Location: <?= $event->getVenue() ?></p>
+                            <p class="card-text">Price: <?= $event->getTicket_price() ?> &euro;</p>
+                            <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
+                        </div>
+                        <div class="card-footer text-light bg-dark text-center">
+                            <p class="text-center"><a href="/artist/artistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
                             <button class="btn btn-secondary">Add to cart</button>
-
-                        </a>
+                        </div>
                     </div>
                 </div>
             <?php

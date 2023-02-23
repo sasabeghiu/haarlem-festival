@@ -1,14 +1,17 @@
 <?php
 require __DIR__ . '/../services/artistservice.php';
+require __DIR__ . '/../services/albumservice.php';
 include_once __DIR__ . '/../views/getURL.php';
 
 class ArtistController
 {
     private $artistService;
+    private $albumService;
 
     function __construct()
     {
         $this->artistService = new ArtistService();
+        $this->albumService = new AlbumService();
     }
 
     public function index()
@@ -24,12 +27,8 @@ class ArtistController
         $url_components = parse_url($url);
         parse_str($url_components['query'], $params);
 
-        if (@$params['id']) {
-            $model = $this->artistService->getOne($params['id']);
-        } else if (@$params['name']) {
-            $model = $this->artistService->getOneArtistByName($params['name']);
-        }
-
+        $model = $this->artistService->getOne($params['id']);
+        $test = $this->albumService->getAllAlbumsByArtist($params['id']);
 
         require __DIR__ . '/../views/dance/artistdetails.php';
     }
