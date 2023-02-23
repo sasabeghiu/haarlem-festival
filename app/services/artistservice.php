@@ -20,6 +20,11 @@ class ArtistService
         return $this->artistRepository->getOne($id);
     }
 
+    public function getOneArtistByName($name)
+    {
+        return $this->artistRepository->getOneArtistByName($name);
+    }
+
     public function addArtist($artist)
     {
         return $this->artistRepository->addArtist($artist);

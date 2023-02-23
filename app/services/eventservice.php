@@ -19,4 +19,9 @@ class EventService
     {
         return $this->eventRepository->getOne($id);
     }
+
+    public function getEventsByDate($datetime)
+    {
+        return $this->eventRepository->getEventsByDate($datetime);
+    }
 }

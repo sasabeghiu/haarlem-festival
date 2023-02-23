@@ -13,19 +13,16 @@ class EventController
 
     public function index()
     {
-        $model = $this->eventService->getAll();
+        if (isset($_POST["friday"])) {
+            $model = $this->eventService->getEventsByDate('%2023-07-27%');
+        } else if (isset($_POST["saturday"])) {
+            $model = $this->eventService->getEventsByDate('%2023-07-28%');
+        } else if (isset($_POST["sunday"])) {
+            $model = $this->eventService->getEventsByDate('%2023-07-29%');
+        } else {
+            $model = $this->eventService->getAll();
+        }
 
         require __DIR__ . '/../views/dance/eventsoverview.php';
-    }
-
-    public function eventdetails()
-    {
-        $url = getURL();
-        $url_components = parse_url($url);
-        parse_str($url_components['query'], $params);
-
-        $model = $this->eventService->getOne($params['id']);
-
-        require __DIR__ . '/../views/dance/eventdetails.php';
     }
 }

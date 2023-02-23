@@ -4,12 +4,12 @@ class Music_Event
     //change types 
     private int $id;
     private string $type;
-    private int $artist;
-    private int $venue;
+    private string $artist;
+    private string $venue;
     private int $ticket_price;
     private int $tickets_available;
     private string $datetime;
-    private string $description;
+    private string $image;
 
     /**
      * Get the value of id
@@ -152,21 +152,21 @@ class Music_Event
     }
 
     /**
-     * Get the value of description
+     * Get the value of image
      */
-    public function getDescription()
+    public function getImage()
     {
-        return $this->description;
+        return $this->image;
     }
 
     /**
-     * Set the value of description
+     * Set the value of image
      *
      * @return  self
      */
-    public function setDescription($description)
+    public function setImage($image)
     {
-        $this->description = $description;
+        $this->image = $image;
 
         return $this;
     }

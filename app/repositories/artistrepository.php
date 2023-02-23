@@ -9,14 +9,10 @@ class ArtistRepository extends Repository
         try {
             $stmt = $this->connection->prepare("SELECT artist.id, artist.name, artist.description, artist.type,  img1.image AS headerImg, img2.image AS thumbnailImg, img3.image AS logo, artist.spotify, img4.image AS image 
             FROM artist 
-            JOIN images as img1
-            ON artist.headerImg=img1.id 
-            JOIN images as img2
-            ON artist.thumbnailImg=img2.id
-            JOIN images as img3
-            ON artist.logo=img3.id
-            JOIN images as img4
-            ON artist.image=img4.id");
+            JOIN images as img1 ON artist.headerImg=img1.id 
+            JOIN images as img2 ON artist.thumbnailImg=img2.id
+            JOIN images as img3 ON artist.logo=img3.id
+            JOIN images as img4 ON artist.image=img4.id");
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Artist');
@@ -33,14 +29,10 @@ class ArtistRepository extends Repository
         try {
             $stmt = $this->connection->prepare("SELECT artist.id, artist.name, artist.description, artist.type,  img1.image AS headerImg, img2.image AS thumbnailImg, img3.image AS logo, artist.spotify, img4.image AS image 
             FROM artist 
-            JOIN images as img1
-            ON artist.headerImg=img1.id 
-            JOIN images as img2
-            ON artist.thumbnailImg=img2.id
-            JOIN images as img3
-            ON artist.logo=img3.id
-            JOIN images as img4
-            ON artist.image=img4.id
+            JOIN images as img1 ON artist.headerImg=img1.id 
+            JOIN images as img2 ON artist.thumbnailImg=img2.id
+            JOIN images as img3 ON artist.logo=img3.id
+            JOIN images as img4 ON artist.image=img4.id
             WHERE artist.id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -53,6 +45,29 @@ class ArtistRepository extends Repository
             echo $e;
         }
     }
+
+    function getOneArtistByName($name)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT artist.id, artist.name, artist.description, artist.type,  img1.image AS headerImg, img2.image AS thumbnailImg, img3.image AS logo, artist.spotify, img4.image AS image 
+            FROM artist 
+            JOIN images as img1 ON artist.headerImg=img1.id 
+            JOIN images as img2 ON artist.thumbnailImg=img2.id
+            JOIN images as img3 ON artist.logo=img3.id
+            JOIN images as img4 ON artist.image=img4.id
+            WHERE artist.name = :name");
+            $stmt->bindParam(':name', $name);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Artist');
+            $artist = $stmt->fetch();
+
+            return $artist;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
 
     //insert
     function addArtist($artist)

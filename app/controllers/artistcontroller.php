@@ -20,12 +20,16 @@ class ArtistController
 
     public function artistdetails()
     {
-        //parse url
         $url = getURL();
         $url_components = parse_url($url);
         parse_str($url_components['query'], $params);
 
-        $model = $this->artistService->getOne($params['id']);
+        if (@$params['id']) {
+            $model = $this->artistService->getOne($params['id']);
+        } else if (@$params['name']) {
+            $model = $this->artistService->getOneArtistByName($params['name']);
+        }
+
 
         require __DIR__ . '/../views/dance/artistdetails.php';
     }
