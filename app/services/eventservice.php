@@ -24,4 +24,14 @@ class EventService
     {
         return $this->eventRepository->getEventsByDate($datetime);
     }
+
+    public function getEventsByArtistID($artistID)
+    {
+        return $this->eventRepository->getEventsByArtistID($artistID);
+    }
+
+    public function getEventsByVenueID($venueID)
+    {
+        return $this->eventRepository->getEventsByVenueID($venueID);
+    }
 }

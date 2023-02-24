@@ -17,6 +17,7 @@ include __DIR__ . '/../header.php';
     <div class="container mb-5">
         <div class="row">
             <div class="col-sm-8">
+                <h2 class="my-3">About</h2>
                 <p><?= $model->getDescription() ?></p>
             </div>
             <div class="col-sm-4">
@@ -24,9 +25,36 @@ include __DIR__ . '/../header.php';
             </div>
         </div>
 
-        <div class="row">
-            <!-- change to $model->getThumbnailImg() and display full size-->
-            <!-- <p><img src="https://pbs.twimg.com/media/D3FtePUXkAENNlK.jpg"></p> -->
+        <h2 class="my-3">HF Dance Events at this location</h2>
+        <div class="row mt-3">
+
+            <?php
+            foreach ($events as $event) {
+                $date_string = $event->getDatetime();
+                $date = new DateTime($date_string);
+                $formated = $date->format("l, j F Y h:i A");
+            ?>
+                <div class="col mb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header text-light bg-dark">
+                            <p class="card-text text-center"><?= $event->getName() ?></p>
+                            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($event->getImage()); ?>" class="mx-auto d-block" height="150px">
+                        </div>
+                        <div class="card-body text-light bg-dark">
+                            <p class="card-text">Time: <?php echo $formated; ?></p>
+                            <p class="card-text">Location: <?= $model->getName() ?></p>
+                            <p class="card-text">Price: <?= $event->getTicket_price() ?> &euro;</p>
+                            <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
+                        </div>
+                        <div class="card-footer text-light bg-dark text-center">
+                            <p class="text-center"><a href="/artist/artistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
+                            <button class="btn btn-secondary">Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>

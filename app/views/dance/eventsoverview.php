@@ -17,6 +17,11 @@ include __DIR__ . '/../header.php';
     <div class="container mb-5">
         <h2 class="text-dark text-center mb-3">HF Dance Events</h2>
 
+        <p class="text-center">A new addition to the festival is Haarlem Dance in which the latest dance, house, techno
+            and trance is central. Six of the top Dj’s in the world will entertain their audience in
+            Back2Backsessions(multipleacts,largerstage,longer sessions) as well as in
+            smaller experimental (club) sessions.</p>
+
         <div class="center mb-3">
             <form method="POST">
                 <input type="submit" name="events" value="All Events" class="btn btn-success mx-3 filterbtn"></a>
@@ -61,6 +66,10 @@ include __DIR__ . '/../header.php';
             }
             ?>
         </div>
+
+        <p class="text-center">The capacity of the Club sessions is very limited. Availability for All-Access pas holders can not be guaranteed due to safety regulations.
+            Tickets available represents total capacity. (90% is sold as single tickets. 10% of total capacity is left for Walk ins / All-Access passholders)</p>
+            
     </div>
 </div>
 <?php

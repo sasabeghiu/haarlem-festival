@@ -1,17 +1,21 @@
 <?php
 require __DIR__ . '/../services/artistservice.php';
 require __DIR__ . '/../services/albumservice.php';
+require __DIR__ . '/../services/eventservice.php';
+
 include_once __DIR__ . '/../views/getURL.php';
 
 class ArtistController
 {
     private $artistService;
     private $albumService;
+    private $eventService;
 
     function __construct()
     {
         $this->artistService = new ArtistService();
         $this->albumService = new AlbumService();
+        $this->eventService = new EventService();
     }
 
     public function index()
@@ -29,6 +33,7 @@ class ArtistController
 
         $model = $this->artistService->getOne($params['id']);
         $test = $this->albumService->getAllAlbumsByArtist($params['id']);
+        $events = $this->eventService->getEventsByArtistID($params['id']);
 
         require __DIR__ . '/../views/dance/artistdetails.php';
     }

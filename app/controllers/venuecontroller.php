@@ -1,14 +1,19 @@
 <?php
 require __DIR__ . '/../services/venueservice.php';
+require __DIR__ . '/../services/eventservice.php';
+
 include_once __DIR__ . '/../views/getURL.php';
 
 class VenueController
 {
     private $venueService;
+    private $eventService;
+
 
     function __construct()
     {
         $this->venueService = new VenueService();
+        $this->eventService = new EventService();
     }
 
     public function index()
@@ -25,6 +30,8 @@ class VenueController
         parse_str($url_components['query'], $params);
 
         $model = $this->venueService->getOne($params['id']);
+        $events = $this->eventService->getEventsByVenueID($params['id']);
+
 
         require __DIR__ . '/../views/dance/venuedetails.php';
     }
