@@ -3,7 +3,7 @@ require __DIR__ . '/../header.php';
 ?>
 
 <head>
-<link rel="stylesheet" href= "/css/foodstyle.css">
+    <link rel="stylesheet" href="/css/foodstyle.css">
 </head>
 
 <p>As breathtaking and wonderful as Haarlem is, the city has a lot to offer when it comes to food. The city is known for its
@@ -23,7 +23,7 @@ require __DIR__ . '/../header.php';
                 vitis to Haarlem!</p>
         </div>
         <div class="col">
-            <img src="/images/BalletjeDrawing.png" alt="Loading image..." class="image-fluid" >
+            <img src="/images/BalletjeDrawing.png" alt="Loading image..." class="image-fluid">
         </div>
     </div>
     <div class="row">
@@ -69,59 +69,59 @@ require __DIR__ . '/../header.php';
             <img src="/images/foodpageimg2.png" alt="Loading image..." class="image-fluid">
         </div>
     </div>
-    <div class="container-fluid">
-        <h4 class="text-center"><b>International food</b></h4>
-        <div class="row">
+</div>
+<div class="container-fluid">
+    <h4 class="text-center"><b>International food</b></h4>
+    <div class="row ">
 
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <img src="/images/javaan.png" alt="Loading image..." class="card-img-top">
-                        <h5><b>De lachende Javaan</b></h5>
-                        <p>Indonesian</p>
-                        <ul>
-                            <li>Specialised in “Rijstaffel” <b>(shared dining)</b></li>
-                            <li>Quality of Asian food</li>
-                            <li>Artistic with culinary culture</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer">
-                        <p><u class="link">Learn more</u> about this restaurant</p>
-                    </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <img src="/images/javaan.png" alt="Loading image..." class="card-img-top">
+                    <h5><b>De lachende Javaan</b></h5>
+                    <p>Indonesian</p>
+                    <ul>
+                        <li>Specialised in “Rijstaffel” <b>(shared dining)</b></li>
+                        <li>Quality of Asian food</li>
+                        <li>Artistic with culinary culture</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <p><u class="link">Learn more</u> about this restaurant</p>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <img src="/images/bluenile.png" alt="Loading image..." class="card-img-top">
-                        <h5><b>Abay Blue Nile Taste</b></h5>
-                        <p>Ethiopian</p>
-                        <ul>
-                            <li>Homemade food made with love</li>
-                            <li>Perfect for family gatherings</li>
-                            <li>Affordable & authentic</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer">
-                        <p><u class="link">Learn more</u> about this restaurant</p>
-                    </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <img src="/images/bluenile.png" alt="Loading image..." class="card-img-top">
+                    <h5><b>Abay Blue Nile Taste</b></h5>
+                    <p>Ethiopian</p>
+                    <ul>
+                        <li>Homemade food made with love</li>
+                        <li>Perfect for family gatherings</li>
+                        <li>Affordable & authentic</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <p><u class="link">Learn more</u> about this restaurant</p>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <img src="/images/littlejamaica.png" alt="Loading image..." class="card-img-top">
-                        <h5><b>Little Jamaica</b></h5>
-                        <p>Caribean/Jamaican</p>
-                        <ul>
-                            <li>Soul food for everybody</li>
-                            <li>Healthy and delicious choice</li>
-                            <li>The jerk chicken & Jamaican patties are a “must-try”</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer">
-                        <p><u class="link">Learn more</u> about this restaurant</p>
-                    </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <img src="/images/littlejamaica.png" alt="Loading image..." class="card-img-top">
+                    <h5><b>Little Jamaica</b></h5>
+                    <p>Caribean/Jamaican</p>
+                    <ul>
+                        <li>Soul food for everybody</li>
+                        <li>Healthy and delicious choice</li>
+                        <li>The jerk chicken & Jamaican patties are a “must-try”</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <p><u class="link">Learn more</u> about this restaurant</p>
                 </div>
             </div>
         </div>

@@ -8,13 +8,16 @@ include __DIR__ . '/../header.php';
 
 <img src="/images/yummybanner.png" class="img-fluid" alt="Loading image...">
 
-<h2 class="mt-4">Welcome to yummy!</h2>
-<p>Although Haarlem had not a globally known culinary tradition there are lots of restaurants that are worth your while. Here you
-    can find all the restaurants that participate in this festival and their discounted prices! The food varies from Dutch cuisine
-    to Indian!</p>
+<!-- The following text is put in a container to make the allignment match up with the rest of the page -->
+<div class="container">
+    <h2 class="mt-4">Welcome to yummy!</h2>
+    <p>Although Haarlem had not a globally known culinary tradition there are lots of restaurants that are worth your while. Here you
+        can find all the restaurants that participate in this festival and their discounted prices! The food varies from Dutch cuisine
+        to Indian!</p>
+</div>
 
 <!-- Container for the highlighted restaurants section -->
-<div class="container-fluid pt-4 mt-4">
+<div class="container pt-4 mt-4">
     <h2 class="text-center">The festival's hottest</h2>
     <div class="row">
         <?php
@@ -55,7 +58,7 @@ include __DIR__ . '/../header.php';
                     </ul>
                 </div>
                 <div class="col-4">
-                    <img src="/images/goodtoknow.png" alt="Loading image..." class="image-fluid"/>
+                    <img src="/images/goodtoknow.png" alt="Loading image..." class="image-fluid" />
                 </div>
             </div>
         </div>
