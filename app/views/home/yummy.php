@@ -2,29 +2,92 @@
 include __DIR__ . '/../header.php';
 ?>
 
-<html>
-<img src="/images/foodBanner.png" class="img-fluid" alt="Loading image...">
+<head>
+    <link rel="stylesheet" href="/css/yummystyle.css">
+</head>
+
+<img src="/images/yummybanner.png" class="img-fluid" alt="Loading image...">
+
+<h2 class="mt-4">Welcome to yummy!</h2>
+<p>Although Haarlem had not a globally known culinary tradition there are lots of restaurants that are worth your while. Here you
+    can find all the restaurants that participate in this festival and their discounted prices! The food varies from Dutch cuisine
+    to Indian!</p>
 
 <!-- Container for the highlighted restaurants section -->
-<div class="container-fluid">
-    <h2 class="text-center"><u>Highlighted Restaurants</u></h2>
-
+<div class="container-fluid pt-4 mt-4">
+    <h2 class="text-center">The festival's hottest</h2>
     <div class="row">
-        <div class="col-md-3 mt-3">
-            <div class="card">
-                <div class="card-body">
-                    <img src="/images/rstrntImgFris.png" class="img-fluid" alt="Loading image...">
-                    <h4>Restaurant Fris</h4>
-                    <a>In the middle of Haarlem, near the Frederikspark, is Restaurant Fris. A modern restaurant where chef
-                        Rick May presents dishes based on classic French cuisine</a>
-                    <h4>Type</h4>
-                    <a>Dutch/French/European</a>
+        <?php
+        for ($i = 0; $i < 3; $i++) {
+        ?>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurants[$i]->image1); ?>" class="card-img-top" alt="Loading image...">
+                        <h4><?= $restaurants[$i]->name ?></h4>
+                        <p><?= $restaurants[$i]->description ?></p>
+                        <h4>Type</h4>
+                        <p> <?= $restaurants[$i]->cuisine ?></p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="/food/about?restaurantid=<?= $restaurants[$i]->id ?>" class="btn btn-primary stretched-link"> Learn more</a>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <a href="/food/about" class="btn btn-primary stretched-link">Learn more</a>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>
+
+<!-- Infocard -->
+<div class="container mt-4">
+    <div class="card infocard">
+        <div class="card-body">
+            <h4>Good to know:</h4>
+            <div class="row justify-content-between">
+                <div class="col-6">
+                    <ul>
+                        <li>Children under 12 years have 50% off at every restaurant</li>
+                        <li>Reservation is mandatory. A reservation fee of €10/person will be charged when a reservation is made on
+                            the Haarlem Festival site</li>
+                        <li>All restaurants are located in Haarlem, Netherlands</li>
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <img src="/images/goodtoknow.png" alt="Loading image..." class="image-fluid"/>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- All festival restaurants -->
+<div class="container mt-4 pt-4">
+    <h3>All restaurants</h3>
+    <p>View all the restaurants participating in the yummy event</p>
+
+    <div class="row">
+        <?php
+        foreach ($restaurants as $restaurant) {
+        ?>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->image1); ?>" class="card-img-top" alt="Loading image...">
+                        <h4><?= $restaurant->name ?></h4>
+                        <p><?= $restaurant->description ?></p>
+                        <h4>Type</h4>
+                        <p> <?= $restaurant->cuisine ?></p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a class="btn btn-primary stretched-link" href="/food/about?restaurantid=<?= $restaurant->id ?>"> Learn more</a>
+                    </div>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 

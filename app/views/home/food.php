@@ -2,6 +2,10 @@
 require __DIR__ . '/../header.php';
 ?>
 
+<head>
+<link rel="stylesheet" href= "/css/foodstyle.css">
+</head>
+
 <p>As breathtaking and wonderful as Haarlem is, the city has a lot to offer when it comes to food. The city is known for its
     variety of cuisines, both Dutch and international. Come with us and dive into our top picks that will make your belly happy
     while visiting Haarlem.</p>
@@ -9,7 +13,7 @@ require __DIR__ . '/../header.php';
 <h3 class="text-center">Enjoy an authentic taste of Dutch food</h3>
 
 <!-- Haarlem food -->
-<div class="container-fluid ">
+<div class="container-fluid">
     <div class="row">
         <div class="col">
             <h4>Welcome to het balletje</h4>
@@ -19,7 +23,7 @@ require __DIR__ . '/../header.php';
                 vitis to Haarlem!</p>
         </div>
         <div class="col">
-            <img src="/images/BalletjeDrawing.png" alt="Loading image..." class="image-fluid">
+            <img src="/images/BalletjeDrawing.png" alt="Loading image..." class="image-fluid" >
         </div>
     </div>
     <div class="row">
@@ -69,10 +73,10 @@ require __DIR__ . '/../header.php';
         <h4 class="text-center"><b>International food</b></h4>
         <div class="row">
 
-            <div class="col-4">
+            <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <img src="/images/javaan.png" alt="Loading image..." class="">
+                        <img src="/images/javaan.png" alt="Loading image..." class="card-img-top">
                         <h5><b>De lachende Javaan</b></h5>
                         <p>Indonesian</p>
                         <ul>
@@ -86,10 +90,10 @@ require __DIR__ . '/../header.php';
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <img src="/images/bluenile.png" alt="Loading image..." class="">
+                        <img src="/images/bluenile.png" alt="Loading image..." class="card-img-top">
                         <h5><b>Abay Blue Nile Taste</b></h5>
                         <p>Ethiopian</p>
                         <ul>
@@ -103,10 +107,10 @@ require __DIR__ . '/../header.php';
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <img src="/images/littlejamaica.png" alt="Loading image..." class="">
+                        <img src="/images/littlejamaica.png" alt="Loading image..." class="card-img-top">
                         <h5><b>Little Jamaica</b></h5>
                         <p>Caribean/Jamaican</p>
                         <ul>
