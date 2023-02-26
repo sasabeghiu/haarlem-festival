@@ -12,7 +12,6 @@ class PatternRouter
 
     public function route($uri)
     {
-
         $uri = $this->stripParameters($uri);
 
         $explodedUri = explode('/', $uri);
@@ -37,7 +36,7 @@ class PatternRouter
             } catch (Error $e) {
                 // For some reason the class/method doesn't load
                 //http_response_code(500);
-                print_r($e);
+                echo $e;
             }
         } else {
             // Controller/method matching the URL not found
