@@ -15,23 +15,26 @@ class LoginController
         require __DIR__ . '/../views/login/index.php';
     }
 
-    public function login()
+    public function validate()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $username = isset($_POST['username']) ? $_POST['username'] : "";
             $password = isset($_POST['password']) ? $_POST['password'] : "";
-            $passtocompare = $this->loginService->getPassByUsername($username);
+            $user = $this->loginService->getByUsername($username);
+            $passtocompare = $user->getPassword();
 
             if (password_verify($password, $passtocompare)) {
-                $_SESSION['username'] = $username;
+                $_SESSION['userId'] = $user->getId();
+                //print_r($_SESSION['userId']);
                 $_SESSION['loggedin'] = true;
-                session_start();
+
                 header('Location: /home/index');
             } else {
-                $message = "Login error: Username or password incorrect.";
+                echo "Login error: Username or password incorrect.";
             }
         }
+        $this->index();
     }
 
     public function register()
@@ -61,5 +64,13 @@ class LoginController
     public function logout()
     {
         require __DIR__ . '/../views/login/logout.php';
+    }
+
+    public function resetpassword()
+    {
+        session_start();
+        print_r($_SESSION['userId']);
+        $user = $this->loginService->getById($id);
+        require __DIR__ . '/../views/login/resetpassword.php';
     }
 }

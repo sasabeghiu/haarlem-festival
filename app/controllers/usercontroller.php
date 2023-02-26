@@ -54,4 +54,11 @@ class UserController
 
         require __DIR__ . '/../views/cms/user/delete.php';
     }
+
+    public function profile()
+    {
+        print_r($_SESSION['id']);
+        $user = $this->userService->getById($_SESSION['userId']);
+        require __DIR__ . '/../views/cms/user/profile.php';
+    }
 }
