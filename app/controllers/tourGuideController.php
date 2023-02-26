@@ -2,8 +2,8 @@
 require __DIR__ . '/controller.php';
 require __DIR__ . '/../services/tourGuideService.php';
 
-class TourGuideController extends Controller
-{
+class TourGuideController extends Controller{
+
     private $tourguideService;
 
     function __construct()
@@ -17,5 +17,6 @@ class TourGuideController extends Controller
         $tourguides = $this->tourguideService->getAll();
 
         $this->displayView($tourguides);
+        //require __DIR__ . '/../views/tourguide/index.php';
     }
 }
