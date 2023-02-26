@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="dropdown show">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               History
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -70,7 +70,7 @@
             <a class="nav-link" href="/login/logout">Logout</a>
           </li>
           <div class="dropdown show">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               CMS
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
