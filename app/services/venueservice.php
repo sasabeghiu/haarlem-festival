@@ -1,0 +1,37 @@
+<?php
+require __DIR__ . '/../repositories/venuerepository.php';
+
+class VenueService
+{
+    private $venueRepository;
+
+    public function __construct()
+    {
+        $this->venueRepository = new VenueRepository();
+    }
+
+    public function getAll()
+    {
+        return $this->venueRepository->getAll();
+    }
+
+    public function getOne($id)
+    {
+        return $this->venueRepository->getOne($id);
+    }
+
+    public function addVenue($venue)
+    {
+        return $this->venueRepository->addVenue($venue);
+    }
+
+    public function updateVenue($venue, $id)
+    {
+        return $this->venueRepository->updateVenue($venue, $id);
+    }
+
+    public function deleteVenue($id)
+    {
+        return $this->venueRepository->deleteVenue($id);
+    }
+}

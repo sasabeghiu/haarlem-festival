@@ -35,7 +35,8 @@ class PatternRouter
                 $controllerObj->$methodName();
             } catch(Error $e) {
                 // For some reason the class/method doesn't load
-                http_response_code(500);
+                //http_response_code(500);
+                echo $e;
             }
         } else {
             // Controller/method matching the URL not found
