@@ -12,7 +12,6 @@ class PatternRouter
 
     public function route($uri)
     {
-
         $uri = $this->stripParameters($uri);
 
         $explodedUri = explode('/', $uri);
