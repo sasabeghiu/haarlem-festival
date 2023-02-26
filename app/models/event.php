@@ -7,12 +7,14 @@ class Event implements JsonSerializable {
         return get_object_vars($this);
     }
 
+
     public int $id;
+    public string $nameOfTours;
     public int $tickets_available;
     public string $price;
-    public DateTime $datetime;
-    public int $venue;
-    public int $image;
+    public string $datetime;
+    public ?int $venueID;
+    public ?int $image;
 
     /**
      * @return int
@@ -28,6 +30,22 @@ class Event implements JsonSerializable {
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->nameOfTours;
+    }
+
+    /**
+     * @param string $nameOfTours
+     */
+    public function setName(string $nameOfTours): void
+    {
+        $this->nameOfTours = $nameOfTours;
     }
 
     /**
@@ -47,67 +65,72 @@ class Event implements JsonSerializable {
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getPrice(): int
+    public function getPrice(): float
     {
         return $this->price;
     }
 
     /**
-     * @param int $price
+     * @param float $price
      */
-    public function setPrice(int $price): void
+    public function setPrice(float $price): void
     {
-        $this->price = $price;
+        $this->price = round((float)$price, 2);
     }
 
     /**
-     * @return DateTime
+     * @return string
      */
-    public function getDatetime(): DateTime
+    public function getDateTime(): string
     {
         return $this->datetime;
     }
 
     /**
-     * @param DateTime $datetime
+     * @param string $datetime
      */
-    public function setDatetime(DateTime $datetime): void
+    public function setDateTime(string $datetime): void
     {
         $this->datetime = $datetime;
     }
 
     /**
-     * @return int
+     * @return ?int
      */
-    public function getVenue(): int
+    public function getVenueID(): ?int
     {
-        return $this->venue;
+        return $this->venueID;
     }
 
     /**
-     * @param int $venue
+     * @param ?int $venueID
      */
-    public function setVenue(int $venue): void
+    public function setVenueID(?int $venueID): void
     {
-        $this->venue = $venue;
+        $this->venueID = $venueID;
     }
 
     /**
-     * @return int
+     * @return ?int
      */
-    public function getImage(): int
+    public function getImage(): ?int
     {
         return $this->image;
     }
 
     /**
-     * @param int $image
+     * @param ?int $image
      */
-    public function setImage(int $image): void
+    public function setImage(?int $image): void
     {
         $this->image = $image;
+    }
+
+    public function getFormattedDate(){
+        $date = new DateTime($this->datetime);
+        return $date->format('d-m-Y');
     }
 
 }

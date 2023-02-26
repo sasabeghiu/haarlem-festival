@@ -28,12 +28,18 @@ include __DIR__ . '/../footer.php';
         <?php
         foreach($model as $tourguides) {
             ?>
-            <div class="card col-12 p-4 my-4">
-                <div class="row" style="border: 0;">
-
-                    <h2 class="card-title" style="color: darkred;"><?= ucfirst($tourguides->getName())?></h2>
-                    <p class="card-description">Description: <?= $tourguides->getDescription()?></p>
-                    <img class="w-100">
+            <div class="card mb-3">
+                <div class="row g-0" style="border: 0;">
+                    <div class="col-md-4">
+                        <img class="card-img h-100" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($tourguides->getImage());?>">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h2 class="card-title" style="color: darkred;"><?= ucfirst($tourguides->getName())?></h2>
+                            <p class="card-description">Description: <?= $tourguides->getDescription()?></p>
+                            <a class="btn btn-info" role="button" href="../event">More Info</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php

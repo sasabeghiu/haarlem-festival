@@ -24,7 +24,7 @@ class EventRepository extends Repository
         try {
             $stmt = $this->connection->prepare("INSERT into history_event (id, tickets_available, price, datetime, venueID, image) VALUES (?,?,?,?,?,?)");
 
-            $stmt->execute([$events->getId(), $events->getTicketsAvailable(), $events->getPrice(), $events->getDateTime(), $events->getVenueId(), $events->getImage()]);
+            $stmt->execute([$events->getId(), $events->getTicketsAvailable(), $events->getPrice(), $events->getFormattedDate(), $events->getVenueID(), $events->getImage()]);
 
         }catch (PDOException $e){
             echo $e;
