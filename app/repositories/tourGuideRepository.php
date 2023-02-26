@@ -2,7 +2,6 @@
 require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/tourGuide.php';
 
-
 class TourGuideRepository extends Repository
 {
     function getAll()
@@ -17,18 +16,18 @@ class TourGuideRepository extends Repository
             $tourguides = $stmt->fetchAll();
 
             return $tourguides;
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
 
-    function insert($tourguides){
+    function insert($tourguides)
+    {
         try {
             $stmt = $this->connection->prepare("INSERT into tourguide (id, name, description, image) VALUES (?,?,?,?)");
 
             $stmt->execute([$tourguides->getId(), $tourguides->getName(), $tourguides->getDescription(), $tourguides->getImage()]);
-
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }

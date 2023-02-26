@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/user.php';
+
 class UserRepository extends Repository
 {
     function getAll()

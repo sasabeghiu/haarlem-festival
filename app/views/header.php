@@ -33,11 +33,12 @@
             </div>
           </div>
           <div class="dropdown show">
-            <a class="nav-link dropdown-toggle dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               History
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Events</a>
+              <a class="dropdown-item" href="/historyevent">Events</a>
+              <a class="dropdown-item" href="/tourguide">Tour Guides</a>
             </div>
           </div>
           <div class="dropdown show">
