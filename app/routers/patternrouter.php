@@ -33,7 +33,7 @@ class PatternRouter
             try {
                 $controllerObj = new $controllerName();
                 $controllerObj->$methodName();
-            } catch(Error $e) {
+            } catch (Error $e) {
                 // For some reason the class/method doesn't load
                 //http_response_code(500);
                 echo $e;
