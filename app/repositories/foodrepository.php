@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/restaurant.php';
+require __DIR__ . '/../models/session.php';
 
 class FoodRepository extends Repository {
 
@@ -50,5 +51,14 @@ class FoodRepository extends Repository {
         {
             echo $e;
         }
+    }
+    public function getSessions() {
+        $stmt = $this->connection->prepare("SELECT * FROM `food_session` ");
+        $stmt->execute();
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
+        $sessions = $stmt->fetchAll();
+
+        return $sessions;
     }
 }

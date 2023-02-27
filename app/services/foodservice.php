@@ -14,4 +14,7 @@ class FoodService{
     public function getRestaurantById(){
         return $this->foodRepository->getRestaurantById();
     }
+    public function getSessions(){
+        return $this->foodRepository->getSessions();
+    }
 }

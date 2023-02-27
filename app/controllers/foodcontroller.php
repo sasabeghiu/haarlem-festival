@@ -21,4 +21,8 @@ class FoodController{
         require __DIR__ . '/../views/home/yummy.php';
 
     }
+    public function manageSessions() {
+        $sessions = $this->foodService->getSessions();
+        require __DIR__ . '/../views/cms/food/managesessions.php';
+    }
 }
