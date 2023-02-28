@@ -11,7 +11,7 @@ include __DIR__ . '/../header.php';
     </div>
 </div>
 
-<a class="fa-solid fa-circle-arrow-left py-5 px-5" href="/venue" style="text-decoration:none; color:black; position: fixed; font-size: 2em;"></a>
+<a class="fa-solid fa-circle-arrow-left py-5 px-5" href="/venue/dancevenues" style="text-decoration:none; color:black; position: fixed; font-size: 2em;"></a>
 
 <div class="album py-5">
     <div class="container mb-5">

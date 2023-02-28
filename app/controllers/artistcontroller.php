@@ -18,14 +18,23 @@ class ArtistController
         $this->eventService = new EventService();
     }
 
-    public function index()
+    public function danceartists()
     {
-        $model = $this->artistService->getAll();
+        $model = $this->artistService->getAllDanceArtists();
 
         require __DIR__ . '/../views/dance/artistsoverview.php';
     }
 
-    public function artistdetails()
+    public function jazzartists()
+    {
+        ini_set('memory_limit', '1024M');
+        $model = $this->artistService->getAllJazzArtists();
+
+        require __DIR__ . '/../views/jazz/artistsoverview.php';
+    }
+
+
+    public function danceartistdetails()
     {
         $url = getURL();
         $url_components = parse_url($url);
@@ -36,6 +45,19 @@ class ArtistController
         $events = $this->eventService->getEventsByArtistID($params['id']);
 
         require __DIR__ . '/../views/dance/artistdetails.php';
+    }
+
+    public function jazzartistdetails()
+    {
+        $url = getURL();
+        $url_components = parse_url($url);
+        parse_str($url_components['query'], $params);
+
+        $model = $this->artistService->getOne($params['id']);
+        $test = $this->albumService->getAllAlbumsByArtist($params['id']);
+        $events = $this->eventService->getEventsByArtistID($params['id']);
+
+        require __DIR__ . '/../views/jazz/artistdetails.php';
     }
 
     public function artistcms()

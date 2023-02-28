@@ -15,6 +15,16 @@ class ArtistService
         return $this->artistRepository->getAll();
     }
 
+    public function getAllDanceArtists()
+    {
+        return $this->artistRepository->getAllDanceArtists();
+    }
+
+    public function getAllJazzArtists()
+    {
+        return $this->artistRepository->getAllJazzArtists();
+    }
+
     public function getOne($id)
     {
         return $this->artistRepository->getOne($id);

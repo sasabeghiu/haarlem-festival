@@ -16,14 +16,21 @@ class VenueController
         $this->eventService = new EventService();
     }
 
-    public function index()
+    public function dancevenues()
     {
-        $model = $this->venueService->getAll();
+        $model = $this->venueService->getAllDanceVenues();
 
         require __DIR__ . '/../views/dance/venuesoverview.php';
     }
 
-    public function venuedetails()
+    public function jazzvenues()
+    {
+        $model = $this->venueService->getAllJazzVenues();
+
+        require __DIR__ . '/../views/jazz/venuesoverview.php';
+    }
+
+    public function dancevenuedetails()
     {
         $url = getURL();
         $url_components = parse_url($url);
@@ -34,6 +41,19 @@ class VenueController
 
 
         require __DIR__ . '/../views/dance/venuedetails.php';
+    }
+
+    public function jazzvenuedetails()
+    {
+        $url = getURL();
+        $url_components = parse_url($url);
+        parse_str($url_components['query'], $params);
+
+        $model = $this->venueService->getOne($params['id']);
+        $events = $this->eventService->getEventsByVenueID($params['id']);
+
+
+        require __DIR__ . '/../views/jazz/venuedetails.php';
     }
 
     public function venuecms()
