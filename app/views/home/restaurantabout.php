@@ -9,16 +9,14 @@ require __DIR__ . '/../header.php';
 <html>
 <div class="container-fluid">
     <div class="row justify-content-around">
-        <?php
-        foreach ($restaurants as $restaurant) {
-        ?>
-            <div class="col-4">
-                <h3>Description</h3>
-                <p><?= $restaurant->description ?></p>
-            </div>
-            <div class="col-4">
-                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->image1); ?>" class="image-fluid" alt="Loading image...">
-            </div>
+
+        <div class="col-4">
+            <h3>Description</h3>
+            <p><?= $restaurant->description ?></p>
+        </div>
+        <div class="col-4">
+            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->image1); ?>" class="image-fluid" alt="Loading image...">
+        </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-2">
@@ -67,9 +65,7 @@ require __DIR__ . '/../header.php';
             </form>
         </div>
     </div>
-<?php
-        }
-?>
+
 </div>
 
 

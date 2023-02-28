@@ -3,9 +3,11 @@ require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/restaurant.php';
 require __DIR__ . '/../models/session.php';
 
-class FoodRepository extends Repository {
+class FoodRepository extends Repository
+{
 
-    function getRestaurants() {
+    function getRestaurants()
+    {
         try {
             $stmt = $this->connection->prepare("SELECT restaurant.id, restaurant.name, restaurant.location, restaurant.description, 
             restaurant.cuisine, restaurant.stars, restaurant.email, restaurant.phonenumber, img1.image AS image1, img2.image 
@@ -20,13 +22,12 @@ class FoodRepository extends Repository {
             $restaurants = $stmt->fetchAll();
 
             return $restaurants;
-
-        } catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $e;
         }
     }
-    function getRestaurantById() {
+    function getRestaurantById()
+    {
         $id = htmlspecialchars($_GET["restaurantid"]);
 
         try {
@@ -45,20 +46,75 @@ class FoodRepository extends Repository {
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'restaurant');
             $restaurants = $stmt->fetchAll();
 
-            return $restaurants;
-
-        } catch (PDOException $e)
-        {
+            return $restaurants[0];
+        } catch (PDOException $e) {
             echo $e;
         }
     }
-    public function getSessions() {
-        $stmt = $this->connection->prepare("SELECT * FROM `food_session` ");
-        $stmt->execute();
+    public function getSessions()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.sessions, fs.price, fs.reducedprice, fs.first_session,
+                                                fs.session_length, fs.seats FROM `food_session` AS fs 
+                                                JOIN restaurant ON fs.restaurantid = restaurant.id");
+            $stmt->execute();
 
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
-        $sessions = $stmt->fetchAll();
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
+            $sessions = $stmt->fetchAll();
 
-        return $sessions;
+            return $sessions;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+    public function getSessionById()
+    {
+        $id = htmlspecialchars($_GET["sessionid"]);
+
+        try {
+            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.sessions, fs.price, fs.reducedprice, fs.first_session,
+                                                fs.session_length, fs.seats FROM `food_session` AS fs 
+                                                JOIN restaurant ON fs.restaurantid = restaurant.id
+                                                WHERE fs.id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
+            $sessions = $stmt->fetchAll();
+
+            return $sessions[0];
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+    public function save(Session $session)
+    {
+        try {
+            if ($session->getId() != 0) {
+                // Update existing session
+                $stmt = $this->connection->prepare("UPDATE `food_session` SET sessions = :sessions, price = :price, reducedprice = :reducedprice, 
+                                                    first_session = :first_session, session_length = :session_length, seats = :seats 
+                                                    WHERE id = :id");
+                $stmt->bindValue(':id', $session->getId());
+            } else {
+                // Insert new session
+                $query = 'INSERT INTO session (sessionname, password, roleId, email) VALUES (:sessionname, :password, :roleId, :email)';
+                $stmt = $this->connection->prepare($query);
+            }
+
+            $stmt->bindValue(':sessions', $session->getSessions());
+            $stmt->bindValue(':price', $session->getPrice());
+            $stmt->bindValue(':reducedprice', $session->getReducedprice());
+            $stmt->bindValue(':first_session', $session->getFirst_session());
+            $stmt->bindValue(':session_length', $session->getSession_length());
+            $stmt->bindValue(':seats', $session->getSeats());
+
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo ($e);
+        }
+        // if ($stmt) {
+        //     return true;
+        // }
     }
 }

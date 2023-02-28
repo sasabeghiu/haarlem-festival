@@ -17,4 +17,10 @@ class FoodService{
     public function getSessions(){
         return $this->foodRepository->getSessions();
     }
+    public function getSessionById() {
+        return $this->foodRepository->getSessionById();
+    }
+    public function saveSession(Session $session) {
+        $this->foodRepository->save($session);
+    }
 }
