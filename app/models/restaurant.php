@@ -6,7 +6,7 @@ class Restaurant {
     private string $description;
     private string $location;
     private int $stars;
-    private string $image;
+    private string $image1;
     private string $image2;
     private string $image3;
     private string $phonenumber;
@@ -60,12 +60,12 @@ class Restaurant {
 		$this->stars = $value;
 	}
 
-	public function getImage() : string {
-		return $this->image;
+	public function getImage1() : string {
+		return $this->image1;
 	}
 
-	public function setImage(string $value) {
-		$this->image = $value;
+	public function setImage1(string $value) {
+		$this->image1 = $value;
 	}
 
 	public function getImage2() : string {
