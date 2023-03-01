@@ -48,8 +48,8 @@ class UserService
     public function validateUser(User $user)
     {
         $repository = new UserRepository();
-        if ($repository->getbyUsername($user->getUsername())) {
-            return false; //user exists
+        if ($repository->getbyUsername($user->getUsername()) || $repository->getbyEmail($user->getEmail())) {
+            return false; //user or email exist in db
         }
         return true;
     }

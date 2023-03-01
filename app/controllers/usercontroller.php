@@ -51,7 +51,7 @@ class UserController
                     }
                     echo "<script>alert('Failed to save User. ')</script>";
                 } else {
-                    echo "<script>alert('Username already exists ')</script>";
+                    echo "<script>alert('Username or email already in use!')</script>";
                 }
                 $this->index();
             } catch (Exception $e) {
