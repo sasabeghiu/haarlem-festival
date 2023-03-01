@@ -31,9 +31,35 @@ class UserRepository extends Repository
         }
     }
 
+    public function getByUsername($username)
+    {
+        $stmt = $this->connection->prepare('SELECT * FROM user WHERE username = :username');
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        if (!$row) {
+            return null;
+        }
+
+        $user = new User();
+        $user->setId($row['id']);
+        $user->setUsername($row['username']);
+        $user->setPassword($row['password']);
+        $user->setEmail($row['email']);
+        $user->setRole($row['roleId']);
+
+
+        return $user;
+    }
+
     public function getById($id)
     {
-        $stmt = $this->connection->prepare('SELECT * FROM user WHERE id = :id');
+        $stmt = $this->connection->prepare('SELECT user.*, roles.name AS roleName
+        FROM user
+        JOIN roles ON user.roleId = roles.id
+        WHERE user.id = :id');
+
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $row = $stmt->fetch();
@@ -48,6 +74,7 @@ class UserRepository extends Repository
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
         $user->setRole($row['roleId']);
+        $user->setRoleName($row['roleName']);
 
         return $user;
     }

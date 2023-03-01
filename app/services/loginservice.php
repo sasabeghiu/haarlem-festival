@@ -27,6 +27,12 @@ class LoginService
         return $repository->getByUsername($username);
     }
 
+    public function getByEmail($email)
+    {
+        $repository = new LoginRepository();
+        return $repository->getByEmail($email);
+    }
+
     public function getById($id)
     {
         $repository = new LoginRepository();

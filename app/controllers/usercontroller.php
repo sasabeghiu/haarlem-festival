@@ -34,30 +34,47 @@ class UserController
     public function save()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $newUser = new User();
-            $hashedPass = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $newUser->setId(isset($_POST['id']) ? $_POST['id'] : 0);
-            $newUser->setUsername(isset($_POST['username']) ? $_POST['username'] : null); //check if information was sent, if so it assigns the value, otherwise sets to null 
-            $newUser->setPassword(isset($_POST['password']) ? $hashedPass : null);
-            $newUser->setEmail(isset($_POST['email']) ? $_POST['email'] : null);
-            $newUser->setRole(isset($_POST['role']) ? $_POST['role'] : null);
+            try {
 
-            if ($this->userService->saveUser($newUser)) {
+                $newUser = new User();
+                $hashedPass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $newUser->setId(htmlspecialchars(isset($_POST['id']) ? $_POST['id'] : 0));
+                $newUser->setUsername(htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : null)); //sanitize input, check if information was sent, if so it assigns the value, otherwise sets to null 
+                $newUser->setPassword(htmlspecialchars(isset($_POST['password']) ? $hashedPass : null));
+                $newUser->setEmail(htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : null));
+                $newUser->setRole(htmlspecialchars(isset($_POST['role']) ? $_POST['role'] : null));
+
+
+                if ($this->userService->validateUser($newUser)) {
+                    if ($this->userService->saveUser($newUser)) {
+                        header('Location: /user');
+                    }
+                    echo "<script>alert('Failed to save User. ')</script>";
+                } else {
+                    echo "<script>alert('Username already exists ')</script>";
+                }
                 $this->index();
+            } catch (Exception $e) {
+                echo "An error occurred: " . $e->getMessage();
             }
         }
     }
 
     public function delete()
     {
-        $this->userService->deleteById($_GET['userId']);
-
         require __DIR__ . '/../views/cms/user/delete.php';
+        $userId = $_GET['userId'];
+        if ($this->userService->deleteById($userId)) {
+            echo "<script>alert('User deleted successfully. ')</script>";
+        } else {
+            echo "<script>alert('Failed to delete User. ')</script>";
+        }
     }
 
     public function profile()
     {
-        print_r($_SESSION['id']);
+        session_start();
+        //print_r($_SESSION['userId']);
         $user = $this->userService->getById($_SESSION['userId']);
         require __DIR__ . '/../views/cms/user/profile.php';
     }

@@ -1,6 +1,6 @@
 <?php
 include(__DIR__ . "/../../header.php");
-echo $_SESSION['userId'];
+//echo $_SESSION['userId'];
 ?>
 <div class="card">
     <div class="card-header">
@@ -14,18 +14,18 @@ echo $_SESSION['userId'];
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
-                <input type="text" class="form-control" name="username" id="username" value="<?php echo $user->getUsername(); ?>">
+                <input type="text" class="form-control" name="username" id="username" required value="<?php echo $user->getUsername(); ?>">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
-                <input type="password" class="form-control" name="password" id="password" value="<?php echo $user->getPassword(); ?>">
+                <input type="password" class="form-control" name="password" id="password" required value="<?php echo $user->getPassword(); ?>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" name="email" id="email" value="<?php echo $user->getEmail(); ?>">
+                <input type="email" class="form-control" name="email" id="email" required value="<?php echo $user->getEmail(); ?>">
             </div>
             <div class="mb-3">
-                <label for="role" class="form-label">Role: <?php echo $user->getRole(); ?></label>
+                <label for="role" class="form-label">Role: <?php echo $user->getRoleName(); ?></label>
                 <input type="hidden" class="form-control" name="role" id="role" value="<?php echo $user->getRole(); ?>">
             </div>
 

@@ -35,11 +35,11 @@
                         <form action="/login/validate" method="post">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" name="username" id="username" aria-describedby="username" placeholder="enter your username">
+                                <input type="text" class="form-control" name="username" id="username" aria-describedby="username" placeholder="enter your username" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" name="password" id="password" aria-describedby="password" placeholder="enter your password">
+                                <input type="password" class="form-control" name="password" id="password" aria-describedby="password" placeholder="enter your password" required>
                             </div>
                             <div class="mb-3">
                                 <a href="/login/resetpassword">Forgot password?</a>

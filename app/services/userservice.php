@@ -27,6 +27,12 @@ class UserService
         return $repository->getById($id);
     }
 
+    public function getByUsername($username)
+    {
+        $repository = new UserRepository();
+        return $repository->getByUsername($username);
+    }
+
     public function deleteById($id)
     {
         $repository = new UserRepository();
@@ -37,5 +43,14 @@ class UserService
     {
         $repository = new UserRepository();
         return $repository->save($user);
+    }
+
+    public function validateUser(User $user)
+    {
+        $repository = new UserRepository();
+        if ($repository->getbyUsername($user->getUsername())) {
+            return false; //user exists
+        }
+        return true;
     }
 }
