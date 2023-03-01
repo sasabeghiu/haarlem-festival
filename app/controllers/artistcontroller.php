@@ -42,7 +42,7 @@ class ArtistController
 
         $model = $this->artistService->getOne($params['id']);
         $test = $this->albumService->getAllAlbumsByArtist($params['id']);
-        $events = $this->eventService->getEventsByArtistID($params['id']);
+        $events = $this->eventService->getEventsByArtistName('%' . $model->getName() . '%');
 
         require __DIR__ . '/../views/dance/artistdetails.php';
     }
@@ -55,7 +55,7 @@ class ArtistController
 
         $model = $this->artistService->getOne($params['id']);
         $test = $this->albumService->getAllAlbumsByArtist($params['id']);
-        $events = $this->eventService->getEventsByArtistID($params['id']);
+        $events = $this->eventService->getEventsByArtistName('%' . $model->getName() . '%');
 
         require __DIR__ . '/../views/jazz/artistdetails.php';
     }

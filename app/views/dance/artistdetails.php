@@ -85,7 +85,7 @@ include __DIR__ . '/../header.php';
 
             </div>
             <div class="col-sm-4 mr-0">
-                <h2 class="my-3">Try his tracks</h2>
+                <h2 class="my-3">Try their tracks</h2>
                 <!-- The container for the music player -->
                 <iframe style="border-radius:12px" src="<?= $model->getSpotify() ?>" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <p><img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getThumbnailImg()); ?>" height="350px" class="mt-3"></p>

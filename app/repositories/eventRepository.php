@@ -38,6 +38,48 @@ class EventRepository
         }
     }
 
+    function getAllDanceEvents()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
+            FROM music_event as e 
+            JOIN venue as v ON e.venue=v.id
+            JOIN artist as a1 ON e.name=a1.id
+            JOIN images as i ON a1.thumbnailImg=i.id
+            WHERE e.type='dance'
+            ORDER BY e.datetime");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Music_Event');
+            $events = $stmt->fetchAll();
+
+            return $events;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getAllJazzEvents()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
+            FROM music_event as e 
+            JOIN venue as v ON e.venue=v.id
+            JOIN artist as a1 ON e.name=a1.id
+            JOIN images as i ON a1.thumbnailImg=i.id
+            WHERE e.type='jazz'
+            ORDER BY e.datetime");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Music_Event');
+            $events = $stmt->fetchAll();
+
+            return $events;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function getOne($id)
     {
         try {
@@ -60,7 +102,7 @@ class EventRepository
         }
     }
 
-    function getEventsByDate($datetime)
+    function getDanceEventsByDate($datetime)
     {
         try {
             $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
@@ -68,7 +110,7 @@ class EventRepository
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
             JOIN images as i ON a1.thumbnailImg=i.id
-            WHERE datetime LIKE :datetime");
+            WHERE e.type='dance' AND datetime LIKE :datetime");
             $stmt->bindParam(':datetime', $datetime);
 
             $stmt->execute();
@@ -82,7 +124,7 @@ class EventRepository
         }
     }
 
-    function getEventsByArtistID($artistID)
+    function getJazzEventsByDate($datetime)
     {
         try {
             $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
@@ -90,8 +132,30 @@ class EventRepository
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
             JOIN images as i ON a1.thumbnailImg=i.id
-            WHERE e.artist = :artistID");
-            $stmt->bindParam(':artistID', $artistID);
+            WHERE e.type='jazz' AND datetime LIKE :datetime");
+            $stmt->bindParam(':datetime', $datetime);
+
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Music_Event');
+            $events = $stmt->fetchAll();
+
+            return $events;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getEventsByArtistName($artistName)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, a1.name as artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
+            FROM music_event as e 
+            JOIN venue as v ON e.venue=v.id
+            JOIN artist as a1 ON e.name=a1.id
+            JOIN images as i ON a1.thumbnailImg=i.id
+            WHERE a1.name LIKE :artistName");
+            $stmt->bindParam(':artistName', $artistName);
 
             $stmt->execute();
 

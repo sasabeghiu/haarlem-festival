@@ -9,7 +9,7 @@ include __DIR__ . '/../header.php';
             <?php
             foreach ($model as $artist) {
             ?>
-                <div class="col mb-3">
+                <div class="row col mb-3">
                     <div class="card shadow-sm">
                         <a href="/artist/jazzartistdetails?id=<?= $artist->getId() ?>">
                             <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($artist->getThumbnailImg()); ?>" height="300px" width="348px">

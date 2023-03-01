@@ -15,19 +15,34 @@ class EventService
         return $this->eventRepository->getAll();
     }
 
+    public function getAllDanceEvents()
+    {
+        return $this->eventRepository->getAllDanceEvents();
+    }
+
+    public function getAllJazzEvents()
+    {
+        return $this->eventRepository->getAllJazzEvents();
+    }
+
     public function getOne($id)
     {
         return $this->eventRepository->getOne($id);
     }
 
-    public function getEventsByDate($datetime)
+    public function getDanceEventsByDate($datetime)
     {
-        return $this->eventRepository->getEventsByDate($datetime);
+        return $this->eventRepository->getDanceEventsByDate($datetime);
     }
 
-    public function getEventsByArtistID($artistID)
+    public function getJazzEventsByDate($datetime)
     {
-        return $this->eventRepository->getEventsByArtistID($artistID);
+        return $this->eventRepository->getJazzEventsByDate($datetime);
+    }
+
+    public function getEventsByArtistName($artistID)
+    {
+        return $this->eventRepository->getEventsByArtistName($artistID);
     }
 
     public function getEventsByVenueID($venueID)

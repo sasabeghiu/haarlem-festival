@@ -15,16 +15,19 @@ include __DIR__ . '/../header.php';
 </style>
 <div class="album py-5">
     <div class="container mb-5">
-        <h2 class="text-dark text-center mb-3">HF Dance Events</h2>
+        <h2 class="text-dark text-center mb-3">HF Jazz Events</h2>
 
-        <p class="text-center">A new addition to the festival is Haarlem Dance in which the latest dance, house, techno
-            and trance is central. Six of the top Dj’s in the world will entertain their audience in
-            Back2Backsessions(multipleacts,largerstage,longer sessions) as well as in
-            smaller experimental (club) sessions.</p>
+        <p class="text-center">Haarlem Jazz is an important music event for the City of Haarlem. During the Haarlem
+            festival, we want to recreate part of this festival by inviting some of the bands that
+            previously performed there to play at the Patronaat. On Sunday, some of the bands will take
+            to the big stage at the Grote Markt to perform for all visitors for free!</p>
 
         <div class="center mb-3">
             <form method="POST">
                 <input type="submit" name="events" value="All Events" class="btn btn-success mx-3 filterbtn"></a>
+            </form>
+            <form method="POST">
+                <input type="submit" name="thursday" value="Thursday 26" class="btn btn-primary mx-3 filterbtn"></a>
             </form>
             <form method="POST">
                 <input type="submit" name="friday" value="Friday 27" class="btn btn-primary mx-3 filterbtn"></a>
@@ -57,7 +60,7 @@ include __DIR__ . '/../header.php';
                             <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
                         </div>
                         <div class="card-footer text-light bg-dark text-center">
-                            <p class="text-center"><a href="/artist/danceartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
+                            <p class="text-center"><a href="/artist/jazzartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
                             <button class="btn btn-secondary">Add to cart</button>
                         </div>
                     </div>
@@ -67,9 +70,14 @@ include __DIR__ . '/../header.php';
             ?>
         </div>
 
-        <p class="text-center">The capacity of the Club sessions is very limited. Availability for All-Access pas holders can not be guaranteed due to safety regulations.
-            Tickets available represents total capacity. (90% is sold as single tickets. 10% of total capacity is left for Walk ins / All-Access passholders)</p>
-            
+        <p class="text-center">Location:
+            Patronaat, Zijlsingel 2 2013 DN Haarlem
+            Email: info@patronaat.nl
+            Phone:
+            023-5175850 (office) - during office hours 10:00 - 17:00
+            023-5175858 (cash desk/information number)
+        </p>
+
     </div>
 </div>
 <?php
