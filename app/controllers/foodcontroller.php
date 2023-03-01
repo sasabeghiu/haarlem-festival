@@ -12,17 +12,17 @@ class FoodController
 
     public function index()
     {
-        require __DIR__ . '/../views/home/food.php';
+        require __DIR__ . '/../views/food/food.php';
     }
     public function about()
     {
         $restaurant = $this->foodService->getRestaurantById();
-        require __DIR__ . '/../views/home/restaurantabout.php';
+        require __DIR__ . '/../views/food/restaurantabout.php';
     }
     public function yummy()
     {
         $restaurants = $this->foodService->getRestaurants();
-        require __DIR__ . '/../views/home/yummy.php';
+        require __DIR__ . '/../views/food/yummy.php';
     }
     public function manageSessions()
     {
@@ -33,6 +33,14 @@ class FoodController
     {
         $session = $this->foodService->getSessionById();
         require __DIR__ . '/../views/cms/food/editsession.php';
+    }
+    public function addSession() {
+        $restaurants = $this->foodService->getRestaurants();
+        require __DIR__ .'/../views/cms/food/addsession.php';
+    }
+    public function deleteSession() {
+        $this->foodService->deleteSession();
+        require __DIR__ . '/../views/cms/food/deletesession.php';
     }
     public function save()
     {

@@ -23,4 +23,7 @@ class FoodService{
     public function saveSession(Session $session) {
         $this->foodRepository->save($session);
     }
+    public function deleteSession() {
+        $this->foodRepository->deleteSession();
+    }
 }

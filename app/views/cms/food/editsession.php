@@ -41,7 +41,7 @@ include(__DIR__ . "/../../header.php");
                 <input type="text" class="form-control" name="seats" id="seats" value="<?php echo $session->getSeats(); ?>">
             </div>
             <button type="submit" class="btn btn-success">Edit</button>
-            <a name="" id="" class="btn btn-primary" href="/session" role="button">Cancel</a>
+            <a name="" id="" class="btn btn-primary" href="/food/manageSessions" role="button">Cancel</a>
 
         </form>
     </div>

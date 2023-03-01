@@ -98,10 +98,12 @@ class FoodRepository extends Repository
                 $stmt->bindValue(':id', $session->getId());
             } else {
                 // Insert new session
-                $query = 'INSERT INTO session (sessionname, password, roleId, email) VALUES (:sessionname, :password, :roleId, :email)';
-                $stmt = $this->connection->prepare($query);
+                $stmt = $this->connection->prepare("INSERT INTO `food_session` (restaurantid, sessions, price, reducedprice, 
+                                                    first_session, session_length, seats) VALUES (:restaurantid, :sessions, :price, 
+                                                    :reducedprice, :first_session, :session_length, :seats)");
             }
 
+            $stmt->bindValue(':restaurantid', $session->getRestaurantid());
             $stmt->bindValue(':sessions', $session->getSessions());
             $stmt->bindValue(':price', $session->getPrice());
             $stmt->bindValue(':reducedprice', $session->getReducedprice());
@@ -116,5 +118,18 @@ class FoodRepository extends Repository
         // if ($stmt) {
         //     return true;
         // }
+    }
+    public function deleteSession() {
+        $sessionid = htmlspecialchars($_GET['sessionid']);
+
+        try{
+            $stmt = $this->connection->prepare("DELETE FROM `food_session` WHERE id = :id");
+
+            $stmt->bindParam(':id', $sessionid);
+            $stmt->execute();
+        }
+        catch(PDOException $e){
+            echo ($e);
+        }
     }
 }

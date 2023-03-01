@@ -5,7 +5,7 @@ include(__DIR__ . "/../../header.php");
 <br />
 <div class="card">
     <div class="card-header">
-        <a name="" id="" class="btn btn-primary" href="/user/create" role="button">Create</a>
+        <a name="" id="" class="btn btn-primary" href="/food/addSession" role="button">Add session</a>
     </div>
     <div class=" card-body">
         <div class="table-responsive-sm">
@@ -33,7 +33,7 @@ include(__DIR__ . "/../../header.php");
                             <td><?php echo $session->getSeats(); ?></td>
                             <td>
                                 <input name="editbtn" id="editbtn" class="btn btn-info" type="button" value="Edit" onclick="location='/food/editsession?sessionid=<?php echo $session->getId(); ?>'">
-                                <input name="deletebtn" id="deletebtn" class="btn btn-danger" type="button" value="Delete" onclick="location='/food/editsession?sessionid=<?php echo $session->getId(); ?>'">
+                                <input name="deletebtn" id="deletebtn" class="btn btn-danger" type="button" value="Delete" onclick="location='/food/deleteSession?sessionid=<?php echo $session->getId(); ?>'">
                             </td>
                         </tr>
                     <?php } ?>
