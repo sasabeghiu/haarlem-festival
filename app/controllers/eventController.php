@@ -14,11 +14,11 @@ class EventController
 
     public function danceevents()
     {
-        if (isset($_POST["friday"])) {
+        if (isset($_POST["thursday"])) {
             $model = $this->eventService->getDanceEventsByDate('%2023-07-27%');
-        } else if (isset($_POST["saturday"])) {
+        } else if (isset($_POST["friday"])) {
             $model = $this->eventService->getDanceEventsByDate('%2023-07-28%');
-        } else if (isset($_POST["sunday"])) {
+        } else if (isset($_POST["saturday"])) {
             $model = $this->eventService->getDanceEventsByDate('%2023-07-29%');
         } else {
             $model = $this->eventService->getAllDanceEvents();
@@ -29,13 +29,13 @@ class EventController
 
     public function jazzevents()
     {
-        if (isset($_POST["thursday"])) {
+        if (isset($_POST["wednesday"])) {
             $model = $this->eventService->getJazzEventsByDate('%2023-07-26%');
-        } else if (isset($_POST["friday"])) {
+        } else if (isset($_POST["thursday"])) {
             $model = $this->eventService->getJazzEventsByDate('%2023-07-27%');
-        } else if (isset($_POST["saturday"])) {
+        } else if (isset($_POST["friday"])) {
             $model = $this->eventService->getJazzEventsByDate('%2023-07-28%');
-        } else if (isset($_POST["sunday"])) {
+        } else if (isset($_POST["saturday"])) {
             $model = $this->eventService->getJazzEventsByDate('%2023-07-29%');
         } else {
             $model = $this->eventService->getAllJazzEvents();

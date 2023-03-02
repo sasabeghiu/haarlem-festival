@@ -33,7 +33,7 @@ include __DIR__ . '/../header.php';
         <div class="row" style="display:flex; justify-content:center;">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
                 <?php
-                foreach ($test as $album) {
+                foreach ($albums as $album) {
                 ?>
                     <div class="col mb-3">
                         <div class="card shadow-sm">

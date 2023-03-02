@@ -29,27 +29,33 @@ include __DIR__ . '/../header.php';
             <p><img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getImage()); ?>" width="1500px" class="img-fluid"></p>
         </div>
 
-        <h2 class="my-3">Important Albums and Singles</h2>
-        <div class="row" style="display:flex; justify-content:center;">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-                <?php
-                foreach ($test as $album) {
-                ?>
-                    <div class="col mb-3">
-                        <div class="card shadow-sm">
-                            <a href="<?= $album->getLink() ?>" target="_blank">
-                                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($album->getImage()); ?>" class="img-fluid">
-                                <div class="card-body text-light bg-dark">
-                                    <p class="card-text fw-bold text-center"><?= $album->getName() ?></p>
-                                </div>
-                            </a>
+        <?php
+        if (!empty($albums)) {
+        ?>
+            <h2 class="my-3">Important Albums and Singles</h2>
+            <div class="row" style="display:flex; justify-content:center;">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+                    <?php
+                    foreach ($albums as $album) {
+                    ?>
+                        <div class="col mb-3">
+                            <div class="card shadow-sm">
+                                <a href="<?= $album->getLink() ?>" target="_blank">
+                                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($album->getImage()); ?>" class="img-fluid">
+                                    <div class="card-body text-light bg-dark">
+                                        <p class="card-text fw-bold text-center"><?= $album->getName() ?></p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                <?php
-                }
-                ?>
+                    <?php
+                    }
+                    ?>
+                </div>
             </div>
-        </div>
+        <?php
+        }
+        ?>
 
         <div class="row">
             <div class="col-sm-6" style="display:inline-block; justify-content:center;">
