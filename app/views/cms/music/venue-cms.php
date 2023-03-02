@@ -1,8 +1,31 @@
 <?php
-include __DIR__ . '/../header.php';
+include __DIR__ . '/../../header.php';
 ?>
 
+<style>
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .filterbtn {
+        width: 120px;
+        height: 50px;
+    }
+</style>
+
 <h1 class="text-center mb-3">Manage Venues</h1>
+
+<div class="center my-3">
+    <form method="POST">
+        <input type="submit" name="dance" value="Dance Venues" class="btn btn-primary mx-3 filterbtn"></a>
+    </form>
+    <form method="POST">
+        <input type="submit" name="jazz" value="Jazz Venues" class="btn btn-primary mx-3 filterbtn"></a>
+    </form>
+</div>
+
 <div class="album px-5">
     <div>
         <button class="btn btn-success mb-2" id="show-add-form">Add venue</button>
@@ -15,31 +38,31 @@ include __DIR__ . '/../header.php';
             <div class="form-group row mb-1">
                 <label for="name" class="col-sm-2 col-form-label">Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Insert Venue Name" required>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="description" class="col-sm-2 col-form-label">Description:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="description" name="description"></textarea>
+                    <textarea class="form-control" id="description" name="description" placeholder="Insert Venue Details" required></textarea>
                 </div>
             </div>
             <div class="form-group row mb-1">
-                <label for="type" class="col-sm-2 col-form-label">Type:</label>
+                <label for="type" class="col-sm-2 col-form-label">Type (dance/jazz):</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="type" name="type" required>
+                    <input type="text" class="form-control" id="type" name="type" placeholder="Insert Venue Type" required>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="image" class="col-sm-2 col-form-label">Image:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="image" name="image" required>
+                    <input type="text" class="form-control" id="image" name="image" placeholder="Insert image id..." required>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="headerImg" class="col-sm-2 col-form-label">HeaderImg:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="headerImg" name="headerImg" required>
+                    <input type="text" class="form-control" id="headerImg" name="headerImg" placeholder="Insert image id..." required>
                 </div>
             </div>
             <!-- <div class="form-group row mb-1">
@@ -48,7 +71,7 @@ include __DIR__ . '/../header.php';
                 <input type="file" class="form-control" id="photo" name="photo">
             </div>
         </div> -->
-            <input type="submit" name="add" value="Insert Venue" class="form-control btn btn-primary mb-1">
+            <input type="submit" name="add" value="Insert Venue" class="form-control btn btn-success mb-1">
         </form>
     </div>
 
@@ -114,7 +137,7 @@ include __DIR__ . '/../header.php';
                     </div>
                 </div>
                 <div class="form-group row mb-1">
-                    <label for="changedType" class="col-sm-2 col-form-label">Type:</label>
+                    <label for="changedType" class="col-sm-2 col-form-label">Type (dance/jazz):</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="changedType" name="changedType" value="<?= $updateVenue->getType() ?>" required>
                     </div>
@@ -123,17 +146,17 @@ include __DIR__ . '/../header.php';
                     <label for="changedImage" class="col-sm-2 col-form-label">Image:</label>
                     <div class="col-sm-10">
                         <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateVenue->getImage()) . '"  height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedImage" name="changedImage" value="<?= (int)$updateVenue->getImage() ?>" required>
+                        <input type="text" class="form-control" id="changedImage" name="changedImage" placeholder="Insert image id..." required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
-                    <label for="changedHeaderImage" class="col-sm-2 col-form-label">Image:</label>
+                    <label for="changedHeaderImage" class="col-sm-2 col-form-label">HeaderImg:</label>
                     <div class="col-sm-10">
                         <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateVenue->getHeaderImg()) . '"  height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedHeaderImage" name="changedHeaderImage" value="<?= (int)$updateVenue->getHeaderImg() ?>" required>
+                        <input type="text" class="form-control" id="changedHeaderImage" name="changedHeaderImage" placeholder="Insert image id..." required>
                     </div>
                 </div>
-                <input type="submit" name="update" value="Update Artist" class="form-control btn btn-primary mb-1">
+                <input type="submit" name="update" value="Update Venue" class="form-control btn btn-success mb-1">
             </form>
         </div>
     <?php
@@ -148,5 +171,5 @@ include __DIR__ . '/../header.php';
 </script>
 
 <?php
-include __DIR__ . '/../footer.php';
+include __DIR__ . '/../../footer.php';
 ?>

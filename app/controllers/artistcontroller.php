@@ -139,8 +139,16 @@ class ArtistController
             }
         }
 
-        $model = $this->artistService->getAll();
+        //sort artists by type
+        if (isset($_POST["dance"])) {
+            $model = $this->artistService->getAllDanceArtists();
+        } else if (isset($_POST["jazz"])) {
+            $model = $this->artistService->getAllJazzArtists();
+        } else {
+            $model = $this->artistService->getAll();
+        }
 
-        require __DIR__ . '/../views/cms/artist-cms.php';
+
+        require __DIR__ . '/../views/cms/music/artist-cms.php';
     }
 }

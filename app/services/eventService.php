@@ -49,4 +49,19 @@ class EventService
     {
         return $this->eventRepository->getEventsByVenueID($venueID);
     }
+
+    public function addEvent($event)
+    {
+        return $this->eventRepository->addEvent($event);
+    }
+
+    public function updateEvent($event, $id)
+    {
+        return $this->eventRepository->updateEvent($event, $id);
+    }
+
+    public function deleteEvent($id)
+    {
+        return $this->eventRepository->deleteEvent($id);
+    }
 }

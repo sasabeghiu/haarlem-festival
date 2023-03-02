@@ -123,8 +123,15 @@ class VenueController
             }
         }
 
-        $model = $this->venueService->getAll();
+        //sort venues by type
+        if (isset($_POST["dance"])) {
+            $model = $this->venueService->getAllDanceVenues();
+        } else if (isset($_POST["jazz"])) {
+            $model = $this->venueService->getAllJazzVenues();
+        } else {
+            $model = $this->venueService->getAll();
+        }
 
-        require __DIR__ . '/../views/cms/venue-cms.php';
+        require __DIR__ . '/../views/cms/music/venue-cms.php';
     }
 }
