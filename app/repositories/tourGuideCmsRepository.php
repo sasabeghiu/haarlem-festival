@@ -8,7 +8,9 @@ class TourGuideCmsRepository extends Repository
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM tourguide");
+            $stmt = $this->connection->prepare("SELECT tourguide.id, tourguide.name, tourguide.description, images.image
+                                                      FROM tourguide
+                                                      JOIN images ON tourguide.image=images.id");
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'TourGuideCms');
@@ -23,8 +25,10 @@ class TourGuideCmsRepository extends Repository
     function getOne($id)
     {
         try {
-            $stmt = $this->connection->prepare("....");
-
+            $stmt = $this->connection->prepare("SELECT tourguide.id, tourguide.name, tourguide.description, images.image
+                                                      FROM tourguide
+                                                      JOIN images ON tourguide.image=images.id
+                                                      WHERE tourguide.id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
@@ -40,8 +44,10 @@ class TourGuideCmsRepository extends Repository
     function getOneTourguideByName($name)
     {
         try {
-            $stmt = $this->connection->prepare("....");
-
+            $stmt = $this->connection->prepare("SELECT tourguide.id, tourguide.name, tourguide.description, images.image
+                                                      FROM tourguide
+                                                      JOIN images ON tourguide.image=images.id
+                                                      WHERE tourguide.name = :name");
             $stmt->bindParam(':name', $name);
             $stmt->execute();
 
