@@ -41,7 +41,7 @@ include __DIR__ . '/../footer.php';
         <div class="form-group row mb-1">
             <label for="image" class="col-sm-2 col-form-label">Image:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="image" name="image" placeholder="Insert Image ID..." required>
+                <input type="text" class="form-control" id="image" name="image" placeholder="Insert Image ID" required>
             </div>
         </div>
         <input type="submit" name="add" value="Insert Tour Guide" class="form-control btn btn-success mb-1">
@@ -69,13 +69,13 @@ include __DIR__ . '/../footer.php';
                 <td style="width: 50%;"><?= $tourguide->getDescription() ?></td>
                 <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($tourguide->getImage()) . '"  height="100px"/>'; ?></td>
                 <td style="width: 2%">
-                    <form action="/tourguidecms?updateID=<?= $tourguide->getId() ?>" method="POST">
+                    <form action="/tourGuideCms?updateID=<?= $tourguide->getId() ?>" method="POST">
                         <input type="hidden" name="edit" value="<?= $tourguide->getId() ?>">
                         <input type="submit" name="submit" value="Edit" class="btn btn-warning">
                     </form>
                 </td>
                 <td style="width: 2%">
-                    <form action="/tourguidecms?deleteID=<?= $tourguide->getId() ?>" method="POST">
+                    <form action="/tourGuideCms?deleteID=<?= $tourguide->getId() ?>" method="POST">
                         <input type="hidden" name="delete" onclick="" value="<?= $tourguide->getId() ?>">
                         <input type="submit" name="submit" value="Delete" class="btn btn-danger">
                     </form>
@@ -91,25 +91,25 @@ include __DIR__ . '/../footer.php';
     <?php
     if (isset($_POST["edit"])) {
     ?>
-        <h3>Edit Tour Guide with ID: <?= $tourguide->getId() ?></h3>
+        <h3>Edit Tour Guide with ID: <?= $updateTourGuide->getId() ?></h3>
         <div>
             <form method="POST">
                 <div class="form-group row mb-1">
                     <label for="changedName" class="col-sm-2 col-form-label">Name:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="changedName" name="changedName" value="<?= $tourguide->getName() ?>" required>
+                        <input type="text" class="form-control" id="changedName" name="changedName" value="<?= $updateTourGuide->getName() ?>" required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
                     <label for="changedDescription" class="col-sm-2 col-form-label">Description:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="changedDescription" id="changedDescription"><?= $tourguide->getDescription() ?></textarea>
+                        <textarea class="form-control" name="changedDescription" id="changedDescription"><?= $updateTourGuide->getDescription() ?></textarea>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
                     <label for="changedImage" class="col-sm-2 col-form-label">Image:</label>
                     <div class="col-sm-10">
-                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($tourguide->getImage()) . '" height="100px"/>'; ?>
+                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateTourGuide->getImage()) . '" height="100px"/>'; ?>
                         <input type="text" class="form-control" id="changedImage" name="changedImage" placeholder="Insert image id..." required>
                     </div>
                 </div>
