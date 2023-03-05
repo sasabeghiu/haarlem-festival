@@ -43,24 +43,34 @@ class LoginController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $username = isset($_POST['username']) ? $_POST['username'] : "";
+            $username = $_POST['username'];
 
-            $password = isset($_POST['password']) ? $_POST['password'] : "";
+            $password = $_POST['password'];
             $hashedPass = password_hash($password, PASSWORD_DEFAULT);
 
-            $email = isset($_POST['email']) ? $_POST['email'] : "";
+            $email = $_POST['email'];
 
-            if ($this->loginService->getByUsername($username) == null || $this->loginService->getByEmail($email) == null) //returns true if username or email exist in db
-            {
-                echo "<script>alert('Username of email already exists!')</script>";
+            // Validate updated information
+            if (empty($email) || !$this->loginService->getByEmail($email) == null) {
+
+                echo "<script>alert('email already exists!')</script>";
+                echo $this->display();
+            } else if (empty($username) || !$this->loginService->getByUsername($username) == null) {
+
+                echo "<script>alert('username already exists!')</script>";
+                $this->display();
+            } else if (strlen($password) < 6) {
+                echo "<script>alert('Password must be at least 6 characters long.')</script>";
+                $this->display();
             } else {
+
                 if ($this->loginService->register($username, $hashedPass, $email)) {
+
                     echo "<script>alert('Register successful! ')</script>";
-                    echo $this->index();
+                    $this->index();
                 }
             }
         }
-        echo $this->display();
     }
 
     public function display()
