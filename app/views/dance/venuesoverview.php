@@ -9,9 +9,9 @@ include __DIR__ . '/../header.php';
             <?php
             foreach ($model as $venue) {
             ?>
-                <div class="col mb-3">
+                <div class="row col mb-3">
                     <div class="card shadow-sm">
-                        <a href="/venue/venuedetails?id=<?= $venue->getId() ?>">
+                        <a href="/venue/dancevenuedetails?id=<?= $venue->getId() ?>">
                             <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($venue->getImage()); ?>" height="300px" width="348px">
                             <div class="card-body text-light bg-dark">
                                 <p class="card-text fw-bold text-center"><?= $venue->getName() ?></p>

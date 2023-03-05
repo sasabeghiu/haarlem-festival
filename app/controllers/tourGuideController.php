@@ -1,10 +1,8 @@
 <?php
-
 require __DIR__ . '/controller.php';
 require __DIR__ . '/../services/tourGuideService.php';
 
-class TourGuideController extends Controller
-{
+class TourGuideController extends Controller{
 
     private $tourguideService;
 

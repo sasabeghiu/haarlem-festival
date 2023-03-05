@@ -1,17 +1,20 @@
 <?php
 require __DIR__ . '/../repositories/foodrepository.php';
 
-class FoodService{
+class FoodService
+{
     private $foodRepository;
 
     public function __construct()
     {
-        $this-> foodRepository = new FoodRepository();
+        $this->foodRepository = new FoodRepository();
     }
-    public function getRestaurants(){
+    public function getRestaurants()
+    {
         return $this->foodRepository->getRestaurants();
     }
-    public function getRestaurantById(){
+    public function getRestaurantById()
+    {
         return $this->foodRepository->getRestaurantById();
     }
     public function getSessions(){

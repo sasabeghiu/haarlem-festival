@@ -4,7 +4,7 @@ class Music_Event
     //change types 
     private int $id;
     private string $type;
-    private int $artist;
+    private string $artist;
     private string $venue;
     private int $ticket_price;
     private int $tickets_available;
