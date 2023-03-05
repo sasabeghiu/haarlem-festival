@@ -1,20 +1,19 @@
 <?php
-require __DIR__ . '/../repositories/historyeventrepository.php';
 
-class HistoryEventService
-{
-    public function getAll()
-    {
+require __DIR__ . '/../repositories/historyeventRepository.php';
+
+class HistoryEventService {
+
+    public function getAll(){
         //retrieve data
         $repository = new HistoryEventRepository();
-        $events = $repository->getAll();
-        return $events;
+        $historyevents = $repository->getAll();
+        return $historyevents;
     }
 
-    public function insert($event)
-    {
+    public function insert($historyevent){
         //retrieve data
         $repository = new HistoryEventRepository();
-        $repository->insert($event);
+        $repository->insert($historyevent);
     }
 }
