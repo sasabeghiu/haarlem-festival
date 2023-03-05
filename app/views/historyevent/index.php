@@ -28,7 +28,7 @@ include __DIR__ . '/../footer.php';
         ?>
         <div class="card mt-3"">
         <div class="card-header">
-            <h1 class="text-center" style="color: darkred;"><?= $historyevents->getTourguideName()?></h1>
+            <h1 class="text-center" style="color: darkred;">Guide Group: <?= $historyevents->getTourguideName()?></h1>
             <div class="row">
                 <div class="col-md-6">
                     <img class="card-img" style="opacity: 70%;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($historyevents->getImage());?>">
@@ -45,7 +45,25 @@ include __DIR__ . '/../footer.php';
             </div>
         </div>
         <div class="card-footer text-center">
-            <small class="text-muted"><?= $historyevents->getFormattedDate()?></small>
+            <div class="row">
+                <div class="row-2">
+                    <div class="col-md-12">
+                        <p class="text-muted">Location:</p>
+                    </div>
+                </div>
+                <div class="col-ml-1">
+                    <small class="text-muted">at</small>
+                </div>
+                <div class="col-md-3" style="padding-right: 50px;">
+                    <small class="text-muted"><?= $historyevents->getLocation()?></small>
+                </div>
+                <div class="col-2-md-3" style="padding-right: 50px;">
+                    <small class="text-muted">on</small>
+                </div>
+                <div class="col-1-md-3">
+                    <small class="text-muted"><?= $historyevents->getFormattedDate()?></small>
+                </div>
+            </div>
         </div>
     </div>
     <?php

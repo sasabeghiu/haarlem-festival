@@ -76,7 +76,7 @@ include __DIR__ . '/../footer.php';
                 </td>
                 <td style="width: 2%">
                     <form action="/tourguidecms?deleteID=<?= $tourguide->getId() ?>" method="POST">
-                        <input type="hidden" name="delete" value="<?= $tourguide->getId() ?>">
+                        <input type="hidden" name="delete" onclick="" value="<?= $tourguide->getId() ?>">
                         <input type="submit" name="submit" value="Delete" class="btn btn-danger">
                     </form>
                 </td>

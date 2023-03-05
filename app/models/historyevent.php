@@ -14,6 +14,7 @@ class HistoryEvent implements JsonSerializable {
     private int $tickets_available;
     private string $price;
     private string $datetime;
+    private string $location;
     private ?int $venueID;
     private string $image;
     private ?int $tourguideID;
@@ -101,6 +102,22 @@ class HistoryEvent implements JsonSerializable {
     }
 
     /**
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation(string $location): void
+    {
+        $this->location = $location;
+    }
+
+    /**
      * @return ?int
      */
     public function getVenueID(): ?int
@@ -183,7 +200,7 @@ class HistoryEvent implements JsonSerializable {
 
     public function getFormattedDate(){
         $date = new DateTime($this->datetime);
-        return $date->format('d-m-Y');
+        return $date->format('d - F - Y - H:i:s');
     }
 
 }

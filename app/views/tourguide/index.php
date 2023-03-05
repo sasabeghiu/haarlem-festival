@@ -33,9 +33,10 @@ include __DIR__ . '/../footer.php';
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h2 class="card-title" style="color: darkred;"><?= ucfirst($tourguides->getName())?></h2>
-                            <p class="card-description">Description: <?= $tourguides->getDescription()?></p>
-                            <a class="btn btn-info" role="button" href="../historyevent">More Info</a>
+                            <h1 class="card-title" style="color: darkred;"><?= ucfirst($tourguides->getName())?></h1>
+                            <h5 class="card-description">Description </h5>
+                            <p><?= $tourguides->getDescription()?></p>
+                            <a class="btn btn-info" role="button" href="../historyevent">Go to event</a>
                         </div>
                     </div>
                 </div>
