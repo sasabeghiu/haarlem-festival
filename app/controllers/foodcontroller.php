@@ -1,7 +1,8 @@
 <?php
 require __DIR__ . '/../services/foodservice.php';
 
-class FoodController{
+class FoodController
+{
     private $foodService;
 
     public function __construct()
@@ -9,16 +10,18 @@ class FoodController{
         $this->foodService = new FoodService();
     }
 
-    public function index(){
+    public function index()
+    {
         require __DIR__ . '/../views/home/food.php';
     }
-    public function about() {
+    public function about()
+    {
         $restaurants = $this->foodService->getRestaurantById();
         require __DIR__ . '/../views/home/restaurantabout.php';
     }
-    public function yummy(){
+    public function yummy()
+    {
         $restaurants = $this->foodService->getRestaurants();
         require __DIR__ . '/../views/home/yummy.php';
-
     }
 }
