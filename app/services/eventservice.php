@@ -1,37 +1,19 @@
 <?php
-require __DIR__ . '/../repositories/eventrepository.php';
 
-class EventService
-{
-    private $eventRepository;
+require __DIR__ . '/../repositories/eventRepository.php';
 
-    public function __construct()
-    {
-        $this->eventRepository = new EventRepository();
+class EventService {
+
+    public function getAll(){
+        //retrieve data
+        $repository = new EventRepository();
+        $events = $repository->getAll();
+        return $events;
     }
 
-    public function getAll()
-    {
-        return $this->eventRepository->getAll();
-    }
-
-    public function getOne($id)
-    {
-        return $this->eventRepository->getOne($id);
-    }
-
-    public function getEventsByDate($datetime)
-    {
-        return $this->eventRepository->getEventsByDate($datetime);
-    }
-
-    public function getEventsByArtistID($artistID)
-    {
-        return $this->eventRepository->getEventsByArtistID($artistID);
-    }
-
-    public function getEventsByVenueID($venueID)
-    {
-        return $this->eventRepository->getEventsByVenueID($venueID);
+    public function insert($event){
+        //retrieve data
+        $repository = new EventRepository();
+        $repository->insert($event);
     }
 }
