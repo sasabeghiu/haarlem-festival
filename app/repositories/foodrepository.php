@@ -2,6 +2,7 @@
 require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/restaurant.php';
 require __DIR__ . '/../models/session.php';
+require __DIR__ . '/../models/reservation.php';
 
 class FoodRepository extends Repository
 {
@@ -92,7 +93,7 @@ class FoodRepository extends Repository
         try {
             if ($session->getId() != 0) {
                 // Update existing session
-                $stmt = $this->connection->prepare("UPDATE `food_session` SET sessions = :sessions, price = :price, reducedprice = :reducedprice, 
+                $stmt = $this->connection->prepare("UPDATE `food_session` SET restaurantid = :restaurantid, sessions = :sessions, price = :price, reducedprice = :reducedprice, 
                                                     first_session = :first_session, session_length = :session_length, seats = :seats 
                                                     WHERE id = :id");
                 $stmt->bindValue(':id', $session->getId());
@@ -119,16 +120,16 @@ class FoodRepository extends Repository
         //     return true;
         // }
     }
-    public function deleteSession() {
+    public function deleteSession()
+    {
         $sessionid = htmlspecialchars($_GET['sessionid']);
 
-        try{
+        try {
             $stmt = $this->connection->prepare("DELETE FROM `food_session` WHERE id = :id");
 
             $stmt->bindParam(':id', $sessionid);
             $stmt->execute();
-        }
-        catch(PDOException $e){
+        } catch (PDOException $e) {
             echo ($e);
         }
     }
@@ -138,25 +139,15 @@ class FoodRepository extends Repository
             if ($restaurant->getId() != 0) {
                 // Update existing restaurant
                 $stmt = $this->connection->prepare("UPDATE `restaurant` SET name = :name, location = :location, description = :description, cuisine = :cuisine, 
-                                                    stars = :stars, email = :email, phonenumber = :phonenumber 
+                                                    stars = :stars, email = :email, phonenumber = :phonenumber, image1 = :image1, 
+                                                    image2 = :image2, image3 = :image3
                                                     WHERE id = :id");
                 $stmt->bindValue(':id', $restaurant->getId());
             } else {
-                //Get the next auto increment value for the images table to assign the correct image id's to the restaurant
-                $tempstmt = $this->connection->prepare("SELECT AUTO_INCREMENT
-                                                        FROM information_schema.TABLES
-                                                        WHERE TABLE_SCHEMA = 'haarlemfestival' 
-                                                        AND TABLE_NAME = 'images'");
-                $tempstmt->execute();
-                $id = $tempstmt->fetchAll();
                 // Insert new restaurant
                 $stmt = $this->connection->prepare("INSERT INTO `restaurant` (name, location, description, cuisine, 
                                                     stars, email, phonenumber, image1, image2, image3) VALUES (:name, :location, :description, :cuisine, 
                                                     :stars, :email, :phonenumber, :image1, :image2, :image3)");
-                                                    
-            $stmt->bindValue(':image1', $id[0]);
-            $stmt->bindValue(':image2', ($id[0] + 1));
-            $stmt->bindValue(':image3', ($id[0] + 2));
             }
 
             $stmt->bindValue(':name', $restaurant->getName());
@@ -166,29 +157,77 @@ class FoodRepository extends Repository
             $stmt->bindValue(':stars', $restaurant->getStars());
             $stmt->bindValue(':email', $restaurant->getEmail());
             $stmt->bindValue(':phonenumber', $restaurant->getPhonenumber());
+            $stmt->bindValue(':image1', $restaurant->getImage1());
+            $stmt->bindValue(':image2', $restaurant->getImage2());
+            $stmt->bindValue(':image3', $restaurant->getImage3());
 
             $stmt->execute();
         } catch (PDOException $e) {
             echo ($e);
         }
     }
-    public function saveImages(string $imgData, int $id, Restaurant $restaurant) {
-        try{
-            if ($restaurant->getId() != 0) {
-                // Update existing restaurant
-                $stmt = $this->connection->prepare("UPDATE `images` SET image = :image  
-                                                    WHERE id = :id");
-                $stmt->bindValue(':id', $id);
-            } else {
-                // Insert new restaurant
-                $stmt = $this->connection->prepare("INSERT INTO `images` (image) VALUES (:image)");
-            }
+    public function saveImage(string $imgData)
+    {
+        try {
+            // Insert new image
+            $stmt = $this->connection->prepare("INSERT INTO `images` (image) VALUES (:image)");
 
             $stmt->bindParam('image', $imgData);
             $stmt->execute();
-        } catch (Exception $e){
+
+            return $this->connection->lastInsertId();
+        } catch (Exception $e) {
             echo $e;
         }
+    }
+    // public function updateImage(Restaurant $restaurant, int $id)
+    // {
+    //     if ($restaurant->getId() != 0) {
+    //         // Update existing restaurant
+    //         $stmt = $this->connection->prepare("UPDATE `images` SET image = :image  
+    //                                             WHERE id = :id");
+    //         $stmt->bindValue(':id', $id);
+    //     }
+    // }
+    public function deleteRestaurant()
+    {
+        $restaurantid = htmlspecialchars($_GET['restaurantid']);
 
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM `restaurant` WHERE id = :id");
+
+            $stmt->bindParam(':id', $restaurantid);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo ($e);
+        }
+    }
+    public function getReservations() {
+        try {
+            $stmt = $this->connection->prepare("SELECT reservation.id, reservation.name, reservation.restaurantID, 
+                                                restaurant.name AS restaurantName, reservation.seats, reservation.date, reservation.status 
+                                                FROM reservation
+                                                JOIN restaurant ON reservation.restaurantID = restaurant.id");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'reservation');
+            $reservations = $stmt->fetchAll();
+
+            return $reservations;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+    public function deactivateReservation() {
+        $reservationid = htmlspecialchars($_GET['reservationid']);
+
+        try {
+            $stmt = $this->connection->prepare("UPDATE reservation SET status = FALSE WHERE id = :id");
+
+            $stmt->bindParam(':id', $reservationid);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo ($e);
+        }
     }
 }

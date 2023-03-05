@@ -51,7 +51,15 @@ include(__DIR__ . "/../../header.php");
                 <label for="image1" class="form-label">Image 1: </label>
                 <input type="file" class="" name="image1" id="image1">
             </div>
-            <button type="submit" class="btn btn-success">Edit</button>
+            <div class="mb-3">
+                <label for="image3" class="form-label">Image 2: </label>
+                <input type="file" class="" name="image2" id="image2">
+            </div>
+            <div class="mb-3">
+                <label for="image3" class="form-label">Image 3: </label>
+                <input type="file" class="" name="image3" id="image3">
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
             <a name="" id="" class="btn btn-primary" href="/food/managerestaurants" role="button">Cancel</a>
         </form>
     </div>
