@@ -24,6 +24,48 @@ class ArtistRepository extends Repository
         }
     }
 
+    function getAllDanceArtists()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT artist.id, artist.name, artist.description, artist.type,  img1.image AS headerImg, img2.image AS thumbnailImg, img3.image AS logo, artist.spotify, img4.image AS image 
+            FROM artist 
+            JOIN images as img1 ON artist.headerImg=img1.id 
+            JOIN images as img2 ON artist.thumbnailImg=img2.id
+            JOIN images as img3 ON artist.logo=img3.id
+            JOIN images as img4 ON artist.image=img4.id
+            WHERE artist.type = 'dance'");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Artist');
+            $artists = $stmt->fetchAll();
+
+            return $artists;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getAllJazzArtists()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT artist.id, artist.name, artist.description, artist.type,  img1.image AS headerImg, img2.image AS thumbnailImg, img3.image AS logo, artist.spotify, img4.image AS image 
+            FROM artist 
+            JOIN images as img1 ON artist.headerImg=img1.id 
+            JOIN images as img2 ON artist.thumbnailImg=img2.id
+            JOIN images as img3 ON artist.logo=img3.id
+            JOIN images as img4 ON artist.image=img4.id
+            WHERE artist.type = 'jazz'");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Artist');
+            $artists = $stmt->fetchAll();
+
+            return $artists;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function getOne($id)
     {
         try {

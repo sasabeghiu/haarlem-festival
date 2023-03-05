@@ -22,6 +22,44 @@ class VenueRepository extends Repository
         }
     }
 
+    function getAllDanceVenues()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT venue.id, venue.name, venue.description, venue.type, img1.image AS image, img2.image AS headerImg  
+            FROM venue 
+            JOIN images as img1 ON venue.image=img1.id
+            JOIN images as img2 ON venue.headerImg=img2.id
+            WHERE venue.type='dance'");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Venue');
+            $venues = $stmt->fetchAll();
+
+            return $venues;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getAllJazzVenues()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT venue.id, venue.name, venue.description, venue.type, img1.image AS image, img2.image AS headerImg  
+            FROM venue 
+            JOIN images as img1 ON venue.image=img1.id
+            JOIN images as img2 ON venue.headerImg=img2.id
+            WHERE venue.type='jazz'");
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Venue');
+            $venues = $stmt->fetchAll();
+
+            return $venues;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function getOne($id)
     {
         try {
@@ -46,8 +84,15 @@ class VenueRepository extends Repository
     function addVenue($venue)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO venue (name, description, type, image, headerImg) VALUES (?,?,?,?,?)");
-            $stmt->execute([$venue->getName(), $venue->getDescription(), $venue->getType(), $venue->getImage(), $venue->getHeaderImg()]);
+            $stmt = $this->connection->prepare("INSERT INTO venue (name, description, type, image, headerImg) VALUES (:name, :description, :type, :image, :headerImg)");
+            $stmt->bindValue(':name', $venue->getName());
+            $stmt->bindValue(':description', $venue->getDescription());
+            $stmt->bindValue(':type', $venue->getType());
+            $stmt->bindValue(':image', $venue->getImage());
+            $stmt->bindValue(':headerImg', $venue->getHeaderImg());
+
+            $stmt->execute();
+
             $venue->setId($this->connection->lastInsertId());
 
             return $this->getOne($venue->getId());
@@ -80,5 +125,22 @@ class VenueRepository extends Repository
             echo $e;
         }
         return true;
+    }
+
+    function saveImage($imgData)
+    {
+        try {
+            // Insert new image
+            $stmt = $this->connection->prepare("INSERT INTO `images` (image) VALUES (:image)");
+
+            $stmt->bindParam('image', $imgData);
+            $stmt->execute();
+
+            $imgData->setId($this->connection->lastInsertId());
+
+            return $this->getOne($imgData->getId());
+        } catch (Exception $e) {
+            echo $e;
+        }
     }
 }

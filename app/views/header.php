@@ -36,11 +36,12 @@
             </div>
           </div>
           <div class="dropdown show">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               History
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Events</a>
+              <a class="dropdown-item" href="/historyevent">Events</a>
+              <a class="dropdown-item" href="/tourguide">TourGuides</a>
             </div>
           </div>
           <div class="dropdown show">
@@ -48,12 +49,9 @@
               Dance
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/artist">Artists</a>
-              <a class="dropdown-item" href="/venue">Venues</a>
-              <a class="dropdown-item" href="/event">Events</a>
-
-              <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
-              <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
+              <a class="dropdown-item" href="/artist/danceartists">Artists</a>
+              <a class="dropdown-item" href="/venue/dancevenues">Venues</a>
+              <a class="dropdown-item" href="/event/danceevents">Events</a>
             </div>
           </div>
           <div class="dropdown show">
@@ -61,9 +59,9 @@
               Jazz
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Artists</a>
-              <a class="dropdown-item" href="/user/index">Venues</a>
-              <a class="dropdown-item" href="#">Events</a>
+              <a class="dropdown-item" href="/artist/jazzartists">Artists</a>
+              <a class="dropdown-item" href="/venue/jazzvenues">Venues</a>
+              <a class="dropdown-item" href="/event/jazzevents">Events</a>
             </div>
           </div>
           <div class="dropdown show">
@@ -82,6 +80,15 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/user/index">Users</a>
+
+              <!-- dance and jazz -->
+              <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
+              <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
+              <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
+                <a class="dropdown-item" href="/tourguidecms">Tour Guide CMS</a>
+              <a class="dropdown-item" href="/food/manageSessions">Yummy</a>
+              <a class="dropdown-item" href="/food/manageRestaurants">Restaurants</a>
+              <a class="dropdown-item" href="/food/manageReservations">Reservations</a>
             </div>
           </div>
         </ul>
