@@ -2,6 +2,7 @@
 require __DIR__ . '/../services/eventservice.php';
 include_once __DIR__ . '/../views/getURL.php';
 
+
 class EventController
 {
     private $eventService;
