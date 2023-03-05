@@ -77,7 +77,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/user/index">Users</a>
               <a class="dropdown-item" href="/food/manageSessions">Yummy</a>
-
+              <a class="dropdown-item" href="/food/manageRestaurants">Restaurants</a>
             </div>
           </div>
         </ul>

@@ -24,6 +24,9 @@ class FoodController
         $restaurants = $this->foodService->getRestaurants();
         require __DIR__ . '/../views/food/yummy.php';
     }
+
+    //--------------------------------------------CMS functionality---------------------------------------------------------------------
+
     public function manageSessions()
     {
         $sessions = $this->foodService->getSessions();
@@ -42,7 +45,7 @@ class FoodController
         $this->foodService->deleteSession();
         require __DIR__ . '/../views/cms/food/deletesession.php';
     }
-    public function save()
+    public function saveSession()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $newSession = new Session();
@@ -56,7 +59,48 @@ class FoodController
             $newSession->setSeats(isset($_POST['seats']) ? $_POST['seats'] : null);
 
             $this->foodService->saveSession($newSession);
-            $this->index();
+            $this->manageSessions();
+        }
+    }
+
+    public function manageRestaurants()
+    {
+        $restaurants = $this->foodService->getRestaurants();
+        require __DIR__ . '/../views/cms/food/managerestaurants.php';
+    }
+    public function editRestaurant()
+    {
+        $restaurant = $this->foodService->getRestaurantById();
+        require __DIR__ . '/../views/cms/food/editrestaurant.php';
+    }
+    public function addRestaurant() {
+        require __DIR__ .'/../views/cms/food/addrestaurant.php';    
+    }
+    // public function deleteSession() {
+    //     $this->foodService->deleteSession();
+    //     require __DIR__ . '/../views/cms/food/deletesession.php';
+    // }
+    public function saveRestaurant()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $newRestaurant = new Restaurant();
+            $newRestaurant->setId(isset($_POST['id']) ? $_POST['id'] : 0);
+            $newRestaurant->setName(isset($_POST['name']) ? $_POST['name'] : null);
+            $newRestaurant->setLocation(isset($_POST['location']) ? $_POST['location'] : null);
+            $newRestaurant->setDescription(isset($_POST['description']) ? $_POST['description'] : null);
+            $newRestaurant->setCuisine(isset($_POST['cuisine']) ? $_POST['cuisine'] : null);
+            $newRestaurant->setStars(isset($_POST['stars']) ? $_POST['stars'] : null);
+            $newRestaurant->setEmail(isset($_POST['email']) ? $_POST['email'] : null);
+            $newRestaurant->setPhonenumber(isset($_POST['phonenumber']) ? $_POST['phonenumber'] : null);
+
+            $this->foodService->saveRestaurant($newRestaurant);
+
+            if (count($_FILES) > 0) {
+                if (is_uploaded_file($_FILES['image1']['tmp_name'])) {
+                    $imgData = file_get_contents($_FILES['image1']['tmp_name']);
+                    $this->foodService->saveImages($imgData, $newRestaurant);
+            }}
+            $this->manageRestaurants();
         }
     }
 }

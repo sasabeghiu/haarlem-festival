@@ -21,9 +21,15 @@ class FoodService{
         return $this->foodRepository->getSessionById();
     }
     public function saveSession(Session $session) {
-        $this->foodRepository->save($session);
+        $this->foodRepository->saveSession($session);
     }
     public function deleteSession() {
         $this->foodRepository->deleteSession();
+    }
+    public function saveRestaurant(Restaurant $restaurant) {
+        $this->foodRepository->saveRestaurant($restaurant);
+    }
+    public function saveImages(string $imgData, Restaurant $restaurant){
+        $this->foodRepository->saveImages($imgData, $restaurant);
     }
 }

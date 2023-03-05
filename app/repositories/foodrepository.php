@@ -87,7 +87,7 @@ class FoodRepository extends Repository
             echo $e;
         }
     }
-    public function save(Session $session)
+    public function saveSession(Session $session)
     {
         try {
             if ($session->getId() != 0) {
@@ -131,5 +131,64 @@ class FoodRepository extends Repository
         catch(PDOException $e){
             echo ($e);
         }
+    }
+    public function saveRestaurant(Restaurant $restaurant)
+    {
+        try {
+            if ($restaurant->getId() != 0) {
+                // Update existing restaurant
+                $stmt = $this->connection->prepare("UPDATE `restaurant` SET name = :name, location = :location, description = :description, cuisine = :cuisine, 
+                                                    stars = :stars, email = :email, phonenumber = :phonenumber 
+                                                    WHERE id = :id");
+                $stmt->bindValue(':id', $restaurant->getId());
+            } else {
+                //Get the next auto increment value for the images table to assign the correct image id's to the restaurant
+                $tempstmt = $this->connection->prepare("SELECT AUTO_INCREMENT
+                                                        FROM information_schema.TABLES
+                                                        WHERE TABLE_SCHEMA = 'haarlemfestival' 
+                                                        AND TABLE_NAME = 'images'");
+                $tempstmt->execute();
+                $id = $tempstmt->fetchAll();
+                // Insert new restaurant
+                $stmt = $this->connection->prepare("INSERT INTO `restaurant` (name, location, description, cuisine, 
+                                                    stars, email, phonenumber, image1, image2, image3) VALUES (:name, :location, :description, :cuisine, 
+                                                    :stars, :email, :phonenumber, :image1, :image2, :image3)");
+                                                    
+            $stmt->bindValue(':image1', $id[0]);
+            $stmt->bindValue(':image2', ($id[0] + 1));
+            $stmt->bindValue(':image3', ($id[0] + 2));
+            }
+
+            $stmt->bindValue(':name', $restaurant->getName());
+            $stmt->bindValue(':location', $restaurant->getLocation());
+            $stmt->bindValue(':description', $restaurant->getDescription());
+            $stmt->bindValue(':cuisine', $restaurant->getCuisine());
+            $stmt->bindValue(':stars', $restaurant->getStars());
+            $stmt->bindValue(':email', $restaurant->getEmail());
+            $stmt->bindValue(':phonenumber', $restaurant->getPhonenumber());
+
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo ($e);
+        }
+    }
+    public function saveImages(string $imgData, int $id, Restaurant $restaurant) {
+        try{
+            if ($restaurant->getId() != 0) {
+                // Update existing restaurant
+                $stmt = $this->connection->prepare("UPDATE `images` SET image = :image  
+                                                    WHERE id = :id");
+                $stmt->bindValue(':id', $id);
+            } else {
+                // Insert new restaurant
+                $stmt = $this->connection->prepare("INSERT INTO `images` (image) VALUES (:image)");
+            }
+
+            $stmt->bindParam('image', $imgData);
+            $stmt->execute();
+        } catch (Exception $e){
+            echo $e;
+        }
+
     }
 }
