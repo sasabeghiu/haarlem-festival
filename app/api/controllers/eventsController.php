@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../services/eventService.php';
+require __DIR__ . '/../../services/historyeventService.php';
 
 class EventController
 {

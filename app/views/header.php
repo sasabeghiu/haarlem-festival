@@ -38,7 +38,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/historyevent">Events</a>
-              <a class="dropdown-item" href="/tourGuide">Tour Guides</a>
+              <a class="dropdown-item" href="/tourguide">TourGuides</a>
             </div>
           </div>
           <div class="dropdown show">
@@ -78,6 +78,7 @@
               <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
               <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
               <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
+                <a class="dropdown-item" href="/tourguidecms">Tour Guide CMS</a>
             </div>
           </div>
         </ul>
