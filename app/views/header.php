@@ -46,12 +46,9 @@
               Dance
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/artist">Artists</a>
-              <a class="dropdown-item" href="/venue">Venues</a>
-              <a class="dropdown-item" href="/event">Events</a>
-
-              <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
-              <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
+              <a class="dropdown-item" href="/artist/danceartists">Artists</a>
+              <a class="dropdown-item" href="/venue/dancevenues">Venues</a>
+              <a class="dropdown-item" href="/event/danceevents">Events</a>
             </div>
           </div>
           <div class="dropdown show">
@@ -59,9 +56,9 @@
               Jazz
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Artists</a>
-              <a class="dropdown-item" href="/user/index">Venues</a>
-              <a class="dropdown-item" href="#">Events</a>
+              <a class="dropdown-item" href="/artist/jazzartists">Artists</a>
+              <a class="dropdown-item" href="/venue/jazzvenues">Venues</a>
+              <a class="dropdown-item" href="/event/jazzevents">Events</a>
             </div>
           </div>
           <li class="nav-item">
@@ -76,6 +73,11 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/user/index">Users</a>
+
+              <!-- dance and jazz -->
+              <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
+              <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
+              <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
                 <a class="dropdown-item" href="/tourguidecms">Tour Guide CMS</a>
             </div>
           </div>

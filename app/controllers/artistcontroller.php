@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../services/artistservice.php';
 require __DIR__ . '/../services/albumservice.php';
-require __DIR__ . '/../services/historyeventService.php';
+require __DIR__ . '/../services/eventService.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
@@ -18,24 +18,46 @@ class ArtistController
         $this->eventService = new EventService();
     }
 
-    public function index()
+    public function danceartists()
     {
-        $model = $this->artistService->getAll();
+        $model = $this->artistService->getAllDanceArtists();
 
         require __DIR__ . '/../views/dance/artistsoverview.php';
     }
 
-    public function artistdetails()
+    public function jazzartists()
+    {
+        ini_set('memory_limit', '1024M');
+        $model = $this->artistService->getAllJazzArtists();
+
+        require __DIR__ . '/../views/jazz/artistsoverview.php';
+    }
+
+
+    public function danceartistdetails()
     {
         $url = getURL();
         $url_components = parse_url($url);
         parse_str($url_components['query'], $params);
 
         $model = $this->artistService->getOne($params['id']);
-        $test = $this->albumService->getAllAlbumsByArtist($params['id']);
-        $events = $this->eventService->getEventsByArtistID($params['id']);
+        $albums = $this->albumService->getAllAlbumsByArtist($params['id']);
+        $events = $this->eventService->getEventsByArtistName('%' . $model->getName() . '%');
 
         require __DIR__ . '/../views/dance/artistdetails.php';
+    }
+
+    public function jazzartistdetails()
+    {
+        $url = getURL();
+        $url_components = parse_url($url);
+        parse_str($url_components['query'], $params);
+
+        $model = $this->artistService->getOne($params['id']);
+        $albums = $this->albumService->getAllAlbumsByArtist($params['id']);
+        $events = $this->eventService->getEventsByArtistName('%' . $model->getName() . '%');
+
+        require __DIR__ . '/../views/jazz/artistdetails.php';
     }
 
     public function artistcms()
@@ -117,8 +139,16 @@ class ArtistController
             }
         }
 
-        $model = $this->artistService->getAll();
+        //sort artists by type
+        if (isset($_POST["dance"])) {
+            $model = $this->artistService->getAllDanceArtists();
+        } else if (isset($_POST["jazz"])) {
+            $model = $this->artistService->getAllJazzArtists();
+        } else {
+            $model = $this->artistService->getAll();
+        }
 
-        require __DIR__ . '/../views/cms/artist-cms.php';
+
+        require __DIR__ . '/../views/cms/music/artist-cms.php';
     }
 }

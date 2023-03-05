@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../services/venueservice.php';
 require __DIR__ . '/../services/eventservice.php';
+require __DIR__ . '/../services/imageservice.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
@@ -8,22 +9,30 @@ class VenueController
 {
     private $venueService;
     private $eventService;
-
+    private $imageService;
 
     function __construct()
     {
         $this->venueService = new VenueService();
         $this->eventService = new EventService();
+        $this->imageService = new ImageService();
     }
 
-    public function index()
+    public function dancevenues()
     {
-        $model = $this->venueService->getAll();
+        $model = $this->venueService->getAllDanceVenues();
 
         require __DIR__ . '/../views/dance/venuesoverview.php';
     }
 
-    public function venuedetails()
+    public function jazzvenues()
+    {
+        $model = $this->venueService->getAllJazzVenues();
+
+        require __DIR__ . '/../views/jazz/venuesoverview.php';
+    }
+
+    public function dancevenuedetails()
     {
         $url = getURL();
         $url_components = parse_url($url);
@@ -34,6 +43,19 @@ class VenueController
 
 
         require __DIR__ . '/../views/dance/venuedetails.php';
+    }
+
+    public function jazzvenuedetails()
+    {
+        $url = getURL();
+        $url_components = parse_url($url);
+        parse_str($url_components['query'], $params);
+
+        $model = $this->venueService->getOne($params['id']);
+        $events = $this->eventService->getEventsByVenueID($params['id']);
+
+
+        require __DIR__ . '/../views/jazz/venuedetails.php';
     }
 
     public function venuecms()
@@ -54,16 +76,26 @@ class VenueController
             $name = htmlspecialchars($_POST["name"]);
             $description = htmlspecialchars($_POST["description"]);
             $type = htmlspecialchars($_POST["type"]);
-            $image = htmlspecialchars($_POST["image"]);
-            $headerImg = htmlspecialchars($_POST["headerImg"]);
 
             $venue = new Venue();
 
             $venue->setName($name);
             $venue->setDescription($description);
             $venue->setType($type);
-            $venue->setImage($image);
-            $venue->setHeaderImg($headerImg);
+
+            if (count($_FILES) > 0) {
+                if (is_uploaded_file($_FILES['image1']['name'])) {
+                    $img = file_get_contents($_FILES['image1']['name']);
+                    $this->imageService->addImage($img);
+                    if ($this->imageService) {
+                        $venue->setImage($img);
+                    }
+                }
+                if (is_uploaded_file($_FILES['headerImg']['name'])) {
+                    $img11 = file_get_contents($_FILES['headerImg']['name']);
+                    $venue->setHeaderImg($this->venueService->saveImage($img11));
+                }
+            }
 
             $this->venueService->addVenue($venue);
 
@@ -103,8 +135,15 @@ class VenueController
             }
         }
 
-        $model = $this->venueService->getAll();
+        //sort venues by type
+        if (isset($_POST["dance"])) {
+            $model = $this->venueService->getAllDanceVenues();
+        } else if (isset($_POST["jazz"])) {
+            $model = $this->venueService->getAllJazzVenues();
+        } else {
+            $model = $this->venueService->getAll();
+        }
 
-        require __DIR__ . '/../views/cms/venue-cms.php';
+        require __DIR__ . '/../views/cms/music/venue-cms.php';
     }
 }
