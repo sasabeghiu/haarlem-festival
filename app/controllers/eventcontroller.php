@@ -1,29 +1,20 @@
 <?php
-require __DIR__ . '/../services/eventservice.php';
-include_once __DIR__ . '/../views/getURL.php';
 
+require __DIR__ . '/controller.php';
+require __DIR__ . '/../services/eventService.php';
 
-class EventController
-{
+class EventController extends Controller {
+
     private $eventService;
 
-    function __construct()
-    {
+    function __construct(){
         $this->eventService = new EventService();
     }
 
-    public function index()
-    {
-        if (isset($_POST["friday"])) {
-            $model = $this->eventService->getEventsByDate('%2023-07-27%');
-        } else if (isset($_POST["saturday"])) {
-            $model = $this->eventService->getEventsByDate('%2023-07-28%');
-        } else if (isset($_POST["sunday"])) {
-            $model = $this->eventService->getEventsByDate('%2023-07-29%');
-        } else {
-            $model = $this->eventService->getAll();
-        }
+    public function index(){
 
-        require __DIR__ . '/../views/dance/eventsoverview.php';
+        $events = $this->eventService->getAll();
+
+        $this->displayView($events);
     }
 }
