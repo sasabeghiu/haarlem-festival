@@ -88,4 +88,20 @@ class LoginRepository extends Repository
 
         return $user;
     }
+
+    public function createVerificationCode($id, $code)
+    {
+        try {
+            $query = 'INSERT INTO verification_codes (userId, code) VALUES (:id, :code)';
+            $stmt = $this->connection->prepare($query);
+            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':code', $code);
+            if ($stmt->execute()) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            print_r($e);
+        }
+        return false;
+    }
 }

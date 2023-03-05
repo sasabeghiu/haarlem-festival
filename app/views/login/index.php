@@ -27,11 +27,6 @@
                         Login
                     </div>
                     <div class="card-body">
-                        <?php if (isset($message)) { ?>
-                            <div class="alert alert-danger" role="alert">
-                                <strong><?php echo $message; ?></strong>
-                            </div>
-                        <?php } ?>
                         <form action="/login/validate" method="post">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
@@ -42,7 +37,7 @@
                                 <input type="password" class="form-control" name="password" id="password" aria-describedby="password" placeholder="enter your password" required>
                             </div>
                             <div class="mb-3">
-                                <a href="/login/resetpassword">Forgot password?</a>
+                                <a href="/login/createCode">Forgot password?</a>
                             </div>
                             <div class="row mb-3">
                                 <div class="col"><button type="submit" class="btn btn-primary">Login</button></div>

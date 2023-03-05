@@ -73,11 +73,47 @@ class LoginController
         require __DIR__ . '/../views/login/logout.php';
     }
 
-    public function resetpassword()
+    public function createCode()
     {
-        session_start();
-        print_r($_SESSION['userId']);
-        $user = $this->loginService->getById($_SESSION['userId']);
+        try {
+            $username = isset($_POST['username']) ? $_POST['username'] : "";
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['username'] != null) {
+
+                $user = $this->loginService->getByUsername($username);
+                $verificationCode = mt_rand(100000, 999999);
+                print_r($verificationCode);
+                if (!$this->loginService->createVerificationCode($user->getId(), $verificationCode) || !$this->sendEmail($user->getEmail(), $verificationCode)) {
+                    echo "something failed in the process.";
+                } else {
+                    echo "alles gut";
+                }
+            }
+        } catch (Exception $e) {
+            echo $e;
+        }
+
+        //phpinfo();
+
         require __DIR__ . '/../views/login/resetpassword.php';
+    }
+
+    public function sendEmail($user, $verificationCode)
+    {
+        // the message
+        $msg = "First line of text\nSecond line of text" .  $verificationCode;
+
+        // use wordwrap() if lines are longer than 70 characters
+        $msg = wordwrap($msg, 70);
+
+        // send email
+        mail($user, "My subject", $msg);
+
+
+        /* if (mail($to, $subject, $message, $headers)) {
+            echo "Email sent successfully";
+        } else {
+            echo "Email sending failed";
+        } */
     }
 }

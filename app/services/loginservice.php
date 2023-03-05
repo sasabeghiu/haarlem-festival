@@ -38,4 +38,10 @@ class LoginService
         $repository = new LoginRepository();
         return $repository->getById($id);
     }
+
+    public function createVerificationCode($id, $code)
+    {
+        $repository = new LoginRepository();
+        return $repository->createVerificationCode($id, $code);
+    }
 }
