@@ -1,31 +1,35 @@
 <?php
+
 require __DIR__ . '/repository.php';
-require __DIR__ . '/../models/event.php';
+require __DIR__ . '/../models/historyevent.php';
 
 class HistoryEventRepository extends Repository
 {
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM history_event");
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, history_event.venueID, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
+                                                      FROM history_event
+                                                      JOIN images ON history_event.image=images.id
+                                                      JOIN tourguide ON history_event.tourguideID=tourguide.id");
             $stmt->execute();
 
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Event');
-            $events = $stmt->fetchAll();
+            $stmt->setFetchMode(PDO::FETCH_CLASS,'HistoryEvent');
+            $historyevents = $stmt->fetchAll();
 
-            return $events;
-        } catch (PDOException $e) {
+            return $historyevents;
+        }catch (PDOException $e){
             echo $e;
         }
     }
 
-    function insert($events)
-    {
+    function insert($historyevents){
         try {
-            $stmt = $this->connection->prepare("INSERT into history_event (id, tickets_available, price, datetime, venueID, image) VALUES (?,?,?,?,?,?)");
+            $stmt = $this->connection->prepare("INSERT into history_event (id, tickets_available, price, datetime, location, venueID, image, tourguideID) VALUES (?,?,?,?,?,?,?,?)");
 
-            $stmt->execute([$events->getId(), $events->getTicketsAvailable(), $events->getPrice(), $events->getFormattedDate(), $events->getVenueID(), $events->getImage()]);
-        } catch (PDOException $e) {
+            $stmt->execute([$historyevents->getId(), $historyevents->getTicketsAvailable(), $historyevents->getPrice(), $historyevents->getFormattedDate(), $historyevents->getLocation(), $historyevents->getVenueID(), $historyevents->getImage(), $historyevents->getTourguideID()]);
+
+        }catch (PDOException $e){
             echo $e;
         }
     }
