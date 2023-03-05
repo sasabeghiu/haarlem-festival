@@ -56,7 +56,7 @@ include __DIR__ . '/../../header.php';
             <div class="form-group row mb-1">
                 <label for="image" class="col-sm-2 col-form-label">Image:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Insert image id..." required>
+                    <input type="file" class="form-control" id="image" name="image" placeholder="Insert image id..." required>
                 </div>
             </div>
             <div class="form-group row mb-1">

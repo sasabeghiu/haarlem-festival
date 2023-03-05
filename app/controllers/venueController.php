@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../services/venueservice.php';
 require __DIR__ . '/../services/eventservice.php';
+require __DIR__ . '/../services/imageservice.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
@@ -8,12 +9,13 @@ class VenueController
 {
     private $venueService;
     private $eventService;
-
+    private $imageService;
 
     function __construct()
     {
         $this->venueService = new VenueService();
         $this->eventService = new EventService();
+        $this->imageService = new ImageService();
     }
 
     public function dancevenues()
@@ -74,7 +76,15 @@ class VenueController
             $name = htmlspecialchars($_POST["name"]);
             $description = htmlspecialchars($_POST["description"]);
             $type = htmlspecialchars($_POST["type"]);
-            $image = htmlspecialchars($_POST["image"]);
+            //$image = htmlspecialchars($_POST["image"]);
+            $image = '';
+            if (count($_FILES) > 0) {
+                if (is_uploaded_file($_FILES['image'])) {
+                    $image=file_get_contents($_FILES['image']);
+
+                    //$this->imageService->addImage($image);
+                }
+            }
             $headerImg = htmlspecialchars($_POST["headerImg"]);
 
             $venue = new Venue();
