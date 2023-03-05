@@ -26,14 +26,14 @@ include __DIR__ . '/../header.php';
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurants[$i]->image1); ?>" class="card-img-top" alt="Loading image...">
-                        <h4><?= $restaurants[$i]->name ?></h4>
-                        <p><?= $restaurants[$i]->description ?></p>
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurants[$i]->getImage1()); ?>" class="card-img-top" alt="Loading image...">
+                        <h4><?= $restaurants[$i]->getName() ?></h4>
+                        <p><?= $restaurants[$i]->getDescription() ?></p>
                         <h4>Type</h4>
-                        <p> <?= $restaurants[$i]->cuisine ?></p>
+                        <p> <?= $restaurants[$i]->getCuisine() ?></p>
                     </div>
                     <div class="card-footer text-center">
-                        <a href="/food/about?restaurantid=<?= $restaurants[$i]->id ?>" class="btn btn-primary stretched-link"> Learn more</a>
+                        <a href="/food/about?restaurantid=<?= $restaurants[$i]->getId() ?>" class="btn btn-primary stretched-link"> Learn more</a>
                     </div>
                 </div>
             </div>
@@ -77,14 +77,14 @@ include __DIR__ . '/../header.php';
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->image1); ?>" class="card-img-top" alt="Loading image...">
-                        <h4><?= $restaurant->name ?></h4>
-                        <p><?= $restaurant->description ?></p>
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->getImage1()); ?>" class="card-img-top" alt="Loading image...">
+                        <h4><?= $restaurant->getName() ?></h4>
+                        <p><?= $restaurant->getDescription() ?></p>
                         <h4>Type</h4>
-                        <p> <?= $restaurant->cuisine ?></p>
+                        <p> <?= $restaurant->getCuisine() ?></p>
                     </div>
                     <div class="card-footer text-center">
-                        <a class="btn btn-primary stretched-link" href="/food/about?restaurantid=<?= $restaurant->id ?>"> Learn more</a>
+                        <a class="btn btn-primary stretched-link" href="/food/about?restaurantid=<?= $restaurant->getId() ?>"> Learn more</a>
                     </div>
                 </div>
             </div>
