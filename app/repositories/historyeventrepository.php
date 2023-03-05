@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/historyevent.php';
 
@@ -13,22 +14,22 @@ class HistoryEventRepository extends Repository
                                                       JOIN tourguide ON history_event.tourguideID=tourguide.id");
             $stmt->execute();
 
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'HistoryEvent');
+            $stmt->setFetchMode(PDO::FETCH_CLASS,'HistoryEvent');
             $historyevents = $stmt->fetchAll();
 
             return $historyevents;
-        } catch (PDOException $e) {
+        }catch (PDOException $e){
             echo $e;
         }
     }
 
-    function insert($historyevents)
-    {
+    function insert($historyevents){
         try {
-            $stmt = $this->connection->prepare("INSERT into history_event (id, tickets_available, price, datetime, venueID, image) VALUES (?,?,?,?,?,?)");
+            $stmt = $this->connection->prepare("INSERT into history_event (id, tickets_available, price, datetime, location, venueID, image, tourguideID) VALUES (?,?,?,?,?,?,?,?)");
 
             $stmt->execute([$historyevents->getId(), $historyevents->getTicketsAvailable(), $historyevents->getPrice(), $historyevents->getFormattedDate(), $historyevents->getLocation(), $historyevents->getVenueID(), $historyevents->getImage(), $historyevents->getTourguideID()]);
-        } catch (PDOException $e) {
+
+        }catch (PDOException $e){
             echo $e;
         }
     }
