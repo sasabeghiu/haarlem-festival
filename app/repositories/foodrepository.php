@@ -2,9 +2,11 @@
 require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/restaurant.php';
 
-class FoodRepository extends Repository {
+class FoodRepository extends Repository
+{
 
-    function getRestaurants() {
+    function getRestaurants()
+    {
         try {
             $stmt = $this->connection->prepare("SELECT restaurant.id, restaurant.name, restaurant.location, restaurant.description, 
             restaurant.cuisine, restaurant.stars, restaurant.email, restaurant.phonenumber, img1.image AS image1, img2.image 
@@ -19,13 +21,12 @@ class FoodRepository extends Repository {
             $restaurants = $stmt->fetchAll();
 
             return $restaurants;
-
-        } catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $e;
         }
     }
-    function getRestaurantById() {
+    function getRestaurantById()
+    {
         $id = htmlspecialchars($_GET["restaurantid"]);
 
         try {
@@ -45,9 +46,7 @@ class FoodRepository extends Repository {
             $restaurants = $stmt->fetchAll();
 
             return $restaurants;
-
-        } catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $e;
         }
     }
