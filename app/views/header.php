@@ -37,7 +37,8 @@
               History
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Events</a>
+              <a class="dropdown-item" href="/historyevent">Events</a>
+              <a class="dropdown-item" href="/tourguide">TourGuides</a>
             </div>
           </div>
           <div class="dropdown show">
