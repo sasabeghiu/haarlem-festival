@@ -2,6 +2,7 @@
 require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/restaurant.php';
 require __DIR__ . '/../models/session.php';
+require __DIR__ . '/../models/reservation.php';
 
 class FoodRepository extends Repository
 {
@@ -203,7 +204,10 @@ class FoodRepository extends Repository
     }
     public function getReservations() {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM reservation");
+            $stmt = $this->connection->prepare("SELECT reservation.id, reservation.name, reservation.restaurantID, 
+                                                restaurant.name AS restaurantName, reservation.seats, reservation.date, reservation.status 
+                                                FROM reservation
+                                                JOIN restaurant ON reservation.restaurantID = restaurant.id");
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'reservation');
@@ -212,6 +216,18 @@ class FoodRepository extends Repository
             return $reservations;
         } catch (PDOException $e) {
             echo $e;
+        }
+    }
+    public function deactivateReservation() {
+        $reservationid = htmlspecialchars($_GET['reservationid']);
+
+        try {
+            $stmt = $this->connection->prepare("UPDATE reservation SET status = FALSE WHERE id = :id");
+
+            $stmt->bindParam(':id', $reservationid);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo ($e);
         }
     }
 }

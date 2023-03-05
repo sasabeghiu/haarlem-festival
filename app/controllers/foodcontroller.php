@@ -94,7 +94,7 @@ class FoodController
             $newRestaurant->setPhonenumber(isset($_POST['phonenumber']) ? $_POST['phonenumber'] : null);
 
             if (count($_FILES) > 0) {
-                for($i = 1; $i <= 3; $i++){
+                for($i = 1; $i <= 3; $i++) {
                     if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
                         $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
                         $setMethod = "setImage" . $i;
@@ -111,5 +111,9 @@ class FoodController
     public function manageReservations() {
         $reservations = $this->foodService->getReservations();
         require __DIR__ . '/../views/cms/food/managereservations.php';
+    }
+    public function deactivateReservation() {
+        $this->foodService->deactivateReservation();
+        require __DIR__ . '/../views/cms/food/deactivatereservation.php';
     }
 }

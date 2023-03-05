@@ -3,8 +3,9 @@ class Reservation {
     private int $id;
     private string $name;
     private int $restaurantID;
+    private string $restaurantName;
     private int $seats;
-    private DateTime $time;
+    private string $date;
     private bool $status;
 
 	public function getId() : int {
@@ -31,6 +32,14 @@ class Reservation {
 		$this->restaurantID = $value;
 	}
 
+	public function getRestaurantName() : string {
+		return $this->restaurantName;
+	}
+
+	public function setRestaurantName(string $value) {
+		$this->restaurantName = $value;
+	}
+
 	public function getSeats() : int {
 		return $this->seats;
 	}
@@ -39,12 +48,12 @@ class Reservation {
 		$this->seats = $value;
 	}
 
-	public function getTime() : DateTime {
-		return $this->time;
+	public function getDate() : string {
+		return $this->date;
 	}
 
-	public function setTime(DateTime $value) {
-		$this->time = $value;
+	public function setDate(string $value) {
+		$this->date = $value;
 	}
 
 	public function getStatus() : bool {

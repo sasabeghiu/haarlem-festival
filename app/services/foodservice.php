@@ -36,6 +36,9 @@ class FoodService{
         $this->foodRepository->deleteRestaurant();
     }
     public function getReservations() {
-        $this->foodRepository->getReservations();
+        return $this->foodRepository->getReservations();
+    }
+    public function deactivateReservation() {
+        $this->foodRepository->deactivateReservation();
     }
 }
