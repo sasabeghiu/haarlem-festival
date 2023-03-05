@@ -1,20 +1,25 @@
 <?php
 
-class Event implements JsonSerializable {
+class HistoryEvent implements JsonSerializable {
 
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }
 
+//better make everything private!
 
-    public int $id;
-    public string $nameOfTours;
-    public int $tickets_available;
-    public string $price;
-    public string $datetime;
-    public ?int $venueID;
-    public ?int $image;
+    private int $id;
+    private string $nameOfTours;
+    private int $tickets_available;
+    private string $price;
+    private string $datetime;
+    private string $location;
+    private ?int $venueID;
+    private string $image;
+    private ?int $tourguideID;
+    private string $tourguideName;
+    private string $tourguideDescription;
 
     /**
      * @return int
@@ -97,6 +102,22 @@ class Event implements JsonSerializable {
     }
 
     /**
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation(string $location): void
+    {
+        $this->location = $location;
+    }
+
+    /**
      * @return ?int
      */
     public function getVenueID(): ?int
@@ -113,24 +134,73 @@ class Event implements JsonSerializable {
     }
 
     /**
-     * @return ?int
+     * @return string
      */
-    public function getImage(): ?int
+    public function getImage(): string
     {
         return $this->image;
     }
 
     /**
-     * @param ?int $image
+     * @param string $image
      */
-    public function setImage(?int $image): void
+    public function setImage(string $image): void
     {
         $this->image = $image;
     }
 
+    /**
+     * @return ?int
+     */
+    public function getTourguideID(): ?int
+    {
+        return $this->tourguideID;
+    }
+
+    /**
+     * @param ?int $tourguideID
+     */
+
+    public function setTourguideID(?int $tourguideID): void
+    {
+        $this->tourguideID = $tourguideID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTourguideName(): string
+    {
+        return $this->tourguideName;
+    }
+
+    /**
+     * @param string $tourguideName
+     */
+    public function setTourguideName(string $tourguideName): void
+    {
+        $this->tourguideName = $tourguideName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTourguideDescription(): string
+    {
+        return $this->tourguideDescription;
+    }
+
+    /**
+     * @param string $tourguideDescription
+     */
+    public function setTourguideDescription(string $tourguideDescription): void
+    {
+        $this->tourguideDescription = $tourguideDescription;
+    }
+
     public function getFormattedDate(){
         $date = new DateTime($this->datetime);
-        return $date->format('d-m-Y');
+        return $date->format('d - F - Y - H:i:s');
     }
 
 }
