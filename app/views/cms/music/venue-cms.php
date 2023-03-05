@@ -54,15 +54,15 @@ include __DIR__ . '/../../header.php';
                 </div>
             </div>
             <div class="form-group row mb-1">
-                <label for="image" class="col-sm-2 col-form-label">Image:</label>
+                <label for="image1" class="col-sm-2 col-form-label">Image:</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" id="image" name="image" placeholder="Insert image id..." required>
+                    <input type="file" class="form-control" id="image1" name="image1"  required>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="headerImg" class="col-sm-2 col-form-label">HeaderImg:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="headerImg" name="headerImg" placeholder="Insert image id..." required>
+                    <input type="file" class="form-control" id="headerImg" name="headerImg" placeholder="Insert image id..." required>
                 </div>
             </div>
             <!-- <div class="form-group row mb-1">

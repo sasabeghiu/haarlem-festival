@@ -44,4 +44,9 @@ class VenueService
     {
         return $this->venueRepository->deleteVenue($id);
     }
+
+    public function saveImage($imgData)
+    {
+        return $this->venueRepository->saveImage($imgData);
+    }
 }

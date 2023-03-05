@@ -47,7 +47,7 @@ include __DIR__ . '/../header.php';
                             <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
                         </div>
                         <div class="card-footer text-light bg-dark text-center">
-                            <p class="text-center"><a href="/artist/artistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
+                            <p class="text-center"><a href="/artist/jazzartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
                             <button class="btn btn-secondary">Add to cart</button>
                         </div>
                     </div>

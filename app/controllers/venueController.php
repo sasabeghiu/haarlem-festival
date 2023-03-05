@@ -76,24 +76,26 @@ class VenueController
             $name = htmlspecialchars($_POST["name"]);
             $description = htmlspecialchars($_POST["description"]);
             $type = htmlspecialchars($_POST["type"]);
-            //$image = htmlspecialchars($_POST["image"]);
-            $image = '';
-            if (count($_FILES) > 0) {
-                if (is_uploaded_file($_FILES['image'])) {
-                    $image=file_get_contents($_FILES['image']);
-
-                    //$this->imageService->addImage($image);
-                }
-            }
-            $headerImg = htmlspecialchars($_POST["headerImg"]);
 
             $venue = new Venue();
 
             $venue->setName($name);
             $venue->setDescription($description);
             $venue->setType($type);
-            $venue->setImage($image);
-            $venue->setHeaderImg($headerImg);
+
+            if (count($_FILES) > 0) {
+                if (is_uploaded_file($_FILES['image1']['name'])) {
+                    $img = file_get_contents($_FILES['image1']['name']);
+                    $this->imageService->addImage($img);
+                    if ($this->imageService) {
+                        $venue->setImage($img);
+                    }
+                }
+                if (is_uploaded_file($_FILES['headerImg']['name'])) {
+                    $img11 = file_get_contents($_FILES['headerImg']['name']);
+                    $venue->setHeaderImg($this->venueService->saveImage($img11));
+                }
+            }
 
             $this->venueService->addVenue($venue);
 

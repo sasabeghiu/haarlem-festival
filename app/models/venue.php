@@ -110,7 +110,7 @@ class Venue
 
     /**
      * Get the value of headerImg
-     */ 
+     */
     public function getHeaderImg()
     {
         return $this->headerImg;
@@ -120,7 +120,7 @@ class Venue
      * Set the value of headerImg
      *
      * @return  self
-     */ 
+     */
     public function setHeaderImg($headerImg)
     {
         $this->headerImg = $headerImg;

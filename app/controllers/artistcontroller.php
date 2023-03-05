@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../services/artistservice.php';
 require __DIR__ . '/../services/albumservice.php';
-require __DIR__ . '/../services/historyeventService.php';
+require __DIR__ . '/../services/eventService.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
