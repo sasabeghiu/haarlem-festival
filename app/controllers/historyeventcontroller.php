@@ -4,17 +4,17 @@ require __DIR__ . '/../services/historyeventservice.php';
 
 class HistoryEventController extends Controller
 {
-    private $eventService;
+    private $historyeventService;
 
     function __construct()
     {
-        $this->eventService = new HistoryEventService();
+        $this->historyeventService = new HistoryEventService();
     }
 
     public function index()
     {
-        $events = $this->eventService->getAll();
+        $historyevents = $this->historyeventService->getAll();
 
-        $this->displayView($events);
+        $this->displayView($historyevents);
     }
 }
