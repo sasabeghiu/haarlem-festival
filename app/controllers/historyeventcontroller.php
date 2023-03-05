@@ -1,20 +1,20 @@
 <?php
+
 require __DIR__ . '/controller.php';
-require __DIR__ . '/../services/historyeventservice.php';
+require __DIR__ . '/../services/historyeventService.php';
 
-class HistoryEventController extends Controller
-{
-    private $eventService;
+class HistoryEventController extends Controller {
 
-    function __construct()
-    {
-        $this->eventService = new HistoryEventService();
+    private $historyeventService;
+
+    function __construct(){
+        $this->historyeventService = new HistoryEventService();
     }
 
-    public function index()
-    {
-        $events = $this->eventService->getAll();
+    public function index(){
 
-        $this->displayView($events);
+        $historyevents = $this->historyeventService->getAll();
+
+        $this->displayView($historyevents);
     }
 }
