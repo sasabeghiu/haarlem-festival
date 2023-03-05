@@ -11,37 +11,37 @@ class LoginService
 
     public function login($username, $password)
     {
-        $repository = new LoginRepository();
-        return $repository->login($username, $password);
+
+        return $this->loginRepository->login($username, $password);
     }
 
     public function register($username, $password, $email)
     {
-        $repository = new LoginRepository();
-        return $repository->register($username, $password, $email);
+
+        return $this->loginRepository->register($username, $password, $email);
     }
 
     public function getByUsername($username)
     {
-        $repository = new LoginRepository();
-        return $repository->getByUsername($username);
+
+        return $this->loginRepository->getByUsername($username);
     }
 
     public function getByEmail($email)
     {
-        $repository = new LoginRepository();
-        return $repository->getByEmail($email);
+
+        return $this->loginRepository->getByEmail($email);
     }
 
     public function getById($id)
     {
-        $repository = new LoginRepository();
-        return $repository->getById($id);
+
+        return $this->loginRepository->getById($id);
     }
 
     public function createVerificationCode($id, $code)
     {
-        $repository = new LoginRepository();
-        return $repository->createVerificationCode($id, $code);
+
+        return $this->loginRepository->createVerificationCode($id, $code);
     }
 }
