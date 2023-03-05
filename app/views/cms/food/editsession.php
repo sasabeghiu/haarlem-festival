@@ -7,7 +7,7 @@ include(__DIR__ . "/../../header.php");
         Editing Session data for restaurant: <?= $session->getRestaurantname() ?>
     </div>
     <div class="card-body">
-        <form action="/food/save" method="post" enctype="multipart/form-data" id="edit-form">
+        <form action="/food/saveSession" method="post" enctype="multipart/form-data" id="edit-form">
             <div class="mb-3">
                 <label for="id" class="form-label">Id: <?php echo $session->getId(); ?></label>
                 <input type="hidden" name="id" value="<?php echo $session->getId(); ?>">
@@ -40,7 +40,7 @@ include(__DIR__ . "/../../header.php");
                 <label for="seats" class="form-label">Seats:</label>
                 <input type="text" class="form-control" name="seats" id="seats" value="<?php echo $session->getSeats(); ?>">
             </div>
-            <button type="submit" class="btn btn-success">Edit</button>
+            <button type="submit" class="btn btn-success">Save</button>
             <a name="" id="" class="btn btn-primary" href="/food/manageSessions" role="button">Cancel</a>
 
         </form>

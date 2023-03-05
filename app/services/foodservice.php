@@ -29,7 +29,13 @@ class FoodService{
     public function saveRestaurant(Restaurant $restaurant) {
         $this->foodRepository->saveRestaurant($restaurant);
     }
-    public function saveImages(string $imgData, Restaurant $restaurant){
-        $this->foodRepository->saveImages($imgData, $restaurant);
+    public function saveImage(string $imgData, Restaurant $restaurant){
+        return $this->foodRepository->saveImage($imgData, $restaurant);
+    }
+    public function deleteRestaurant() {
+        $this->foodRepository->deleteRestaurant();
+    }
+    public function getReservations() {
+        $this->foodRepository->getReservations();
     }
 }

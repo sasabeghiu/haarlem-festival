@@ -76,10 +76,10 @@ class FoodController
     public function addRestaurant() {
         require __DIR__ .'/../views/cms/food/addrestaurant.php';    
     }
-    // public function deleteSession() {
-    //     $this->foodService->deleteSession();
-    //     require __DIR__ . '/../views/cms/food/deletesession.php';
-    // }
+    public function deleteRestaurant() {
+        $this->foodService->deleteRestaurant();
+        require __DIR__ . '/../views/cms/food/deleterestaurant.php';
+    }
     public function saveRestaurant()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -93,14 +93,23 @@ class FoodController
             $newRestaurant->setEmail(isset($_POST['email']) ? $_POST['email'] : null);
             $newRestaurant->setPhonenumber(isset($_POST['phonenumber']) ? $_POST['phonenumber'] : null);
 
+            if (count($_FILES) > 0) {
+                for($i = 1; $i <= 3; $i++){
+                    if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
+                        $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
+                        $setMethod = "setImage" . $i;
+                        $newRestaurant->$setMethod($this->foodService->saveImage($imgData, $newRestaurant));
+                }
+                
+            }}
+
             $this->foodService->saveRestaurant($newRestaurant);
 
-            if (count($_FILES) > 0) {
-                if (is_uploaded_file($_FILES['image1']['tmp_name'])) {
-                    $imgData = file_get_contents($_FILES['image1']['tmp_name']);
-                    $this->foodService->saveImages($imgData, $newRestaurant);
-            }}
             $this->manageRestaurants();
         }
+    }
+    public function manageReservations() {
+        $reservations = $this->foodService->getReservations();
+        require __DIR__ . '/../views/cms/food/managereservations.php';
     }
 }

@@ -7,7 +7,7 @@ include(__DIR__ . "/../../header.php");
         Adding Session
     </div>
     <div class="card-body">
-        <form action="/food/save" method="post" enctype="multipart/form-data" id="edit-form">
+        <form action="/food/saveSession" method="post" enctype="multipart/form-data" id="edit-form">
             <div class="form-field mb-3">
                 <label for="restaurantid" class="form-label">Restaurant: </label>
                 <select name="restaurantid">
