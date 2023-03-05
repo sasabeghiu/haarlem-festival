@@ -1,3 +1,6 @@
+<?php
+//session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,12 +64,16 @@
               <a class="dropdown-item" href="/event/jazzevents">Events</a>
             </div>
           </div>
-          <li class="nav-item">
-            <a class="nav-link" href="/">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login/logout">Logout</a>
-          </li>
+          <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Profile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/user/profile">Edit Profile</a>
+              <a class="dropdown-item" href="/login/logout">Logout</a>
+            </div>
+
+          </div>
           <div class="dropdown show">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               CMS

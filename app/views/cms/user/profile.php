@@ -1,10 +1,10 @@
 <?php
 include(__DIR__ . "/../../header.php");
-
+//echo $_SESSION['userId'];
 ?>
 <div class="card">
     <div class="card-header">
-        Edit User
+        Edit Profile
     </div>
     <div class="card-body">
         <form action="/user/save" method="post" enctype="multipart/form-data" id="edit-form">
@@ -25,18 +25,10 @@ include(__DIR__ . "/../../header.php");
                 <input type="email" class="form-control" name="email" id="email" required value="<?php echo $user->getEmail(); ?>">
             </div>
             <div class="mb-3">
-                <label for="role" class="form-label">Role:</label>
-                <select name="role" id="role" class="form-control">
-                    <?php foreach ($roles as $role) {
-                        if ($role['id'] == $user->getRole()) {
-                            echo "<option selected value='$role[id]'>$role[name]</option>";
-                        } else {
-                            echo "<option value='$role[id]'>$role[name]</option>";
-                        }
-                    }
-                    ?>
-                </select>
+                <label for="role" class="form-label">Role: <?php echo $user->getRoleName(); ?></label>
+                <input type="hidden" class="form-control" name="role" id="role" value="<?php echo $user->getRole(); ?>">
             </div>
+
             <button type="submit" class="btn btn-success">Edit</button>
             <a name="" id="" class="btn btn-primary" href="/user" role="button">Cancel</a>
 
