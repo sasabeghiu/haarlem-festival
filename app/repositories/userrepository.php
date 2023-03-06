@@ -38,20 +38,10 @@ class UserRepository extends Repository
         $stmt->bindValue(':username', $username);
         $stmt->execute();
         $row = $stmt->fetch();
-
-        if (!$row) {
-            return null;
+        if ($row != null) {
+            return true;
         }
-
-        $user = new User();
-        $user->setId($row['id']);
-        $user->setUsername($row['username']);
-        $user->setPassword($row['password']);
-        $user->setEmail($row['email']);
-        $user->setRole($row['roleId']);
-
-
-        return $user;
+        return false;
     }
     public function getByEmail($email)
     {
@@ -60,19 +50,11 @@ class UserRepository extends Repository
         $stmt->execute();
         $row = $stmt->fetch();
 
-        if (!$row) {
-            return null;
+        if ($row != null) {
+            return true;
         }
 
-        $user = new User();
-        $user->setId($row['id']);
-        $user->setUsername($row['username']);
-        $user->setPassword($row['password']);
-        $user->setEmail($row['email']);
-        $user->setRole($row['roleId']);
-
-
-        return $user;
+        return false;
     }
 
     public function getById($id)
@@ -101,75 +83,62 @@ class UserRepository extends Repository
         return $user;
     }
 
-    public function validateUser($user, $id)
+    public function checkExistingUser(User $user, $id)
     {
-        $stmt = $this->connection->prepare('SELECT * FROM user WHERE email= :email AND username = :username AND id != :id');
-
-        $stmt->bindValue(':id', $id);
-        $stmt->bindValue(':username', $user->getUsername());
-        $stmt->bindValue(':email', $user->getEmail());
+        $query = "SELECT COUNT(*) FROM user WHERE (username = :username OR email = :email) AND id != :id";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':username', $user->getUsername());
+        $stmt->bindParam(':email', $user->getEmail());
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
-        $row = $stmt->fetch();
-
-        if (!$row) {
-            return null;
-        }
-
-        return $user;
+        $count = $stmt->fetchColumn();
+        return $count > 0;
     }
 
-    public function createUser($id, User $user)
+    public function createUser(User $user)
     {
         try {
             // Insert new user
-            $query = 'INSERT INTO user (username, password, roleId, email) VALUES (:username, :password, :roleId, :email)';
+            $query = "INSERT INTO user (username, password, roleId, email) VALUES (:username, :password, :roleId, :email)";
             $stmt = $this->connection->prepare($query);
             $stmt->bindValue(':username', $user->getUsername());
             $stmt->bindValue(':password', $user->getPassword());
             $stmt->bindValue(':roleId', $user->getRole());
             $stmt->bindValue(':email', $user->getEmail());
             $stmt->execute();
+            if ($stmt) {
+                return true;
+            }
+            return false;
         } catch (PDOException $e) {
-            echo ($e);
-        }
-        if ($stmt) {
-            return true;
+            print_r($e);
         }
     }
 
     public function updateUser(User $user)
     {
-        $id = $user->getId();
-        $username = $user->getUsername();
-        $email = $user->getEmail();
-        $role = $user->getRole();
-        $password = $user->getPassword();
-        $params = array();
-        $set_string = '';
-
-        if (!empty($username)) {
-            $set_string .= 'username = :username, ';
-            $params[':username'] = $username;
+        try {
+            $query = "UPDATE user SET roleId = :role" . (!empty($user->getUsername()) ? ", username = :username " : "") . (!empty($user->getPassword()) ? ", password = :password " : "") . (!empty($user->getEmail()) ? ", email = :email " : "") . "WHERE id = :id ";
+            $stmt = $this->connection->prepare($query);
+            if (!empty($user->getUsername())) {
+                $stmt->bindParam(':username', $user->getUsername());
+            }
+            if (!empty($user->getPassword())) {
+                $hashedPass = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+                $stmt->bindParam(':password', $hashedPass);
+            }
+            if (!empty($user->getEmail())) {
+                $stmt->bindParam(':email', $user->getEmail());
+            }
+            $stmt->bindValue(':role', $user->getRole()); //default user is customer
+            $stmt->bindValue(':id', $user->getId());
+        } catch (PDOException $e) {
+            print_r($e);
         }
-        if (!empty($email)) {
-            $set_string .= 'email = :email, ';
-            $params[':email'] = $email;
+        if ($stmt->execute()) {
+            return true;
         }
-        if (!empty($role)) {
-            $set_string .= 'role = :role, ';
-            $params[':role'] = $role;
-        }
-        if (!empty($password)) {
-            $set_string .= 'password = :password, ';
-            $params[':password'] = $password;
-        }
-
-        $set_string = rtrim($set_string, ', ');
-
-        $query = "UPDATE users SET $set_string WHERE id = :id";
-        $stmt = $this->db->prepare($query);
-        $params[':id'] = $id;
-        return $stmt->execute($params);
+        return false;
     }
 
     public function deleteById($id)

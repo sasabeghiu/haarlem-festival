@@ -79,13 +79,13 @@
               CMS
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/user/index">Users</a>
+              <a class="dropdown-item" href="/user">Users</a>
 
               <!-- dance and jazz -->
               <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
               <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
               <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
-                <a class="dropdown-item" href="/tourguidecms">Tour Guide CMS</a>
+              <a class="dropdown-item" href="/tourguidecms">Tour Guide CMS</a>
               <a class="dropdown-item" href="/food/manageSessions">Yummy</a>
               <a class="dropdown-item" href="/food/manageRestaurants">Restaurants</a>
               <a class="dropdown-item" href="/food/manageReservations">Reservations</a>

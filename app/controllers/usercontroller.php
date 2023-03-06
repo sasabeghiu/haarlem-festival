@@ -17,7 +17,7 @@ class UserController
 
         require __DIR__ . '/../views/cms/user/index.php';
     }
-    public function create()
+    public function displayCreate()
     {
         $roles = $this->userService->getRoles();
 
@@ -31,29 +31,50 @@ class UserController
         require __DIR__ . '/../views/cms/user/edit.php';
     }
 
-    public function save()
+    public function create()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
-
                 $newUser = new User();
-                $hashedPass = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $newUser->setId(htmlspecialchars(isset($_POST['id']) ? $_POST['id'] : 0));
-                $newUser->setUsername(htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : null)); //sanitize input, check if information was sent, if so it assigns the value, otherwise sets to null 
-                $newUser->setPassword(htmlspecialchars(isset($_POST['password']) ? $hashedPass : null));
-                $newUser->setEmail(htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : null));
-                $newUser->setRole(htmlspecialchars(isset($_POST['role']) ? $_POST['role'] : null));
+                $newUser->setUsername(htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : ""));
+                $hashedPass = isset($_POST['password']) ? $_POST['password'] : "";
+                $newUser->setPassword($hashedPass);
+                $newUser->setEmail(htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : ""));
+                $newUser->setRole(htmlspecialchars(isset($_POST['role']) ? $_POST['role'] : 2)); //default customer
 
-
-                if ($this->userService->validateUser($newUser)) {
-                    if ($this->userService->saveUser($newUser)) {
-                        header('Location: /user');
-                    }
-                    echo "<script>alert('Failed to save User. ')</script>";
+                if ($this->userService->getByUsername($newUser->getUsername())) {
+                    echo "<script>alert('Username already in use!'); window.location = '/user/displayCreate';</script>";
+                } else if ($this->userService->getByEmail($newUser->getEmail())) { //returns true if username or email exist in db
+                    echo "<script>alert('Email already in use!'); window.location = '/user/displayCreate';</script>";
+                } else if (!$this->userService->create($newUser)) {
+                    echo "<script>alert('An error occurred while creating the user.'); window.location = '/user/displayCreate';</script>";
                 } else {
-                    echo "<script>alert('Username or email already in use!')</script>";
+                    echo "<script>alert('Created successfully!'); window.location = '/user';</script>";
                 }
-                $this->index();
+            } catch (Exception $e) {
+                echo "An error occurred: " . $e->getMessage();
+            }
+        }
+    }
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            try {
+                $newUser = new User();
+                $newUser->setId(htmlspecialchars(isset($_POST['id']) ? $_POST['id'] : ""));
+                $newUser->setUsername(htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : ""));
+                $hashedPass = isset($_POST['password']) ? $_POST['password'] : "";
+                $newUser->setPassword($hashedPass);
+                $newUser->setEmail(htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : ""));
+                $newUser->setRole(htmlspecialchars(isset($_POST['role']) ? $_POST['role'] : 2)); //default customer
+
+                if ($this->userService->validateUser($newUser, $_POST['id'])) { //returns true is user.username an user.email do not exist in db excluding id
+                    echo "<script>alert('Username or Email already in use!'); window.location = '/user';</script>";
+                } else if (!$this->userService->update($newUser)) {
+                    echo "<script>alert('Failed to update User. ') window.location = '/user';</script>";
+                } else {
+                    echo "<script>alert('Updated successfully!'); window.location = '/home';</script>";
+                }
             } catch (Exception $e) {
                 echo "An error occurred: " . $e->getMessage();
             }
@@ -74,8 +95,11 @@ class UserController
     public function profile()
     {
         session_start();
-        //print_r($_SESSION['userId']);
-        $user = $this->userService->getById($_SESSION['userId']);
-        require __DIR__ . '/../views/cms/user/profile.php';
+        if (isset($_SESSION['userId'])) {
+            $user = $this->userService->getById($_SESSION['userId']);
+            require __DIR__ . '/../views/cms/user/profile.php';
+        } else {
+            echo "<script>alert('Please log in to access profile!'); window.location = '/home';</script>";
+        }
     }
 }
