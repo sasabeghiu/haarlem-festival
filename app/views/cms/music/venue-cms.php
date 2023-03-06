@@ -31,10 +31,9 @@ include __DIR__ . '/../../header.php';
         <button class="btn btn-success mb-2" id="show-add-form">Add venue</button>
     </div>
 
-    <!-- fix the form with images -->
     <!-- hidden form to add a new venue -->
     <div id="form-add-container" style="display: none;">
-        <form method="POST">
+        <form action="/venue/venuecms" method="POST" enctype="multipart/form-data">
             <div class="form-group row mb-1">
                 <label for="name" class="col-sm-2 col-form-label">Name:</label>
                 <div class="col-sm-10">
@@ -56,7 +55,7 @@ include __DIR__ . '/../../header.php';
             <div class="form-group row mb-1">
                 <label for="image1" class="col-sm-2 col-form-label">Image:</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" id="image1" name="image1"  required>
+                    <input type="file" class="form-control" id="image1" name="image1" required>
                 </div>
             </div>
             <div class="form-group row mb-1">
@@ -65,12 +64,7 @@ include __DIR__ . '/../../header.php';
                     <input type="file" class="form-control" id="headerImg" name="headerImg" placeholder="Insert image id..." required>
                 </div>
             </div>
-            <!-- <div class="form-group row mb-1">
-            <label for="photo" class="col-sm-2 col-form-label text-light">Photo:</label>
-            <div class="col-sm-10">
-                <input type="file" class="form-control" id="photo" name="photo">
-            </div>
-        </div> -->
+
             <input type="submit" name="add" value="Insert Venue" class="form-control btn btn-success mb-1">
         </form>
     </div>

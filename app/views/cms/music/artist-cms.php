@@ -31,66 +31,61 @@ include __DIR__ . '/../../header.php';
         <button class="btn btn-success mb-2" id="show-add-form">Add artist</button>
     </div>
 
-    <!-- fix the form with images -->
     <!-- hidden form to add a new artist -->
     <div id="form-add-container" style="display: none;">
-        <form method="POST">
-            <div class="form-group row mb-1">
-                <label for="name" class="col-sm-2 col-form-label">Name:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Insert Artist Name" required>
+        <form action="/artist/artistcms" method="POST" enctype="multipart/form-data">
+            <form method="POST">
+                <div class="form-group row mb-1">
+                    <label for="name" class="col-sm-2 col-form-label">Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Insert Artist Name" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="description" class="col-sm-2 col-form-label">Description:</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="description" name="description" placeholder="Insert Artist Details" required></textarea>
+                <div class="form-group row mb-1">
+                    <label for="description" class="col-sm-2 col-form-label">Description:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="description" name="description" placeholder="Insert Artist Details" required></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="type" class="col-sm-2 col-form-label">Type (dance/jazz):</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="type" name="type" placeholder="Insert Artist Type" required>
+                <div class="form-group row mb-1">
+                    <label for="type" class="col-sm-2 col-form-label">Type (dance/jazz):</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="type" name="type" placeholder="Insert Artist Type" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="headerImg" class="col-sm-2 col-form-label">HeaderImg:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="headerImg" name="headerImg" placeholder="Insert image id..." required>
+                <div class="form-group row mb-1">
+                    <label for="headerImg" class="col-sm-2 col-form-label">HeaderImg:</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="headerImg" name="headerImg" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="thumbnailImg" class="col-sm-2 col-form-label">ThumbnailImg:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="thumbnailImg" name="thumbnailImg" placeholder="Insert image id..." required>
+                <div class="form-group row mb-1">
+                    <label for="thumbnailImg" class="col-sm-2 col-form-label">ThumbnailImg:</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="thumbnailImg" name="thumbnailImg" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="logo" class="col-sm-2 col-form-label">Logo:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="logo" name="logo" placeholder="Insert image id.." required>
+                <div class="form-group row mb-1">
+                    <label for="logo" class="col-sm-2 col-form-label">Logo:</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="logo" name="logo" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="spotify" class="col-sm-2 col-form-label">Spotify (link):</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="spotify" name="spotify" placeholder="Insert Spotify embedded song link" required>
+                <div class="form-group row mb-1">
+                    <label for="spotify" class="col-sm-2 col-form-label">Spotify (link):</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="spotify" name="spotify" placeholder="Insert Spotify embedded song link" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="image" class="col-sm-2 col-form-label">Image:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Insert image id..." required>
+                <div class="form-group row mb-1">
+                    <label for="image" class="col-sm-2 col-form-label">Image:</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="image" name="image" required>
+                    </div>
                 </div>
-            </div>
-            <!-- <div class="form-group row mb-1">
-            <label for="photo" class="col-sm-2 col-form-label text-light">Photo:</label>
-            <div class="col-sm-10">
-                <input type="file" class="form-control" id="photo" name="photo">
-            </div>
-        </div> -->
-            <input type="submit" name="add" value="Insert Artist" class="form-control btn btn-success mb-1">
-        </form>
+
+                <input type="submit" name="add" value="Insert Artist" class="form-control btn btn-success mb-1">
+            </form>
     </div>
 
     <!-- display data -->
@@ -105,7 +100,6 @@ include __DIR__ . '/../../header.php';
                 <th scope="col">Logo</th>
                 <th scope="col">Image</th>
                 <th scope="col">Spotify</th>
-                <th scope="col">Albums</th>
                 <th scope="col" colspan="2" class="text-center">Actions</th>
             </tr>
         </thead>
@@ -122,7 +116,6 @@ include __DIR__ . '/../../header.php';
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getLogo()) . '"  width="100px"/>'; ?></td>
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getImage()) . '"  height="100px"/>'; ?></td>
                     <td style="width:25%;"><iframe style="border-radius:12px" src="<?= $artist->getSpotify() ?>" width="100%" height="300px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></td>
-                    <td style="width: 10%;"><a href="#">View Albums</a></td>
                     <td style="width:2%;">
                         <form action="/artist/artistcms?updateID=<?= $artist->getId() ?>" method="POST">
                             <input type="hidden" name="edit" value="<?= $artist->getId() ?>">

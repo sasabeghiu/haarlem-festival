@@ -1,7 +1,6 @@
 <?php
 require __DIR__ . '/../services/venueservice.php';
 require __DIR__ . '/../services/eventservice.php';
-require __DIR__ . '/../services/imageservice.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
@@ -9,13 +8,11 @@ class VenueController
 {
     private $venueService;
     private $eventService;
-    private $imageService;
 
     function __construct()
     {
         $this->venueService = new VenueService();
         $this->eventService = new EventService();
-        $this->imageService = new ImageService();
     }
 
     public function dancevenues()
@@ -83,18 +80,19 @@ class VenueController
             $venue->setDescription($description);
             $venue->setType($type);
 
+
             if (count($_FILES) > 0) {
-                if (is_uploaded_file($_FILES['image1']['name'])) {
-                    $img = file_get_contents($_FILES['image1']['name']);
-                    $this->imageService->addImage($img);
-                    if ($this->imageService) {
-                        $venue->setImage($img);
-                    }
+                if (is_uploaded_file($_FILES['image1']['tmp_name'])) {
+                    $img = file_get_contents($_FILES['image1']['tmp_name']);
+                    $id = $this->venueService->saveImage($img);
+                    $venue->setImage($id);
                 }
-                if (is_uploaded_file($_FILES['headerImg']['name'])) {
-                    $img11 = file_get_contents($_FILES['headerImg']['name']);
+                if (is_uploaded_file($_FILES['headerImg']['tmp_name'])) {
+                    $img11 = file_get_contents($_FILES['headerImg']['tmp_name']);
                     $venue->setHeaderImg($this->venueService->saveImage($img11));
                 }
+            } else {
+                echo "problem";
             }
 
             $this->venueService->addVenue($venue);

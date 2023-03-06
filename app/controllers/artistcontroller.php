@@ -78,22 +78,35 @@ class ArtistController
             $name = htmlspecialchars($_POST["name"]);
             $description = htmlspecialchars($_POST["description"]);
             $type = htmlspecialchars($_POST["type"]);
-            $headerImg = htmlspecialchars($_POST["headerImg"]);
-            $thumbnailImg = htmlspecialchars($_POST["thumbnailImg"]);
-            $logo = htmlspecialchars($_POST["logo"]);
             $spotify = htmlspecialchars($_POST["spotify"]);
-            $image = htmlspecialchars($_POST["image"]);
 
             $artist = new Artist();
 
             $artist->setName($name);
             $artist->setDescription($description);
             $artist->setType($type);
-            $artist->setHeaderImg($headerImg);
-            $artist->setThumbnailImg($thumbnailImg);
-            $artist->setLogo($logo);
             $artist->setSpotify($spotify);
-            $artist->setImage($image);
+
+            if (count($_FILES) > 0) {
+                if (is_uploaded_file($_FILES['headerImg']['tmp_name'])) {
+                    $headerImage = file_get_contents($_FILES['headerImg']['tmp_name']);
+                    $artist->setHeaderImg($this->artistService->saveImage($headerImage));
+                }
+                if (is_uploaded_file($_FILES['thumbnailImg']['tmp_name'])) {
+                    $thumbnailImage = file_get_contents($_FILES['thumbnailImg']['tmp_name']);
+                    $artist->setThumbnailImg($this->artistService->saveImage($thumbnailImage));
+                }
+                if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
+                    $logo = file_get_contents($_FILES['logo']['tmp_name']);
+                    $artist->setLogo($this->artistService->saveImage($logo));
+                }
+                if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+                    $image = file_get_contents($_FILES['image']['tmp_name']);
+                    $artist->setImage($this->artistService->saveImage($image));
+                }
+            } else {
+                echo "problem";
+            }
 
             $this->artistService->addArtist($artist);
 

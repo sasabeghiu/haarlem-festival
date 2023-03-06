@@ -81,10 +81,11 @@ class VenueRepository extends Repository
     }
 
     //insert
-    function addVenue($venue)
+    function addVenue(Venue $venue)
     {
         try {
             $stmt = $this->connection->prepare("INSERT INTO venue (name, description, type, image, headerImg) VALUES (:name, :description, :type, :image, :headerImg)");
+
             $stmt->bindValue(':name', $venue->getName());
             $stmt->bindValue(':description', $venue->getDescription());
             $stmt->bindValue(':type', $venue->getType());
@@ -116,8 +117,11 @@ class VenueRepository extends Repository
     function deleteVenue($id)
     {
         try {
-            $stmt = $this->connection->prepare("DELETE FROM venue WHERE id = :id");
-            $stmt->bindParam(':id', $id);
+            $stmt = $this->connection->prepare("DELETE v, i, i2
+            FROM venue as v, images as i, images as i2
+            WHERE v.id=:id AND i.id=v.image AND i2.id=v.headerImg");
+            $stmt->bindValue(':id', $id);
+
             $stmt->execute();
 
             return;
@@ -127,18 +131,15 @@ class VenueRepository extends Repository
         return true;
     }
 
-    function saveImage($imgData)
+    function saveImage(string $imgData)
     {
         try {
-            // Insert new image
-            $stmt = $this->connection->prepare("INSERT INTO `images` (image) VALUES (:image)");
+            $stmt = $this->connection->prepare('INSERT INTO images (image) VALUES (:image)');
 
-            $stmt->bindParam('image', $imgData);
+            $stmt->bindParam(':image', $imgData);
             $stmt->execute();
 
-            $imgData->setId($this->connection->lastInsertId());
-
-            return $this->getOne($imgData->getId());
+            return $this->connection->lastInsertId();
         } catch (Exception $e) {
             echo $e;
         }

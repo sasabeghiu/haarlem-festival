@@ -112,11 +112,22 @@ class ArtistRepository extends Repository
 
 
     //insert
-    function addArtist($artist)
+    function addArtist(Artist $artist)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO artist (name, description, type, headerImg, thumbnailImg, logo, spotify, image) VALUES (?,?,?,?,?,?,?,?)");
-            $stmt->execute([$artist->getName(), $artist->getDescription(), $artist->getType(), $artist->getHeaderImg(), $artist->getThumbnailImg(), $artist->getLogo(), $artist->getSpotify(), $artist->getImage()]);
+            $stmt = $this->connection->prepare("INSERT INTO artist (name, description, type, headerImg, thumbnailImg, logo, spotify, image) VALUES (:name, :description, :type, :headerImg, :thumbnailImg, :logo, :spotify, :image)");
+
+            $stmt->bindValue(':name', $artist->getName());
+            $stmt->bindValue(':description', $artist->getDescription());
+            $stmt->bindValue(':type', $artist->getType());
+            $stmt->bindValue(':headerImg', $artist->getHeaderImg());
+            $stmt->bindValue(':thumbnailImg', $artist->getThumbnailImg());
+            $stmt->bindValue(':logo', $artist->getLogo());
+            $stmt->bindValue(':spotify', $artist->getSpotify());
+            $stmt->bindValue(':image', $artist->getImage());
+
+            $stmt->execute();
+
             $artist->setId($this->connection->lastInsertId());
 
             return $this->getOne($artist->getId());
@@ -140,7 +151,9 @@ class ArtistRepository extends Repository
     function deleteArtist($id)
     {
         try {
-            $stmt = $this->connection->prepare("DELETE FROM artist WHERE id = :id");
+            $stmt = $this->connection->prepare("DELETE a, i, i1, i2, i3
+            FROM artist as a, images as i, images as i1, images as i2, images as i3
+            WHERE a.id=:id AND i.id=a.headerImg AND i1.id=a.thumbnailImg AND i2.id=a.logo AND i3.id=a.image");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
@@ -149,5 +162,19 @@ class ArtistRepository extends Repository
             echo $e;
         }
         return true;
+    }
+
+    function saveImage(string $imgData)
+    {
+        try {
+            $stmt = $this->connection->prepare('INSERT INTO images (image) VALUES (:image)');
+
+            $stmt->bindParam(':image', $imgData);
+            $stmt->execute();
+
+            return $this->connection->lastInsertId();
+        } catch (Exception $e) {
+            echo $e;
+        }
     }
 }

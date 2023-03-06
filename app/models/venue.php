@@ -11,7 +11,7 @@ class Venue
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -21,11 +21,9 @@ class Venue
      *
      * @return  self
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -91,7 +89,7 @@ class Venue
     /**
      * Get the value of image
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }
@@ -101,17 +99,15 @@ class Venue
      *
      * @return  self
      */
-    public function setImage($image)
+    public function setImage(string $image)
     {
         $this->image = $image;
-
-        return $this;
     }
 
     /**
      * Get the value of headerImg
      */
-    public function getHeaderImg()
+    public function getHeaderImg(): string
     {
         return $this->headerImg;
     }
@@ -121,10 +117,8 @@ class Venue
      *
      * @return  self
      */
-    public function setHeaderImg($headerImg)
+    public function setHeaderImg(string $headerImg)
     {
         $this->headerImg = $headerImg;
-
-        return $this;
     }
 }

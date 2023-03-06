@@ -35,7 +35,7 @@ class ArtistService
         return $this->artistRepository->getOneArtistByName($name);
     }
 
-    public function addArtist($artist)
+    public function addArtist(Artist $artist)
     {
         return $this->artistRepository->addArtist($artist);
     }
@@ -48,5 +48,10 @@ class ArtistService
     public function deleteArtist($id)
     {
         return $this->artistRepository->deleteArtist($id);
+    }
+
+    public function saveImage($imgData)
+    {
+        return $this->artistRepository->saveImage($imgData);
     }
 }
