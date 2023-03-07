@@ -1,13 +1,14 @@
 <?php
 
-require __DIR__ . '/../../services/historyeventService.php';
+require __DIR__ . '/../../services/historyeventservice.php';
 
 class EventController
 {
 
     private $eventService;
 
-    function __construct(){
+    function __construct()
+    {
         $this->eventService = new EventService();
     }
 
@@ -17,7 +18,7 @@ class EventController
         header("Access-Control-Allow-Headers: *");
         header("Access-Control-Allow-Methods: *");
 
-        if ($_SERVER["REQUEST_METHOD"] == "GET"){
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $events = $this->eventService->getAll();
             header('Content-Type: application/json');
             echo json_encode($events);
