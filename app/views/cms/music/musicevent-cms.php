@@ -2,18 +2,9 @@
 include __DIR__ . '/../../header.php';
 ?>
 
-<style>
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .filterbtn {
-        width: 120px;
-        height: 50px;
-    }
-</style>
+<head>
+    <link rel="stylesheet" href="/css/music_cms_style.css">
+</head>
 
 <h1 class="text-center mb-3">Manage Events</h1>
 
@@ -31,10 +22,9 @@ include __DIR__ . '/../../header.php';
         <button class="btn btn-success mb-2" id="show-add-form">Add event</button>
     </div>
 
-    <!-- fix the form with images -->
     <!-- hidden form to add a new event -->
     <div id="form-add-container" style="display: none;">
-        <form method="POST">
+        <form method="POST" id="addEvent">
             <div class="form-group row mb-1">
                 <label for="type" class="col-sm-2 col-form-label">Type (dance/jazz):</label>
                 <div class="col-sm-10">
@@ -44,13 +34,29 @@ include __DIR__ . '/../../header.php';
             <div class="form-group row mb-1">
                 <label for="artistName" class="col-sm-2 col-form-label">Artist:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="artistName" name="artistName" placeholder="Insert Artist id" required>
+                    <select name="artistName" id="artistName" class="form-control" form="addEvent" required>
+                        <?php
+                        foreach ($artists as $artist) {
+                        ?>
+                            <option value="<?= $artist->getId() ?>"><?= $artist->getName() ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="venueName" class="col-sm-2 col-form-label">Venue:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="venueName" name="venueName" placeholder="Insert Venue id" required>
+                    <select name="venueName" id="venueName" class="form-control" form="addEvent" required>
+                        <?php
+                        foreach ($venues as $venue) {
+                        ?>
+                            <option value="<?= $venue->getId() ?>"><?= $venue->getName() ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
             <div class="form-group row mb-1">
@@ -69,12 +75,6 @@ include __DIR__ . '/../../header.php';
                 <label for="datetime" class="col-sm-2 col-form-label">Date and Time:</label>
                 <div class="col-sm-10">
                     <input type="datetime-local" class="form-control" id="datetime" name="datetime" placeholder="Insert datetime" required>
-                </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="image" class="col-sm-2 col-form-label">Image:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Insert image id..." required>
                 </div>
             </div>
 
@@ -145,15 +145,43 @@ include __DIR__ . '/../../header.php';
                     </div>
                 </div>
                 <div class="form-group row mb-1">
-                    <label for="updatedArtistName" class="col-sm-2 col-form-label">Artist:</label>
+                    <label for="" class="col-sm-2 col-form-label">Previous artist:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="updatedArtistName" name="updatedArtistName" value="<?= $updateEvent->getArtist() ?>" required>
+                        <input type="text" class="form-control" value="<?= $updateEvent->getName() ?>" disabled>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
-                    <label for="updatedVenueName" class="col-sm-2 col-form-label">Venue:</label>
+                    <label for="updatedArtistName" class="col-sm-2 col-form-label">Select new artist:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="updatedVenueName" name="updatedVenueName" value="<?= $updateEvent->getVenue() ?>" required>
+                        <select name="updatedArtistName" id="updatedArtistName" class="form-control" required>
+                            <?php
+                            foreach ($artists as $artist) {
+                            ?>
+                                <option value="<?= $artist->getId() ?>"><?= $artist->getName() ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="" class="col-sm-2 col-form-label">Previous venue:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="<?= $updateEvent->getVenue() ?>" disabled>
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="updatedVenueName" class="col-sm-2 col-form-label">Select new venue:</label>
+                    <div class="col-sm-10">
+                        <select name="updatedVenueName" id="updatedVenueName" class="form-control" required>
+                            <?php
+                            foreach ($venues as $venue) {
+                            ?>
+                                <option value="<?= $venue->getId() ?>"><?= $venue->getName() ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
@@ -169,16 +197,19 @@ include __DIR__ . '/../../header.php';
                     </div>
                 </div>
                 <div class="form-group row mb-1">
-                    <label for="updatedDatetime" class="col-sm-2 col-form-label">Date and Time:</label>
+                    <label for="" class="col-sm-2 col-form-label">Previous datetime:</label>
                     <div class="col-sm-10">
-                        <input type="datetime-local" class="form-control" id="updatedDatetime" name="updatedDatetime" value="<?= $updateEvent->getDatetime() ?>" required>
+                        <input type="text" class="form-control" value="<?php
+                                                                        $date_string = $updateEvent->getDatetime();
+                                                                        $date = new DateTime($date_string);
+                                                                        echo $date->format("l, j F Y h:i A");
+                                                                        ?>" disabled>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
-                    <label for="updatedImage" class="col-sm-2 col-form-label">Image:</label>
+                    <label for="updatedDatetime" class="col-sm-2 col-form-label">New datetime:</label>
                     <div class="col-sm-10">
-                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateEvent->getImage()) . '"  height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="updatedImage" name="updatedImage" placeholder="Insert image id..." required>
+                        <input type="datetime-local" class="form-control" id="updatedDatetime" name="updatedDatetime" required>
                     </div>
                 </div>
 

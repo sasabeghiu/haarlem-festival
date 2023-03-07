@@ -54,4 +54,14 @@ class ArtistService
     {
         return $this->artistRepository->saveImage($imgData);
     }
+
+    public function updateImage($imgData, $id)
+    {
+        return $this->artistRepository->updateImage($imgData, $id);
+    }
+
+    public function getAnArtist($id)
+    {
+        return $this->artistRepository->getAnArtist($id);
+    }
 }

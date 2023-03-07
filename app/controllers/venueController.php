@@ -55,85 +55,108 @@ class VenueController
         require __DIR__ . '/../views/jazz/venuedetails.php';
     }
 
+    // cms part
+
+    public function addVenue()
+    {
+        $name = htmlspecialchars($_POST["name"]);
+        $description = htmlspecialchars($_POST["description"]);
+        $type = htmlspecialchars($_POST["type"]);
+
+        $venue = new Venue();
+
+        $venue->setName($name);
+        $venue->setDescription($description);
+        $venue->setType($type);
+
+
+        if (count($_FILES) > 0) {
+            if (is_uploaded_file($_FILES['image1']['tmp_name'])) {
+                $img = file_get_contents($_FILES['image1']['tmp_name']);
+                $id = $this->venueService->saveImage($img);
+                $venue->setImage($id);
+            }
+            if (is_uploaded_file($_FILES['headerImg']['tmp_name'])) {
+                $img11 = file_get_contents($_FILES['headerImg']['tmp_name']);
+                $venue->setHeaderImg($this->venueService->saveImage($img11));
+            }
+        } else {
+            echo "problem";
+        }
+
+        $this->venueService->addVenue($venue);
+
+        if ($this->venueService) {
+            echo "<script>alert('Venue addedd successfully. ')</script>";
+        } else {
+            echo "<script>alert('Failed to add Venue. ')</script>";
+        }
+    }
+
+    public function updateVenue()
+    {
+        $name = htmlspecialchars($_POST["changedName"]);
+        $description = htmlspecialchars($_POST["changedDescription"]);
+        $type = htmlspecialchars($_POST["changedType"]);
+
+        $venue = new Venue();
+
+        $venue->setName($name);
+        $venue->setDescription($description);
+        $venue->setType($type);
+
+        $thisVenue = $this->venueService->getAVenue($_GET["updateID"]);
+        if (count($_FILES) > 0) {
+            if (is_uploaded_file($_FILES['changedImage']['tmp_name'])) {
+                $img = file_get_contents($_FILES['changedImage']['tmp_name']);
+                $venue->setImage($this->venueService->updateImage($img, $thisVenue->getImage()));
+            }
+            if (is_uploaded_file($_FILES['changedHeaderImage']['tmp_name'])) {
+                $img11 = file_get_contents($_FILES['changedHeaderImage']['tmp_name']);
+                $venue->setHeaderImg($this->venueService->updateImage($img11, $thisVenue->getHeaderImg()));
+            }
+        } else {
+            echo "problem";
+        }
+
+        $this->venueService->updateVenue($venue, $_GET["updateID"]);
+
+        if ($this->venueService) {
+            echo "<script>alert('Venue updated successfully. ')</script>";
+        } else {
+            echo "<script>alert('Failed to update Venue. ')</script>";
+        }
+    }
+
+    public function deleteVenue()
+    {
+        $id = htmlspecialchars($_GET["deleteID"]);
+        $this->venueService->deleteVenue($id);
+
+        if ($this->venueService) {
+            echo "<script>alert('Venue deleted successfully. ')</script>";
+        } else {
+            echo "<script>alert('Failed to delete Venue. ')</script>";
+        }
+    }
+
     public function venuecms()
     {
-        //delete
         if (isset($_POST["delete"])) {
-            $id = htmlspecialchars($_GET["deleteID"]);
-            $this->venueService->deleteVenue($id);
-
-            if ($this->venueService) {
-                echo "<script>alert('Venue deleted successfully. ')</script>";
-            } else {
-                echo "<script>alert('Failed to delete Venue. ')</script>";
-            }
+            $this->deleteVenue();
         }
-        //add
         if (isset($_POST["add"])) {
-            $name = htmlspecialchars($_POST["name"]);
-            $description = htmlspecialchars($_POST["description"]);
-            $type = htmlspecialchars($_POST["type"]);
-
-            $venue = new Venue();
-
-            $venue->setName($name);
-            $venue->setDescription($description);
-            $venue->setType($type);
-
-
-            if (count($_FILES) > 0) {
-                if (is_uploaded_file($_FILES['image1']['tmp_name'])) {
-                    $img = file_get_contents($_FILES['image1']['tmp_name']);
-                    $id = $this->venueService->saveImage($img);
-                    $venue->setImage($id);
-                }
-                if (is_uploaded_file($_FILES['headerImg']['tmp_name'])) {
-                    $img11 = file_get_contents($_FILES['headerImg']['tmp_name']);
-                    $venue->setHeaderImg($this->venueService->saveImage($img11));
-                }
-            } else {
-                echo "problem";
-            }
-
-            $this->venueService->addVenue($venue);
-
-            if ($this->venueService) {
-                echo "<script>alert('Venue addedd successfully. ')</script>";
-            } else {
-                echo "<script>alert('Failed to add Venue. ')</script>";
-            }
+            $this->addVenue();
         }
-        //edit
         if (isset($_POST["edit"])) {
             $id = htmlspecialchars($_GET["updateID"]);
             $updateVenue = $this->venueService->getOne($id);
         }
-        //update
         if (isset($_POST["update"])) {
-            $name = htmlspecialchars($_POST["changedName"]);
-            $description = htmlspecialchars($_POST["changedDescription"]);
-            $type = htmlspecialchars($_POST["changedType"]);
-            $image = htmlspecialchars($_POST["changedImage"]);
-            $headerImg = htmlspecialchars($_POST["changedHeaderImage"]);
-
-            $venue = new Venue();
-
-            $venue->setName($name);
-            $venue->setDescription($description);
-            $venue->setType($type);
-            $venue->setImage($image);
-            $venue->setHeaderImg($headerImg);
-
-            $this->venueService->updateVenue($venue, $_GET["updateID"]);
-
-            if ($this->venueService) {
-                echo "<script>alert('Venue updated successfully. ')</script>";
-            } else {
-                echo "<script>alert('Failed to update Venue. ')</script>";
-            }
+            $this->updateVenue();
         }
 
-        //sort venues by type
+        //sort venues by type dance or jazz
         if (isset($_POST["dance"])) {
             $model = $this->venueService->getAllDanceVenues();
         } else if (isset($_POST["jazz"])) {

@@ -49,4 +49,14 @@ class VenueService
     {
         return $this->venueRepository->saveImage($imgData);
     }
+
+    public function updateImage($imgData, $id)
+    {
+        return $this->venueRepository->updateImage($imgData, $id);
+    }
+
+    public function getAVenue($id)
+    {
+        return $this->venueRepository->getAVenue($id);
+    }
 }

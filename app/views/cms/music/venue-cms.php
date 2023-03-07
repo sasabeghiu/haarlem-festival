@@ -2,18 +2,9 @@
 include __DIR__ . '/../../header.php';
 ?>
 
-<style>
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .filterbtn {
-        width: 120px;
-        height: 50px;
-    }
-</style>
+<head>
+    <link rel="stylesheet" href="/css/music_cms_style.css">
+</head>
 
 <h1 class="text-center mb-3">Manage Venues</h1>
 
@@ -117,7 +108,7 @@ include __DIR__ . '/../../header.php';
     ?>
         <h3>Edit venue #<?= $updateVenue->getId() ?></h3>
         <div>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="form-group row mb-1">
                     <label for="changedName" class="col-sm-2 col-form-label">Name:</label>
                     <div class="col-sm-10">
@@ -140,15 +131,16 @@ include __DIR__ . '/../../header.php';
                     <label for="changedImage" class="col-sm-2 col-form-label">Image:</label>
                     <div class="col-sm-10">
                         <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateVenue->getImage()) . '"  height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedImage" name="changedImage" placeholder="Insert image id..." required>
+                        <input type="file" class="form-control" id="changedImage" name="changedImage" required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
                     <label for="changedHeaderImage" class="col-sm-2 col-form-label">HeaderImg:</label>
                     <div class="col-sm-10">
                         <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateVenue->getHeaderImg()) . '"  height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedHeaderImage" name="changedHeaderImage" placeholder="Insert image id..." required>
+                        <input type="file" class="form-control" id="changedHeaderImage" name="changedHeaderImage" required>
                     </div>
+
                 </div>
                 <input type="submit" name="update" value="Update Venue" class="form-control btn btn-success mb-1">
             </form>

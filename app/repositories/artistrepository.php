@@ -1,9 +1,23 @@
 <?php
-require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/artist.php';
 
-class ArtistRepository extends Repository
+class ArtistRepository
 {
+    protected $connection;
+
+    public function __construct()
+    {
+        require __DIR__ . '/../config/dbconfig.php';
+
+        try {
+            $this->connection = new PDO("$type:host=$servername;dbname=$database", $username, $password);
+            // set the PDO error mode to exception
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+    }
+
     function getAll()
     {
         try {
@@ -66,27 +80,6 @@ class ArtistRepository extends Repository
         }
     }
 
-    function getOne($id)
-    {
-        try {
-            $stmt = $this->connection->prepare("SELECT artist.id, artist.name, artist.description, artist.type,  img1.image AS headerImg, img2.image AS thumbnailImg, img3.image AS logo, artist.spotify, img4.image AS image 
-            FROM artist 
-            JOIN images as img1 ON artist.headerImg=img1.id 
-            JOIN images as img2 ON artist.thumbnailImg=img2.id
-            JOIN images as img3 ON artist.logo=img3.id
-            JOIN images as img4 ON artist.image=img4.id
-            WHERE artist.id = :id");
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Artist');
-            $artist = $stmt->fetch();
-
-            return $artist;
-        } catch (PDOException $e) {
-            echo $e;
-        }
-    }
 
     function getOneArtistByName($name)
     {
@@ -110,8 +103,28 @@ class ArtistRepository extends Repository
         }
     }
 
+    function getOne($id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT artist.id, artist.name, artist.description, artist.type,  img1.image AS headerImg, img2.image AS thumbnailImg, img3.image AS logo, artist.spotify, img4.image AS image 
+            FROM artist 
+            JOIN images as img1 ON artist.headerImg=img1.id 
+            JOIN images as img2 ON artist.thumbnailImg=img2.id
+            JOIN images as img3 ON artist.logo=img3.id
+            JOIN images as img4 ON artist.image=img4.id
+            WHERE artist.id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
 
-    //insert
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Artist');
+            $artist = $stmt->fetch();
+
+            return $artist;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function addArtist(Artist $artist)
     {
         try {
@@ -136,7 +149,6 @@ class ArtistRepository extends Repository
         }
     }
 
-    //update
     function updateArtist($artist, $id)
     {
         try {
@@ -147,7 +159,6 @@ class ArtistRepository extends Repository
         }
     }
 
-    //delete
     function deleteArtist($id)
     {
         try {
@@ -174,6 +185,36 @@ class ArtistRepository extends Repository
 
             return $this->connection->lastInsertId();
         } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    function updateImage($imgData, $id)
+    {
+        try {
+            $stmt = $this->connection->prepare("UPDATE images SET image = :image WHERE id = :id");
+            $stmt->bindValue(':image', $imgData);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            return $id;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getAnArtist($id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM artist WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Artist');
+            $artist = $stmt->fetch();
+
+            return $artist;
+        } catch (PDOException $e) {
             echo $e;
         }
     }
