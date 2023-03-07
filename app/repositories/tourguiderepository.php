@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/repository.php';
-require __DIR__ . '/../models/tourGuide.php';
+require __DIR__ . '/../models/tourguide.php';
 
 class TourGuideRepository extends Repository
 {

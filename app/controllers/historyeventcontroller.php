@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__ . '/controller.php';
-require __DIR__ . '/../services/historyeventervice.php';
+require __DIR__ . '/../services/historyeventservice.php';
 
 class HistoryEventController extends Controller
 {
@@ -16,8 +16,8 @@ class HistoryEventController extends Controller
     public function index()
     {
 
-        $historyevents = $this->historyeventService->getAll();
+        $model = $this->historyeventService->getAll();
 
-        $this->displayView($historyevents);
+        require __DIR__ . '/../views/historyevent/index.php';
     }
 }
