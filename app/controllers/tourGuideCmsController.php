@@ -1,11 +1,9 @@
 <?php
-require __DIR__ . '/controller.php';
-
-require __DIR__ . '/../services/tourGuideCmsService.php';
+require __DIR__ . '/../services/tourguidecmsservice.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
-class TourGuideCmsController extends Controller
+class TourGuideCmsController
 {
     private $tourguideService;
 
@@ -16,9 +14,9 @@ class TourGuideCmsController extends Controller
 
     public function index()
     {
-        $tourguidecms = $this->tourguideService->getAll();
+        $model = $this->tourguideService->getAll();
 
-        $this->displayView($tourguidecms);
+        require __DIR__ . '/../views/tourguidecms/index.php';
     }
 
     public function tourGuideDetails()
@@ -29,7 +27,7 @@ class TourGuideCmsController extends Controller
 
         $model = $this->tourguideService->getOne($params['id']);
 
-        //a require is needed most likely here.
+        require __DIR__ . '/../views/tourguidecms/index.php';
     }
 
     public function tourGuideCms()
@@ -68,7 +66,7 @@ class TourGuideCmsController extends Controller
         //Functionality editing
         if (isset($_POST["edit"])) {
             $id = htmlspecialchars($_GET["updateID"]);
-            $updateTourGuide = $this->tourguideService->getOne($id);
+            $updateTourguide = $this->tourguideService->getOne($id);
         }
         //Functionality update
         if (isset($_POST["update"])) {
@@ -90,9 +88,8 @@ class TourGuideCmsController extends Controller
                 echo "<script>alert('Failed to update Tour Guide. ')</script>";
             }
         }
+        $this->index();
 
-        /*$model = $this->tourguideService->getAll();
-
-        require __DIR__ . '/../views/cms/artist-cms.php';*/
+        require __DIR__ . '/../views/tourguidecms/index.php';
     }
 }

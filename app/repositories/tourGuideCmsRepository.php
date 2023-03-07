@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__ . '/repository.php';
-require __DIR__ . '/../models/tourGuideCms.php';
+require __DIR__ . '/../models/tourguidecms.php';
 
 class TourGuideCmsRepository extends Repository
 {
@@ -64,9 +64,9 @@ class TourGuideCmsRepository extends Repository
     function addTourguide($tourguides)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT into tourguide (id, name, description, image) VALUES (?,?,?,?)");
+            $stmt = $this->connection->prepare("INSERT into tourguide (name, description, image) VALUES (?,?,?)");
 
-            $stmt->execute([$tourguides->getId(), $tourguides->getName(), $tourguides->getDescription(), $tourguides->getImage()]);
+            $stmt->execute([$tourguides->getName(), $tourguides->getDescription(), $tourguides->getImage()]);
 
             $tourguides->setId($this->connection->lastInsertId());
 
