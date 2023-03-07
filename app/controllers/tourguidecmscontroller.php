@@ -14,9 +14,9 @@ class TourGuideCmsController
 
     public function index()
     {
-        $model = $this->tourguideService->getAll();
+        $array = $this->tourguideService->getAll();
 
-        require __DIR__ . '/../views/tourguidecms/index.php';
+        require __DIR__ . '/../views/tourguide/index.php';
     }
 
     public function tourGuideDetails()
@@ -27,11 +27,13 @@ class TourGuideCmsController
 
         $model = $this->tourguideService->getOne($params['id']);
 
-        require __DIR__ . '/../views/tourguidecms/index.php';
+        require __DIR__ . '/../views/cms/tourguide/index.php';
     }
 
-    public function tourGuideCms()
+    public function cms()
     {
+        $model = $this->tourguideService->getAll();
+
         //Functionality delete
         if (isset($_POST["delete"])) {
             $id = htmlspecialchars($_GET["deleteID"]);
@@ -80,16 +82,15 @@ class TourGuideCmsController
             $tourguidescms->setDescription($description);
             $tourguidescms->setImage($image);
 
-            $this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"]);
+            //$this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"]);
 
-            if ($this->tourguideService) {
+            if ($this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"])) {
                 echo "<script>alert('Tour Guide updated successfully! ')</script>";
             } else {
                 echo "<script>alert('Failed to update Tour Guide. ')</script>";
             }
         }
-        $this->index();
 
-        require __DIR__ . '/../views/tourguidecms/index.php';
+        require __DIR__ . '/../views/cms/tourguide/index.php';
     }
 }
