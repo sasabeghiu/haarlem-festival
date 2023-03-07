@@ -1,11 +1,9 @@
 <?php
-require __DIR__ . '/controller.php';
-
-require __DIR__ . '/../services/tourGuideCmsService.php';
+require __DIR__ . '/../services/tourguidecmsservice.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
-class TourGuideCmsController extends Controller
+class TourGuideCmsController
 {
     private $tourguideService;
 
@@ -16,9 +14,9 @@ class TourGuideCmsController extends Controller
 
     public function index()
     {
-        $tourguidecms = $this->tourguideService->getAll();
+        $array = $this->tourguideService->getAll();
 
-        $this->displayView($tourguidecms);
+        require __DIR__ . '/../views/tourguide/index.php';
     }
 
     public function tourGuideDetails()
@@ -29,11 +27,13 @@ class TourGuideCmsController extends Controller
 
         $model = $this->tourguideService->getOne($params['id']);
 
-        //a require is needed most likely here.
+        require __DIR__ . '/../views/cms/tourguide/index.php';
     }
 
-    public function tourGuideCms()
+    public function cms()
     {
+        $model = $this->tourguideService->getAll();
+
         //Functionality delete
         if (isset($_POST["delete"])) {
             $id = htmlspecialchars($_GET["deleteID"]);
@@ -68,7 +68,7 @@ class TourGuideCmsController extends Controller
         //Functionality editing
         if (isset($_POST["edit"])) {
             $id = htmlspecialchars($_GET["updateID"]);
-            $updateTourGuide = $this->tourguideService->getOne($id);
+            $updateTourguide = $this->tourguideService->getOne($id);
         }
         //Functionality update
         if (isset($_POST["update"])) {
@@ -82,17 +82,15 @@ class TourGuideCmsController extends Controller
             $tourguidescms->setDescription($description);
             $tourguidescms->setImage($image);
 
-            $this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"]);
+            //$this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"]);
 
-            if ($this->tourguideService) {
+            if ($this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"])) {
                 echo "<script>alert('Tour Guide updated successfully! ')</script>";
             } else {
                 echo "<script>alert('Failed to update Tour Guide. ')</script>";
             }
         }
 
-        /*$model = $this->tourguideService->getAll();
-
-        require __DIR__ . '/../views/cms/artist-cms.php';*/
+        require __DIR__ . '/../views/cms/tourguide/index.php';
     }
 }
