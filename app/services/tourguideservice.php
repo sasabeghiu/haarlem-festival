@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../repositories/tourGuideRepository.php';
+require __DIR__ . '/../repositories/tourguiderepository.php';
 
 class TourGuideService
 {

@@ -7,7 +7,7 @@ include(__DIR__ . "/../../header.php");
         Edit Profile
     </div>
     <div class="card-body">
-        <form action="/user/save" method="post" enctype="multipart/form-data" id="edit-form">
+        <form action="/user/update" method="post" enctype="multipart/form-data" id="edit-form">
             <div class="mb-3">
                 <label for="id" class="form-label">Id: <?php echo $user->getId(); ?></label>
                 <input type="hidden" name="id" value="<?php echo $user->getId(); ?>">
@@ -15,10 +15,6 @@ include(__DIR__ . "/../../header.php");
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
                 <input type="text" class="form-control" name="username" id="username" required value="<?php echo $user->getUsername(); ?>">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" class="form-control" name="password" id="password" required value="<?php echo $user->getPassword(); ?>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
@@ -30,7 +26,7 @@ include(__DIR__ . "/../../header.php");
             </div>
 
             <button type="submit" class="btn btn-success">Edit</button>
-            <a name="" id="" class="btn btn-primary" href="/user" role="button">Cancel</a>
+            <a name="" id="" class="btn btn-primary" href="/home" role="button">Cancel</a>
 
         </form>
     </div>

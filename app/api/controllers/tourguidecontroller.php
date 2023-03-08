@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../services/tourGuideService.php';
+require __DIR__ . '/../../services/tourguideservice.php';
 
 class TourGuideController
 {
@@ -18,7 +18,7 @@ class TourGuideController
         header("Access-Control-Allow-Headers: *");
         header("Access-Control-Allow-Methods: *");
 
-        if ($_SERVER["REQUEST_METHOD"] == "GET"){
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $tourguides = $this->tourguideService->getAll();
             header('Content-Type: application/json');
             echo json_encode($tourguides);

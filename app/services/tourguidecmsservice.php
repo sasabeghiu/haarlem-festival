@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../repositories/tourGuideCmsRepository.php';
+require __DIR__ . '/../repositories/tourguidecmsrepository.php';
 
 class TourGuideCmsService
 {

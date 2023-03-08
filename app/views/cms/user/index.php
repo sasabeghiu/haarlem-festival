@@ -5,7 +5,7 @@ include(__DIR__ . "/../../header.php");
 <br />
 <div class="card">
     <div class="card-header">
-        <a name="" id="" class="btn btn-primary" href="/user/create" role="button">Create</a>
+        <a name="" id="" class="btn btn-primary" href="/user/displayCreate" role="button">Create</a>
     </div>
     <div class=" card-body">
         <div class="table-responsive-sm">
