@@ -25,7 +25,6 @@ class TourGuideCmsController
 
     public function cms()
     {
-        $model = $this->tourguideService->getAll();
 
         //Functionality delete
         if (isset($_POST["delete"])) {
@@ -75,14 +74,16 @@ class TourGuideCmsController
             $tourguidescms->setDescription($description);
             $tourguidescms->setImage($image);
 
-            //$this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"]);
+            $this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"]);
 
-            if ($this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"])) {
+            if ($this->tourguideService) {
                 echo "<script>alert('Tour Guide updated successfully! ')</script>";
             } else {
                 echo "<script>alert('Failed to update Tour Guide. ')</script>";
             }
         }
+        $model = $this->tourguideService->getAll();
+
 
         require __DIR__ . '/../views/cms/tourguide/index.php';
     }
