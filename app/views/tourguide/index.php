@@ -17,7 +17,7 @@ include __DIR__ . '/../footer.php';
     text-align: center;
     display: table-cell;
     vertical-align: middle;
-    color: white;">Explore History</h1>
+    color: gray;">Explore History</h1>
 </div>
 
 <div class="mt-2 container mx-auto" style="max-width: 1000px;">

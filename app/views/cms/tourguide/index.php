@@ -78,7 +78,7 @@ include __DIR__ . '/../../header.php';
                         </form>
                     </td>
                     <td style="width: 2%">
-                        <form action="/tourguidecms/cms?updateID=<?= $tourguide->getId() ?>" method="POST">
+                        <form action="/tourguidecms/cms?deleteID=<?= $tourguide->getId() ?>" method="POST">
                             <input type="hidden" name="delete" onclick="" value="<?= $tourguide->getId() ?>">
                             <input type="submit" name="submit" value="Delete" class="btn btn-danger">
                         </form>
