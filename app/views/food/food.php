@@ -12,6 +12,7 @@ require __DIR__ . '/../header.php';
 
 <h3 class="text-center">Enjoy an authentic taste of Dutch food</h3>
 
+<!-- Page id 7, card id's 35 and up -->
 <!-- Haarlem food -->
 <div class="container-fluid">
     <div class="row">
