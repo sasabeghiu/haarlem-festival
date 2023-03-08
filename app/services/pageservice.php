@@ -9,4 +9,9 @@ class PageService
     {
         $this->pageRepository = new PageRepository();
     }
+
+    public function getOnePage($id)
+    {
+        return $this->pageRepository->getOnePage($id);
+    }
 }

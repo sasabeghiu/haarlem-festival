@@ -12,4 +12,20 @@ class PageController
         $this->pageController = new PageService();
         $this->pageCardController = new PageCardService();
     }
+
+    public function theaterpage()
+    {
+        $page = $this->pageController->getOnePage(5);
+        $pagecards = $this->pageCardController->getAllCardsByPageId(5);
+
+        require __DIR__ . '/../views/visithaarlem/theater.php';
+    }
+
+    public function musicpage()
+    {
+        $page = $this->pageController->getOnePage(6);
+        $pagecards = $this->pageCardController->getAllCardsByPageId(6);
+
+        require __DIR__ . '/../views/visithaarlem/music.php';
+    }
 }
