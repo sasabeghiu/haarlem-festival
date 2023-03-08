@@ -12,13 +12,6 @@ class TourGuideCmsController
         $this->tourguideService = new TourGuideCmsService();
     }
 
-    public function index()
-    {
-        $array = $this->tourguideService->getAll();
-
-        require __DIR__ . '/../views/tourguide/index.php';
-    }
-
     public function tourGuideDetails()
     {
         $url = getURL();
