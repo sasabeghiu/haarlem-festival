@@ -2,18 +2,9 @@
 include __DIR__ . '/../../header.php';
 ?>
 
-<style>
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .filterbtn {
-        width: 120px;
-        height: 50px;
-    }
-</style>
+<head>
+    <link rel="stylesheet" href="/css/music_cms_style.css">
+</head>
 
 <h1 class="text-center mb-3">Manage Artists</h1>
 
@@ -31,10 +22,9 @@ include __DIR__ . '/../../header.php';
         <button class="btn btn-success mb-2" id="show-add-form">Add artist</button>
     </div>
 
-    <!-- fix the form with images -->
     <!-- hidden form to add a new artist -->
     <div id="form-add-container" style="display: none;">
-        <form method="POST">
+        <form action="/artist/artistcms" method="POST" enctype="multipart/form-data">
             <div class="form-group row mb-1">
                 <label for="name" class="col-sm-2 col-form-label">Name:</label>
                 <div class="col-sm-10">
@@ -56,19 +46,19 @@ include __DIR__ . '/../../header.php';
             <div class="form-group row mb-1">
                 <label for="headerImg" class="col-sm-2 col-form-label">HeaderImg:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="headerImg" name="headerImg" placeholder="Insert image id..." required>
+                    <input type="file" class="form-control" id="headerImg" name="headerImg" required>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="thumbnailImg" class="col-sm-2 col-form-label">ThumbnailImg:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="thumbnailImg" name="thumbnailImg" placeholder="Insert image id..." required>
+                    <input type="file" class="form-control" id="thumbnailImg" name="thumbnailImg" required>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="logo" class="col-sm-2 col-form-label">Logo:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="logo" name="logo" placeholder="Insert image id.." required>
+                    <input type="file" class="form-control" id="logo" name="logo" required>
                 </div>
             </div>
             <div class="form-group row mb-1">
@@ -80,15 +70,10 @@ include __DIR__ . '/../../header.php';
             <div class="form-group row mb-1">
                 <label for="image" class="col-sm-2 col-form-label">Image:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Insert image id..." required>
+                    <input type="file" class="form-control" id="image" name="image" required>
                 </div>
             </div>
-            <!-- <div class="form-group row mb-1">
-            <label for="photo" class="col-sm-2 col-form-label text-light">Photo:</label>
-            <div class="col-sm-10">
-                <input type="file" class="form-control" id="photo" name="photo">
-            </div>
-        </div> -->
+
             <input type="submit" name="add" value="Insert Artist" class="form-control btn btn-success mb-1">
         </form>
     </div>
@@ -105,7 +90,6 @@ include __DIR__ . '/../../header.php';
                 <th scope="col">Logo</th>
                 <th scope="col">Image</th>
                 <th scope="col">Spotify</th>
-                <th scope="col">Albums</th>
                 <th scope="col" colspan="2" class="text-center">Actions</th>
             </tr>
         </thead>
@@ -122,7 +106,6 @@ include __DIR__ . '/../../header.php';
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getLogo()) . '"  width="100px"/>'; ?></td>
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getImage()) . '"  height="100px"/>'; ?></td>
                     <td style="width:25%;"><iframe style="border-radius:12px" src="<?= $artist->getSpotify() ?>" width="100%" height="300px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></td>
-                    <td style="width: 10%;"><a href="#">View Albums</a></td>
                     <td style="width:2%;">
                         <form action="/artist/artistcms?updateID=<?= $artist->getId() ?>" method="POST">
                             <input type="hidden" name="edit" value="<?= $artist->getId() ?>">
@@ -148,7 +131,7 @@ include __DIR__ . '/../../header.php';
     ?>
         <h3>Edit artist #<?= $updateArtist->getId() ?></h3>
         <div>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="form-group row mb-1">
                     <label for="changedName" class="col-sm-2 col-form-label">Name:</label>
                     <div class="col-sm-10">
@@ -170,22 +153,22 @@ include __DIR__ . '/../../header.php';
                 <div class="form-group row mb-1">
                     <label for="changedHeaderImg" class="col-sm-2 col-form-label">HeaderImg:</label>
                     <div class="col-sm-10">
-                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getHeaderImg()) . '" height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedHeaderImg" name="changedHeaderImg" placeholder="Insert image id..." required>
+                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateArtist->getHeaderImg()) . '" height="100px"/>'; ?>
+                        <input type="file" class="form-control" id="changedHeaderImg" name="changedHeaderImg" required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
                     <label for="changedThumbnailImg" class="col-sm-2 col-form-label">ThumbnailImg:</label>
                     <div class="col-sm-10">
-                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getThumbnailImg()) . '" height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedThumbnailImg" name="changedThumbnailImg" placeholder="Insert image id..." required>
+                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateArtist->getThumbnailImg()) . '" height="100px"/>'; ?>
+                        <input type="file" class="form-control" id="changedThumbnailImg" name="changedThumbnailImg" required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
                     <label for="changedLogo" class="col-sm-2 col-form-label">Logo:</label>
                     <div class="col-sm-10">
-                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getLogo()) . '" height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedLogo" name="changedLogo" placeholder="Insert image id..." required>
+                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateArtist->getLogo()) . '" height="100px"/>'; ?>
+                        <input type="file" class="form-control" id="changedLogo" name="changedLogo" required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
@@ -197,8 +180,8 @@ include __DIR__ . '/../../header.php';
                 <div class="form-group row mb-1">
                     <label for="changedImage" class="col-sm-2 col-form-label">Image:</label>
                     <div class="col-sm-10">
-                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($artist->getImage()) . '" height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedImage" name="changedImage" placeholder="Insert image id..." required>
+                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateArtist->getImage()) . '" height="100px"/>'; ?>
+                        <input type="file" class="form-control" id="changedImage" name="changedImage" required>
                     </div>
                 </div>
                 <input type="submit" name="update" value="Update Artist" class="form-control btn btn-success mb-1">

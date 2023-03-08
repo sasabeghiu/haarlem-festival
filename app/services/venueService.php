@@ -30,7 +30,7 @@ class VenueService
         return $this->venueRepository->getOne($id);
     }
 
-    public function addVenue($venue)
+    public function addVenue(Venue $venue)
     {
         return $this->venueRepository->addVenue($venue);
     }
@@ -49,7 +49,14 @@ class VenueService
     {
         return $this->venueRepository->saveImage($imgData);
     }
+
+    public function updateImage($imgData, $id)
+    {
+        return $this->venueRepository->updateImage($imgData, $id);
+    }
+
+    public function getAVenue($id)
+    {
+        return $this->venueRepository->getAVenue($id);
+    }
 }
-
-
-//ds

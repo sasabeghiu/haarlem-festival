@@ -1,0 +1,15 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filterbtn {
+  width: 120px;
+  height: 50px;
+}
+
+.card {
+  width: 100%;
+  height: auto;
+}
