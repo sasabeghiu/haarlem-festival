@@ -1,23 +1,11 @@
 <?php
 include __DIR__ . '/../header.php';
 ?>
-<style>
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 
-    .filterbtn {
-        width: 120px;
-        height: 50px;
-    }
+<head>
+    <link rel="stylesheet" href="/css/music_cms_style.css">
+</head>
 
-    .card {
-        width: 100%;
-        height: auto;
-    }
-</style>
 <div class="album py-5">
     <div class="container mb-5">
         <h2 class="text-dark text-center mb-3">HF Jazz Events</h2>

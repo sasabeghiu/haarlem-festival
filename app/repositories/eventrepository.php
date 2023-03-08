@@ -189,7 +189,6 @@ class EventRepository
         }
     }
 
-    //insert
     function addEvent($event)
     {
         try {
@@ -202,7 +201,7 @@ class EventRepository
             echo $e;
         }
     }
-    //update
+
     function updateEvent($event, $id)
     {
         try {
@@ -213,7 +212,6 @@ class EventRepository
         }
     }
 
-    //delete
     function deleteEvent($id)
     {
         try {
