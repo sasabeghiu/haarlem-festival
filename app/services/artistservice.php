@@ -15,6 +15,16 @@ class ArtistService
         return $this->artistRepository->getAll();
     }
 
+    public function getAllDanceArtists()
+    {
+        return $this->artistRepository->getAllDanceArtists();
+    }
+
+    public function getAllJazzArtists()
+    {
+        return $this->artistRepository->getAllJazzArtists();
+    }
+
     public function getOne($id)
     {
         return $this->artistRepository->getOne($id);
@@ -25,7 +35,7 @@ class ArtistService
         return $this->artistRepository->getOneArtistByName($name);
     }
 
-    public function addArtist($artist)
+    public function addArtist(Artist $artist)
     {
         return $this->artistRepository->addArtist($artist);
     }
@@ -38,5 +48,20 @@ class ArtistService
     public function deleteArtist($id)
     {
         return $this->artistRepository->deleteArtist($id);
+    }
+
+    public function saveImage($imgData)
+    {
+        return $this->artistRepository->saveImage($imgData);
+    }
+
+    public function updateImage($imgData, $id)
+    {
+        return $this->artistRepository->updateImage($imgData, $id);
+    }
+
+    public function getAnArtist($id)
+    {
+        return $this->artistRepository->getAnArtist($id);
     }
 }

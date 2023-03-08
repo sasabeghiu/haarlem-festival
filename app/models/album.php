@@ -9,7 +9,7 @@ class Album
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -19,7 +19,7 @@ class Album
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -29,7 +29,7 @@ class Album
 
     /**
      * Get the value of image
-     */ 
+     */
     public function getImage()
     {
         return $this->image;
@@ -39,7 +39,7 @@ class Album
      * Set the value of image
      *
      * @return  self
-     */ 
+     */
     public function setImage($image)
     {
         $this->image = $image;
@@ -49,7 +49,7 @@ class Album
 
     /**
      * Get the value of name
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -59,7 +59,7 @@ class Album
      * Set the value of name
      *
      * @return  self
-     */ 
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -69,7 +69,7 @@ class Album
 
     /**
      * Get the value of link
-     */ 
+     */
     public function getLink()
     {
         return $this->link;
@@ -79,7 +79,7 @@ class Album
      * Set the value of link
      *
      * @return  self
-     */ 
+     */
     public function setLink($link)
     {
         $this->link = $link;
@@ -89,7 +89,7 @@ class Album
 
     /**
      * Get the value of artistId
-     */ 
+     */
     public function getArtistId()
     {
         return $this->artistId;
@@ -99,7 +99,7 @@ class Album
      * Set the value of artistId
      *
      * @return  self
-     */ 
+     */
     public function setArtistId($artistId)
     {
         $this->artistId = $artistId;

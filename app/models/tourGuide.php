@@ -7,10 +7,10 @@ class tourGuide implements JsonSerializable {
         return get_object_vars($this);
     }
 
-    public int $id;
-    public string $name;
-    public string $description;
-    public string $image;
+    private int $id;
+    private string $name;
+    private string $description;
+    private string $image;
 
     /**
      * @return int

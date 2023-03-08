@@ -4,7 +4,7 @@ class Music_Event
     //change types 
     private int $id;
     private string $type;
-    private int $artist;
+    private string $artist;
     private string $venue;
     private int $ticket_price;
     private int $tickets_available;
@@ -174,7 +174,7 @@ class Music_Event
 
     /**
      * Get the value of name
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -184,7 +184,7 @@ class Music_Event
      * Set the value of name
      *
      * @return  self
-     */ 
+     */
     public function setName($name)
     {
         $this->name = $name;

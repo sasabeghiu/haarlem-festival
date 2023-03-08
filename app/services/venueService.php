@@ -15,12 +15,22 @@ class VenueService
         return $this->venueRepository->getAll();
     }
 
+    public function getAllDanceVenues()
+    {
+        return $this->venueRepository->getAllDanceVenues();
+    }
+
+    public function getAllJazzVenues()
+    {
+        return $this->venueRepository->getAllJazzVenues();
+    }
+
     public function getOne($id)
     {
         return $this->venueRepository->getOne($id);
     }
 
-    public function addVenue($venue)
+    public function addVenue(Venue $venue)
     {
         return $this->venueRepository->addVenue($venue);
     }
@@ -33,5 +43,20 @@ class VenueService
     public function deleteVenue($id)
     {
         return $this->venueRepository->deleteVenue($id);
+    }
+
+    public function saveImage($imgData)
+    {
+        return $this->venueRepository->saveImage($imgData);
+    }
+
+    public function updateImage($imgData, $id)
+    {
+        return $this->venueRepository->updateImage($imgData, $id);
+    }
+
+    public function getAVenue($id)
+    {
+        return $this->venueRepository->getAVenue($id);
     }
 }
