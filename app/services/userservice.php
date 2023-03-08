@@ -33,24 +33,32 @@ class UserService
         return $repository->getByUsername($username);
     }
 
+    public function getByEmail($email)
+    {
+        $repository = new UserRepository();
+        return $repository->getByEmail($email);
+    }
+
     public function deleteById($id)
     {
         $repository = new UserRepository();
         return $repository->deleteById($id);
     }
 
-    public function saveUser(User $user)
+    public function create(User $user)
     {
         $repository = new UserRepository();
-        return $repository->save($user);
+        return $repository->createUser($user);
     }
 
-    public function validateUser(User $user)
+    public function update(User $user)
     {
         $repository = new UserRepository();
-        if ($repository->getbyUsername($user->getUsername()) || $repository->getbyEmail($user->getEmail())) {
-            return false; //user or email exist in db
-        }
-        return true;
+        return $repository->updateUser($user);
+    }
+
+    public function validateUser(User $user, $id)
+    {
+        return $this->userRepository->checkExistingUser($user, $id); //returns true if username or email exist in db
     }
 }
