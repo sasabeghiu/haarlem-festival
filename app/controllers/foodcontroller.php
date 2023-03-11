@@ -12,6 +12,8 @@ class FoodController
 
     public function index()
     {
+        $page = $this->foodService->getFoodPageContent();
+        $cards = $this->foodService->getFoodPageCards();
         require __DIR__ . '/../views/food/food.php';
     }
     public function about()
