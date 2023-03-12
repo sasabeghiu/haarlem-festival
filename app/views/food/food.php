@@ -7,7 +7,7 @@ require __DIR__ . '/../header.php';
 </head>
 
 <div class="container-fluid">
-    <h3 class="text-center"><?= $page->getTitle() ?></h3>
+    <h3 class="text-center" id="summernote"><?= $page->getTitle() ?></h3>
     <p><?= $page->getDescription() ?></p>
 </div>
 
@@ -149,6 +149,14 @@ require __DIR__ . '/../header.php';
         </div>
     </div>
 </div>
+
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hello bootstrap',
+        tabsize: 2,
+        height: 100
+    })
+    </script>
 
 <?php
 require __DIR__ . '/../footer.php';
