@@ -104,4 +104,23 @@ class LoginRepository extends Repository
         }
         return false;
     }
+
+    public function getVerificationCode($id) //gets latest code from userID
+    {
+        try {
+            $query = 'SELECT code FROM verification_codes 
+            WHERE userId = :id
+            ORDER BY timestamp DESC
+            LIMIT 1';
+            $stmt = $this->connection->prepare($query);
+            $stmt->bindValue(':id', $id);
+            $row = $stmt->fetch();
+            if ($stmt->execute()) {
+                return $row['code'];
+            }
+        } catch (PDOException $e) {
+            print_r($e);
+        }
+        return false;
+    }
 }

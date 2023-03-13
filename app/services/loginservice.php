@@ -45,4 +45,13 @@ class LoginService
 
         return $this->loginRepository->createVerificationCode($id, $code);
     }
+
+    public function isValid($id, $code)
+    {
+        if ($this->loginRepository->getVerificationCode($id) == $code) {
+            return true;
+        }
+
+        return false;
+    }
 }

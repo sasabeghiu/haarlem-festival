@@ -1,13 +1,19 @@
 <?php
+
+use PHPMailer\Mailer;
+
 require __DIR__ . '/../services/loginservice.php';
+require __DIR__ . '/../utils/mailer.php';
 
 class LoginController
 {
     private $loginService;
+    private $mailer;
 
     function __construct()
     {
         $this->loginService = new LoginService();
+        $this->mailer = new Mailer();
     }
 
     public function index()
@@ -92,8 +98,14 @@ class LoginController
 
                 $user = $this->loginService->getByUsername($username);
                 $verificationCode = mt_rand(100000, 999999);
+                $verfication
                 print_r($verificationCode);
-                if (!$this->loginService->createVerificationCode($user->getId(), $verificationCode) || !$this->sendEmail($user->getEmail(), $verificationCode)) {
+                $receiver = $user->getEmail();
+                $receiver_name = $user->getUsername();
+                $subject = "Verification Code - Haarlem Festival Support";
+                $link = "http://localhost/login/verifyCode?code=" . $verificationCode;
+                $body_string = 'Click on the link to reset your password: ' . $link;
+                if (!$this->loginService->createVerificationCode($user->getId(), $verificationCode) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
                     echo "something failed in the process.";
                 } else {
                     echo "alles gut";
@@ -108,22 +120,18 @@ class LoginController
         require __DIR__ . '/../views/login/resetpassword.php';
     }
 
-    public function sendEmail($user, $verificationCode)
+    public function verifyCode()
     {
-        // the message
-        $msg = "First line of text\nSecond line of text" .  $verificationCode;
+        try {
+            if ($this->loginService->isValid($_GET['code'])) {
+                echo $_GET['code'];
+            } else {
+                echo "nono";
+            }
+        } catch (Exception $e) {
+            echo $e;
+        }
 
-        // use wordwrap() if lines are longer than 70 characters
-        $msg = wordwrap($msg, 70);
-
-        // send email
-        mail($user, "My subject", $msg);
-
-
-        /* if (mail($to, $subject, $message, $headers)) {
-            echo "Email sent successfully";
-        } else {
-            echo "Email sending failed";
-        } */
+        require __DIR__ . '/../views/login/newpassword.php';
     }
 }
