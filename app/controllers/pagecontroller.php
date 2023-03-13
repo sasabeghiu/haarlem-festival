@@ -28,4 +28,20 @@ class PageController
 
         require __DIR__ . '/../views/visithaarlem/music.php';
     }
+
+    public function homepage()
+    {
+        $page = $this->pageController->getOnePage(1);
+        $pagecards = $this->pageCardController->getAllCardsByPageId(1);
+
+        require __DIR__ . '/../views/visithaarlem/homepage.php';
+    }
+
+    public function festivalpage()
+    {
+        $page = $this->pageController->getOnePage(2);
+        $pagecards = $this->pageCardController->getAllCardsByPageId(2);
+
+        require __DIR__ . '/../views/home/homepage.php';
+    }
 }
