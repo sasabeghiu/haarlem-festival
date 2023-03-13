@@ -3,6 +3,17 @@
 include __DIR__ . '/../header.php';
 ?>
 
+<style>
+    .links {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 50px;
+        background-color: orangered;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+    }
+</style>
 <div style="position: relative; text-align: center; color: white;" class="click2edit">
     <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($page->getHeaderImg()); ?>" width="100%" height="auto">
     <div style="position: absolute; bottom: 8px; left: 16px;">
@@ -22,7 +33,6 @@ include __DIR__ . '/../header.php';
         <button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit EVERYTHING</button>
         <button id="save" class="btn btn-primary" onclick="save()" type="button">Save ALL</button>
 
-
         <div class="row" style="display:flex; justify-content:center;">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
                 <?php
@@ -31,13 +41,15 @@ include __DIR__ . '/../header.php';
                     <div class="row mb-3">
                         <div class="card shadow-sm">
                             <div class="card-body text-light bg-dark">
-                                <p class="text-center fw-bold"><?= $card->getTitle() ?></p>
-                                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="rounded float-right" width="40%">
+                                <p class="font-weight-bold text-center display-4"><?= $card->getTitle() ?></p>
+                                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="rounded float-right ml-2" width="40%">
                                 <p><?= $card->getDescription() ?></p>
-                                <p>Price: </p>
-                                <p>Rating: <?= $card->getRating() ?>/10</p>
-                                <p>Addres: <?= $card->getLocation() ?></p>
-                                <a href="<?= $card->getLink() ?>" target="_blank">Go to website</a>
+                                <p><i class="fa-solid fa-euro-sign"></i> Price differs depending on the program</p>
+                                <hr>
+                                <p><i class="fa-regular fa-star"></i> <?= $card->getRating() ?>/10</p>
+                                <hr>
+                                <p><i class="fa-solid fa-location-dot"></i> <?= $card->getLocation() ?></p>
+                                <a href="<?= $card->getLink() ?>" class="float-right links" target="_blank">Go to website <i class="fa-solid fa-circle-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
