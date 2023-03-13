@@ -17,31 +17,40 @@ class FoodService
     {
         return $this->foodRepository->getRestaurantById();
     }
-    public function getSessions(){
+    public function getSessions()
+    {
         return $this->foodRepository->getSessions();
     }
-    public function getSessionById() {
+    public function getSessionById()
+    {
         return $this->foodRepository->getSessionById();
     }
-    public function saveSession(Session $session) {
+    public function saveSession(Session $session)
+    {
         $this->foodRepository->saveSession($session);
     }
-    public function deleteSession() {
+    public function deleteSession()
+    {
         $this->foodRepository->deleteSession();
     }
-    public function saveRestaurant(Restaurant $restaurant) {
+    public function saveRestaurant(Restaurant $restaurant)
+    {
         $this->foodRepository->saveRestaurant($restaurant);
     }
-    public function saveImage(string $imgData, Restaurant $restaurant){
+    public function saveImage(string $imgData, Restaurant $restaurant)
+    {
         return $this->foodRepository->saveImage($imgData, $restaurant);
     }
-    public function deleteRestaurant() {
+    public function deleteRestaurant()
+    {
         $this->foodRepository->deleteRestaurant();
     }
-    public function getReservations() {
+    public function getReservations()
+    {
         return $this->foodRepository->getReservations();
     }
-    public function deactivateReservation() {
+    public function deactivateReservation()
+    {
         $this->foodRepository->deactivateReservation();
     }
 }

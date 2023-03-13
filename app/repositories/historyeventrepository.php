@@ -14,7 +14,7 @@ class HistoryEventRepository extends Repository
                                                       JOIN tourguide ON history_event.tourguideID=tourguide.id");
             $stmt->execute();
 
-            $stmt->setFetchMode(PDO::FETCH_CLASS,'HistoryEvent');
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'HistoryEvent');
             $historyevents = $stmt->fetchAll();
 
             return $historyevents;
