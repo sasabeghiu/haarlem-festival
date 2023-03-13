@@ -69,11 +69,6 @@ include __DIR__ . '/../header.php';
         })
     };
 
-    // var save = function() {
-    //     var markup = $('.click2edit').summernote('code');
-    //     $('.click2edit').summernote('destroy');
-    // };
-
     var save = function() {
         $('.click2edit').each(function() {
             $(this).summernote('code');
