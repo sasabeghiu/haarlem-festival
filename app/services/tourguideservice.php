@@ -3,18 +3,16 @@ require __DIR__ . '/../repositories/tourguiderepository.php';
 
 class TourGuideService
 {
-    public function getAll()
+    private $tourguideRepository;
+
+    function __construct()
     {
-        //retrieve data
-        $repository = new TourGuideRepository();
-        $tourguides = $repository->getAll();
-        return $tourguides;
+        $this->tourguideRepository = new TourGuideRepository();   
     }
 
-    public function insert($tourguide)
+    public function getAll()
     {
         // retrieve data
-        $repository = new TourGuideRepository();
-        $repository->insert($tourguide);
+        return $this->tourguideRepository->getAll();
     }
 }

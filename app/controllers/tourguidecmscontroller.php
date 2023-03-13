@@ -23,6 +23,7 @@ class TourGuideCmsController
         require __DIR__ . '/../views/cms/tourguide/index.php';
     }
 
+
     public function cms()
     {
 
@@ -49,6 +50,15 @@ class TourGuideCmsController
             $tourguidescms->setDescription($description);
             $tourguidescms->setImage($image);
 
+            if (count($_FILES) > 0) {
+                if (is_uploaded_file($_FILES['image']['tmp_name'])){
+                    $image = file_get_contents($_FILES['image']['tmp_name']);
+                    $tourguidescms->setImage($this->tourguideService->saveImage($image));
+                }
+            } else {
+                echo "Problem Occured!";
+            }
+
             $this->tourguideService->addTourguide($tourguidescms);
 
             if ($this->tourguideService) {
@@ -73,6 +83,16 @@ class TourGuideCmsController
             $tourguidescms->setName($name);
             $tourguidescms->setDescription($description);
             $tourguidescms->setImage($image);
+
+            $theTourguide = $this->tourguideService->getATourguide($_GET["updateID"]);
+            if (count($_FILES) > 0) {
+                if (is_uploaded_file($_FILES['changeImage']['tmp_name'])) {
+                    $image = file_get_contents($_FILES['changeImage']['tmp_name']);
+                    $tourguidescms->setImage($this->tourguideService->updateImage($image, $theTourguide->getImage()));
+                }
+            } else {
+                echo "Problem Occured!";
+            }
 
             $this->tourguideService->updateTourguide($tourguidescms, $_GET["updateID"]);
 
