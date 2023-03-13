@@ -13,15 +13,15 @@
         </div>
         <div class="col socials">
             <h6 class="text-center">socials</h6>
-            <img src="/images/instaVector.png" alt="<?php echo "<p><u>Instagram</u></p>" ?> " class="vector">
-            <img src="/images/facebookvector.png" alt="<?php echo "<p><u>Facebook</u></p>" ?> " class="vector">
-            <img src="/images/youtubeVector.png" alt="<?php echo "<p><u>Youtube</u></p>" ?> " class="vector">
+            <a href="link" target="_blank"><i class="fa-brands fa-instagram vector"></i></a>
+            <a href="link" target="_blank"><i class="fa-brands fa-youtube vector"></i></a>
+            <a href="link" target="_blank"><i class="fa-brands fa-facebook vector"></i></a>
         </div>
         <div class="col">
             <h6 class="text-center">overview</h6>
-            <p class="text-center">Culture</p>
-            <p class="text-center">History</p>
-            <p class="text-center">Food</p>
+            <p class="text-center" href="/culture">Culture</p>
+            <p class="text-center" href="/history">History</p>
+            <p class="text-center" href="/food">Food</p>
             <!-- <a>Children</a> -->
             <p class="text-center">Festival</p>
         </div>
