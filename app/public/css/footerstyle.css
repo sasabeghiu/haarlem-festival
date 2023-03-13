@@ -4,8 +4,15 @@
 }
 
 #footer p,
-h6 {
+#footer h6,
+#footer a {
     color: white;
+}
+
+.overview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .socials {

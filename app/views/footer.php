@@ -17,13 +17,13 @@
             <a href="link" target="_blank"><i class="fa-brands fa-youtube vector"></i></a>
             <a href="link" target="_blank"><i class="fa-brands fa-facebook vector"></i></a>
         </div>
-        <div class="col">
+        <div class="col overview">
             <h6 class="text-center">overview</h6>
-            <p class="text-center" href="/culture">Culture</p>
-            <p class="text-center" href="/history">History</p>
-            <p class="text-center" href="/food">Food</p>
+            <a class="text-center" href="/culture">Culture</a>
+            <a class="text-center" href="/history">History</a>
+            <a class="text-center" href="/food">Food</a>
             <!-- <a>Children</a> -->
-            <p class="text-center">Festival</p>
+            <a class="text-center">Festival</a>
         </div>
         <div class="col">
             <h6 class="text-center">contact</h6>
