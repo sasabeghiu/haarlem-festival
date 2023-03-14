@@ -13,6 +13,22 @@ class PageController
         $this->pageCardController = new PageCardService();
     }
 
+    public function historypage()
+    {
+        $page = $this->pageController->getOnePage(3);
+        $pagecards = $this->pageCardController->getAllCardsByPageId(3);
+
+        require __DIR__ . '/../views/visithaarlem/history.php';
+    }
+
+    public function museumpage()
+    {
+        $page = $this->pageController->getOnePage(4);
+        $pagecards = $this->pageCardController->getAllCardsByPageId(4);
+
+        require __DIR__ . '/../views/visithaarlem/museum.php';
+    }
+
     public function theaterpage()
     {
         $page = $this->pageController->getOnePage(5);
@@ -28,4 +44,5 @@ class PageController
 
         require __DIR__ . '/../views/visithaarlem/music.php';
     }
+
 }
