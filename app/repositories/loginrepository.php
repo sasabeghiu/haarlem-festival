@@ -89,12 +89,11 @@ class LoginRepository extends Repository
         return $user;
     }
 
-    public function createVerificationCode($id, $code)
+    public function createVerificationCode($code)
     {
         try {
-            $query = 'INSERT INTO verification_codes (userId, code) VALUES (:id, :code)';
+            $query = 'INSERT INTO verification_code (code) VALUES (:code)';
             $stmt = $this->connection->prepare($query);
-            $stmt->bindValue(':id', $id);
             $stmt->bindValue(':code', $code);
             if ($stmt->execute()) {
                 return true;
@@ -105,18 +104,15 @@ class LoginRepository extends Repository
         return false;
     }
 
-    public function getVerificationCode($id) //gets latest code from userID
+    public function isValid($code)
     {
         try {
-            $query = 'SELECT code FROM verification_codes 
-            WHERE userId = :id
-            ORDER BY timestamp DESC
-            LIMIT 1';
+            $query = 'SELECT * FROM verification_code WHERE code = :code AND timestamp > NOW()';
             $stmt = $this->connection->prepare($query);
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':code', $code);
             $row = $stmt->fetch();
-            if ($stmt->execute()) {
-                return $row['code'];
+            if ($stmt->rowCount() > 0) {
+                return true;
             }
         } catch (PDOException $e) {
             print_r($e);
