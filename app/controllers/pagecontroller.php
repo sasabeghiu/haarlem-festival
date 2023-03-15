@@ -4,28 +4,46 @@ require __DIR__ . '/../services/pagecardservice.php';
 
 class PageController
 {
-    private $pageController;
-    private $pageCardController;
+    private $pageService;
+    private $pageCardService;
 
     function __construct()
     {
-        $this->pageController = new PageService();
-        $this->pageCardController = new PageCardService();
+        $this->pageService = new PageService();
+        $this->pageCardService = new PageCardService();
     }
 
     public function theaterpage()
     {
-        $page = $this->pageController->getOnePage(5);
-        $pagecards = $this->pageCardController->getAllCardsByPageId(5);
+        $page = $this->pageService->getOnePage(5);
+        $pagecards = $this->pageCardService->getAllCardsByPageId(5);
 
         require __DIR__ . '/../views/visithaarlem/theater.php';
     }
 
     public function musicpage()
     {
-        $page = $this->pageController->getOnePage(6);
-        $pagecards = $this->pageCardController->getAllCardsByPageId(6);
+        $page = $this->pageService->getOnePage(6);
+        $pagecards = $this->pageCardService->getAllCardsByPageId(6);
+
+        if (isset($_POST["update"])) {
+            $this->updateMusicPage();
+        }
 
         require __DIR__ . '/../views/visithaarlem/music.php';
+    }
+
+    public function updateMusicPage()
+    {
+        $title = htmlspecialchars($_POST["title"]);
+        $description = htmlspecialchars($_POST["description"]);
+
+        $page = new Page();
+
+        $page->setHeaderImg('');
+        $page->setTitle($title);
+        $page->setDescription($description);
+
+        $this->pageService->updatePage($page, 6);
     }
 }
