@@ -19,11 +19,18 @@
         </div>
         <div class="col overview">
             <h6 class="text-center">overview</h6>
-            <a class="text-center" href="/culture">Culture</a>
+            <a class="text-center" href="/theater">Theater</a>
             <a class="text-center" href="/history">History</a>
             <a class="text-center" href="/food">Food</a>
             <!-- <a>Children</a> -->
-            <a class="text-center">Festival</a>
+        </div>
+        <div class="col overview">
+            <h6 class="text-center">Festival</h6>
+            <a class="text-center" href="/festival">home</a>
+            <a class="text-center" href="/historyevent">History</a>
+            <a class="text-center" href="/food/yummy">Food</a>
+            <a class="text-center" href="/event">Dance</a>
+            <a class="text-center" href="/??">Jazz</a>
         </div>
         <div class="col">
             <h6 class="text-center">contact</h6>
