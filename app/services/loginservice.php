@@ -12,46 +12,36 @@ class LoginService
 
     public function login($username, $password)
     {
-
         return $this->loginRepository->login($username, $password);
     }
 
     public function register($username, $password, $email)
     {
-
         return $this->loginRepository->register($username, $password, $email);
     }
 
     public function getByUsername($username)
     {
-
         return $this->loginRepository->getByUsername($username);
     }
 
     public function getByEmail($email)
     {
-
         return $this->loginRepository->getByEmail($email);
     }
 
     public function getById($id)
     {
-
         return $this->loginRepository->getById($id);
     }
 
-    public function createVerificationCode($id, $code)
+    public function createVerificationCode($code)
     {
-
-        return $this->loginRepository->createVerificationCode($id, $code);
+        return $this->loginRepository->createVerificationCode($code);
     }
 
-    public function isValid($id, $code)
+    public function isValid($code)
     {
-        if ($this->loginRepository->getVerificationCode($id) == $code) {
-            return true;
-        }
-
-        return false;
+        return $this->loginRepository->isValid($code);
     }
 }

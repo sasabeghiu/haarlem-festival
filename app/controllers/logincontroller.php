@@ -95,17 +95,19 @@ class LoginController
             $username = isset($_POST['username']) ? $_POST['username'] : "";
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['username'] != null) {
+                session_start();
 
                 $user = $this->loginService->getByUsername($username);
+                $_SESSION['username'] = $user->getUsername();
                 $verificationCode = mt_rand(100000, 999999);
-                $verfication
+
                 print_r($verificationCode);
                 $receiver = $user->getEmail();
                 $receiver_name = $user->getUsername();
                 $subject = "Verification Code - Haarlem Festival Support";
                 $link = "http://localhost/login/verifyCode?code=" . $verificationCode;
                 $body_string = 'Click on the link to reset your password: ' . $link;
-                if (!$this->loginService->createVerificationCode($user->getId(), $verificationCode) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
+                if (!$this->loginService->createVerificationCode($verificationCode) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
                     echo "something failed in the process.";
                 } else {
                     echo "alles gut";
@@ -114,19 +116,23 @@ class LoginController
         } catch (Exception $e) {
             echo $e;
         }
-
-        //phpinfo();
-
         require __DIR__ . '/../views/login/resetpassword.php';
     }
 
     public function verifyCode()
     {
         try {
-            if ($this->loginService->isValid($_GET['code'])) {
-                echo $_GET['code'];
-            } else {
-                echo "nono";
+            $code = $_GET['code'];
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $password1 = $_POST['password'];
+                $password2 = $_POST['confirmPassword'];
+
+                if ($this->loginService->isValid($code) && $password1 == $password2) {
+                    echo 'success';
+                } else {
+                    echo "nono";
+                }
             }
         } catch (Exception $e) {
             echo $e;

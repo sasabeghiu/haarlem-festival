@@ -19,11 +19,7 @@
         <div class="container mt-4">
             <h2>Reset Password</h2>
             <p>Enter your password.</p>
-            <form method="post" action="login/verifyCode">
-                <div class="form-group">
-                    <label for="code">Password</label>
-                    <input type="num" class="form-control" id="code" name="code" required>
-                </div>
+            <form method="post" action="/login/verifyCode">
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
