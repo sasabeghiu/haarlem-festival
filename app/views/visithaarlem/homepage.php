@@ -1,6 +1,6 @@
 <?php
 //incl new navbar
-include __DIR__ . '/../header.php';
+include __DIR__ . '/../navbar.php';
 ?>
 
 <div style="position: relative; text-align: center; color: white;" class="click2edit">
