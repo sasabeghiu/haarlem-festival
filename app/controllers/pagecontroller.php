@@ -20,7 +20,26 @@ class PageController
         $this->historyEventService = new HistoryEventService();
     }
 
-    public function historypage()
+    public function index()
+    {
+        $page = $this->pageService->getOnePage(1);
+        $pagecards = $this->pageCardService->getAllCardsByPageId(1);
+
+        require __DIR__ . '/../views/visithaarlem/homepage.php';
+    }
+
+    public function festival()
+    {
+        $page = $this->pageService->getOnePage(2);
+        $pagecards = $this->pageCardService->getAllCardsByPageId(2);
+
+        $events = $this->eventService->getAll();
+        $historyEvents = $this->historyEventService->getAll();
+
+        require __DIR__ . '/../views/home/homepage.php';
+    }
+
+    public function history()
     {
         $page = $this->pageService->getOnePage(3);
         $pagecards = $this->pageCardService->getAllCardsByPageId(3);
@@ -28,7 +47,7 @@ class PageController
         require __DIR__ . '/../views/visithaarlem/history.php';
     }
 
-    public function museumpage()
+    public function museum()
     {
         $page = $this->pageService->getOnePage(4);
         $pagecards = $this->pageCardService->getAllCardsByPageId(4);
@@ -36,7 +55,7 @@ class PageController
         require __DIR__ . '/../views/visithaarlem/museum.php';
     }
 
-    public function theaterpage()
+    public function theater()
     {
         $page = $this->pageService->getOnePage(5);
         $pagecards = $this->pageCardService->getAllCardsByPageId(5);
@@ -44,7 +63,7 @@ class PageController
         require __DIR__ . '/../views/visithaarlem/theater.php';
     }
 
-    public function musicpage()
+    public function music()
     {
         $page = $this->pageService->getOnePage(6);
         $pagecards = $this->pageCardService->getAllCardsByPageId(6);
@@ -68,24 +87,5 @@ class PageController
         $page->setDescription($description);
 
         $this->pageService->updatePage($page, 6);
-    }
-
-    public function homepage()
-    {
-        $page = $this->pageService->getOnePage(1);
-        $pagecards = $this->pageCardService->getAllCardsByPageId(1);
-
-        require __DIR__ . '/../views/visithaarlem/homepage.php';
-    }
-
-    public function festivalpage()
-    {
-        $page = $this->pageService->getOnePage(2);
-        $pagecards = $this->pageCardService->getAllCardsByPageId(2);
-
-        $events = $this->eventService->getAll();
-        $historyEvents = $this->historyEventService->getAll();
-
-        require __DIR__ . '/../views/home/homepage.php';
     }
 }
