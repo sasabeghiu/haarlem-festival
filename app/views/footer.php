@@ -1,6 +1,6 @@
 </div>
 <head>
-    <link rel="stylesheet" href="css/footerstyle.css">
+    <link rel="stylesheet" href="/css/footerstyle.css">
 </head>
 <!-- Footer -->
 <div class="container-fluid" id="footer">
