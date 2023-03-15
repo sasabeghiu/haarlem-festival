@@ -13,20 +13,24 @@ include __DIR__ . '/../header.php';
 </div>
 <!-- Main Content -->
 <div class="container mb-3">
-    <div class="row mb-4">
-        <div class="col-md-6">
-            <p> <?= $page->getDescription() ?></p>
-        </div>
+    <div class="row mb-3">
+        <p class="text-center fs-1"> <?= $page->getDescription() ?></p>
     </div>
     <div class="row mb-3" style="display:flex; justify-content:center;">
         <?php
         foreach ($pagecards as $card) {
         ?>
-            <div class="card">
-                <h5 class="text-center fw-bold"><?= $card->getTitle() ?></h5>
-                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img-top">
-                <div class="card-body">
-                    <p class="text"><?= $card->getDescription() ?></p>
+            <div class="card" style="width: 60%; height: auto">
+                <div class="row">
+                    <div class="col-md-9">
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img rounded-left">
+                    </div>
+                    <div class="col-md-3 bg-light rounded-right">
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?= $card->getTitle() ?></h5>
+                            <p class="card-text"><?= $card->getDescription() ?></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         <?php
@@ -36,50 +40,36 @@ include __DIR__ . '/../header.php';
 </div>
 
 <!-- TimeTable -->
-<div class="container mb-3">
-    <h2>Festival Schedule Overview</h2>
-    <div class="btn-group mb-3" role="group" aria-label="Event filter buttons">
-        <button type="button" class="btn btn-primary">Dance Events</button>
-        <button type="button" class="btn btn-secondary">Jazz Events</button>
-        <button type="button" class="btn btn-secondary">History Events</button>
+<div class="container">
+    <div>
+        <button class="btn btn-secondary" id="show-dance-events">Dance</button>
+        <button class="btn btn-secondary" id="show-jazz-events">Jazz</button>
+        <button class="btn btn-secondary" disabled id="show-history-events">History</button>
     </div>
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">Day</th>
                 <th scope="col">Time</th>
-                <th scope="col">Event</th>
+                <th scope="col">Name</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th scope="row">12:00pm</th>
-                <td>Music Event 1</td>
-            </tr>
-            <tr>
-                <th scope="row">2:00pm</th>
-                <td>Art Event 1</td>
-            </tr>
-            <tr>
-                <th scope="row">4:00pm</th>
-                <td>Music Event 2</td>
-            </tr>
-            <tr>
-                <th scope="row">6:00pm</th>
-                <td>Music Event 3</td>
-            </tr>
-            <tr>
-                <th scope="row">8:00pm</th>
-                <td>Art Event 2</td>
-            </tr>
+        <tbody id="jazz&dance">
+            <?php foreach ($events as $event) :
+                $day = date('l', strtotime($event->getDatetime())); ?>
+                <tr class="<?php echo $event->getType(); ?>">
+                    <td><?php echo $day ?></td>
+                    <td><?php echo date('g:i A', strtotime($event->getDatetime())); ?></td>
+                    <td><?php echo $event->getName(); ?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 
 
-
-
 <!-- Location -->
-<div class="row mb-4">
+<div class="container">
     <div class="col-md-6">
         <div class="location">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2427.660308624696!2d4.632323215799311!3d52.386532879785394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c6097df89360c9%3A0x1a70afdd12fd6e39!2sGrote%20Markt%2C%20Haarlem!5e0!3m2!1sen!2snl!4v1615301111915!5m2!1sen!2snl" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
@@ -97,44 +87,34 @@ include __DIR__ . '/../header.php';
 </div>
 
 
-<!-- Footer -->
-<!-- <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h4>About Us</h4>
-                        <p><a href="VisitHaarlem.nl">VisitHaarlem.nl</a> is dedicated to
-                            present Haarlem’s offer in
-                            an engaging way</p>
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Socials</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Instagram</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Contact</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Email</a></li>
-                            <li><a href="#">Phone</a></li>
-                            <li><a href="#">Address</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Information</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">FAQs</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer> -->
+<?php
+include __DIR__ . '/../footer.php';
+?>
 
+<script>
+    const jazzButton = document.getElementById('show-jazz-events');
+    const danceButton = document.getElementById('show-dance-events');
+    const jazzRows = document.querySelectorAll('.jazz');
+    const danceRows = document.querySelectorAll('.dance');
+
+    jazzButton.addEventListener('click', function() {
+        jazzRows.forEach(function(row) {
+            row.style.display = 'table-row';
+        });
+        danceRows.forEach(function(row) {
+            row.style.display = 'none';
+        });
+    });
+
+    danceButton.addEventListener('click', function() {
+        danceRows.forEach(function(row) {
+            row.style.display = 'table-row';
+        });
+        jazzRows.forEach(function(row) {
+            row.style.display = 'none';
+        });
+    });
+</script>
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

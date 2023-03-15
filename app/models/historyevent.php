@@ -1,13 +1,12 @@
 <?php
 
-class HistoryEvent implements JsonSerializable {
+class HistoryEvent implements JsonSerializable
+{
 
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }
-
-//better make everything private!
 
     private int $id;
     private string $nameOfTours;
@@ -198,9 +197,9 @@ class HistoryEvent implements JsonSerializable {
         $this->tourguideDescription = $tourguideDescription;
     }
 
-    public function getFormattedDate(){
+    public function getFormattedDate()
+    {
         $date = new DateTime($this->datetime);
         return $date->format('d - F - Y - H:i:s');
     }
-
 }

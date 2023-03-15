@@ -1,10 +1,24 @@
 <?php
 
-require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/historyevent.php';
 
-class HistoryEventRepository extends Repository
+class HistoryEventRepository
 {
+    protected $connection;
+
+    public function __construct()
+    {
+        require __DIR__ . '/../config/dbconfig.php';
+
+        try {
+            $this->connection = new PDO("$type:host=$servername;dbname=$database", $username, $password);
+            // set the PDO error mode to exception
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+    }
+
     function getAll()
     {
         try {
