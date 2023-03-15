@@ -34,7 +34,7 @@ class LoginController
                         session_start();
                         $_SESSION['userId'] = $user->getId();
                         $_SESSION['loggedin'] = true;
-                        header('Location: /home/index');
+                        header('Location: /page/festival');
                     }
                 }
                 echo "Login error: Username or password incorrect.";
@@ -121,6 +121,7 @@ class LoginController
 
     public function verifyCode()
     {
+        //change $this
         try {
             $code = $_GET['code'];
 

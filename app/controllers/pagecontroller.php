@@ -36,7 +36,7 @@ class PageController
         $events = $this->eventService->getAll();
         $historyEvents = $this->historyEventService->getAll();
 
-        require __DIR__ . '/../views/home/homepage.php';
+        require __DIR__ . '/../views/visithaarlem/festivalhomepage.php';
     }
 
     public function history()

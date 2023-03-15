@@ -45,6 +45,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/page/music">Music</a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/food">Food</a>
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="/page/festival">Festival</a>
