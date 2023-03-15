@@ -17,14 +17,22 @@
     </header>
     <main class="container">
         <div class="container mt-4">
-            <h2>Verify Account</h2>
-            <p>Enter your username to receive a verification code in the email associated with the account.</p>
-            <form method="post" action="/login/createCode">
+            <h2>Reset Password</h2>
+            <p>Enter your password.</p>
+            <form method="post" action="login/verifyCode">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <label for="code">Password</label>
+                    <input type="num" class="form-control" id="code" name="code" required>
                 </div>
-                <button type="submit" class="btn btn-primary" name="submit">Send Verification Code</button>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" name="submit">Reset Password</button>
                 <a href="/login" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
