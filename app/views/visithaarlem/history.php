@@ -35,6 +35,9 @@ include __DIR__ . '/../header.php';
         <button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit EVERYTHING</button>
         <button id="save" class="btn btn-primary" onclick="save()" type="button">Save ALL</button>
 
+        <!--For this hardcoded part I can call a foreach loop in which I use the same title with the other foreachloop as well
+        and use the location as the description of those cards, instead of keeping it as a null. As well call the links
+        in the loop when the above steps are finished.-->
         <div class="card-group d-flex flex-wrap justify-content-center">
 
             <div class="card my-4 card-sm" style="gap: 1rem;">
