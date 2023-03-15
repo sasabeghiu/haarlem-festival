@@ -1,9 +1,8 @@
 <?php
 
-require __DIR__ . '/controller.php';
 require __DIR__ . '/../services/historyeventservice.php';
 
-class HistoryEventController extends Controller
+class HistoryEventController
 {
 
     private $historyeventService;

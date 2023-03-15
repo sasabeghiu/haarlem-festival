@@ -18,18 +18,7 @@ class HistoryEventRepository extends Repository
             $historyevents = $stmt->fetchAll();
 
             return $historyevents;
-        } catch (PDOException $e) {
-            echo $e;
-        }
-    }
-
-    function insert($historyevents)
-    {
-        try {
-            $stmt = $this->connection->prepare("INSERT into history_event (id, tickets_available, price, datetime, location, venueID, image, tourguideID) VALUES (?,?,?,?,?,?,?,?)");
-
-            $stmt->execute([$historyevents->getId(), $historyevents->getTicketsAvailable(), $historyevents->getPrice(), $historyevents->getFormattedDate(), $historyevents->getLocation(), $historyevents->getVenueID(), $historyevents->getImage(), $historyevents->getTourguideID()]);
-        } catch (PDOException $e) {
+        }catch (PDOException $e){
             echo $e;
         }
     }

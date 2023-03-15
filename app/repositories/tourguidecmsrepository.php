@@ -101,4 +101,48 @@ class TourGuideCmsRepository extends Repository
         }
         return true;
     }
+
+    function saveImage(string $imgInfo)
+    {
+        try {
+            $stmt = $this->connection->prepare('INSERT INTO images (image) VALUES (:image)');
+
+            $stmt->bindParam(':image', $imgInfo);
+            $stmt->execute();
+
+            return $this->connection->lastInsertId();
+        } catch(Exception $e){
+            echo $e;
+        }
+    }
+
+    function updateImage($imgInfo, $id)
+    {
+        try {
+            $stmt = $this->connection->prepare('UPDATE images SET image = :image WHERE id = :id');
+            $stmt->bindValue(':image', $imgInfo);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            return $id;
+        } catch (PDOException $e){
+            echo $e;
+        }
+    }
+
+    function getATourguide($id)
+    {
+        try {
+            $stmt = $this->connection->prepare('SELECT * FROM tourguide WHERE id = :id');
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'TourGuideCms');
+            $tourguidescms = $stmt->fetch();
+
+            return $tourguidescms;
+        } catch (PDOException $e){
+            echo $e;
+        }
+    }
 }
