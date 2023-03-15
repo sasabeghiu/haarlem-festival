@@ -34,7 +34,7 @@ class LoginController
                         session_start();
                         $_SESSION['userId'] = $user->getId();
                         $_SESSION['loggedin'] = true;
-                        header('Location: /home/index');
+                        header('Location: /page/festival');
                     }
                 }
                 echo "Login error: Username or password incorrect.";
@@ -98,7 +98,7 @@ class LoginController
 
                 $user = $this->loginService->getByUsername($username);
                 $verificationCode = mt_rand(100000, 999999);
-                $verfication
+                
                 print_r($verificationCode);
                 $receiver = $user->getEmail();
                 $receiver_name = $user->getUsername();
@@ -122,8 +122,9 @@ class LoginController
 
     public function verifyCode()
     {
+        //change $this
         try {
-            if ($this->loginService->isValid($_GET['code'])) {
+            if ($this->loginService->isValid($this, $_GET['code'])) {
                 echo $_GET['code'];
             } else {
                 echo "nono";
