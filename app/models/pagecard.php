@@ -11,7 +11,7 @@ class PageCard
     private ?float $kids_price;
     private string $image;
     private ?string $link;
-    private ?string $description;
+    private string $description;
     private int $pageId;
 
     /**

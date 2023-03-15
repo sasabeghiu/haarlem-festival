@@ -3,10 +3,34 @@ require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/restaurant.php';
 require __DIR__ . '/../models/session.php';
 require __DIR__ . '/../models/reservation.php';
+require __DIR__ . '/../models/page.php';
+require __DIR__ . '/../models/pagecard.php';
 
 class FoodRepository extends Repository
 {
+    function getFoodPageContent() {
+        $stmt = $this->connection->prepare("SELECT page.id, images.image, page.title, page.description FROM `page` 
+                                            JOIN images ON page.headerImg = images.id
+                                            WHERE page.id = 7");
+        $stmt->execute();
 
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'page');
+        $page = $stmt->fetchAll();
+
+        return $page[0];
+    }
+    function getFoodPageCards() {
+        $stmt = $this->connection->prepare("SELECT pagecard.id, pagecard.title, pagecard.description, pagecard.link, images.image
+                                            FROM pagecard
+                                            JOIN images ON pagecard.image = images.id
+                                            WHERE pagecard.pageId = 7");
+        $stmt->execute();
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'pagecard');
+        $cards = $stmt->fetchAll();
+
+        return $cards;
+    }
     function getRestaurants()
     {
         try {
