@@ -44,7 +44,7 @@ include __DIR__ . '/../../header.php';
             <div class="form-group row mb-1">
                 <label for="image" class="col-sm-2 col-form-label">Image:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Insert Image ID" required>
+                    <input type="file" class="form-control" id="image" name="image" required>
                 </div>
             </div>
             <input type="submit" name="add" value="Insert Tour Guide" class="form-control btn btn-success mb-1">
@@ -113,7 +113,7 @@ include __DIR__ . '/../../header.php';
                     <label for="changedImage" class="col-sm-2 col-form-label">Image:</label>
                     <div class="col-sm-10">
                         <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateTourguide->getImage()) . '" height="100px"/>'; ?>
-                        <input type="text" class="form-control" id="changedImage" name="changedImage" placeholder="Insert image id..." required>
+                        <input type="file" class="form-control" id="changedImage" name="changedImage" required>
                     </div>
                 </div>
                 <input type="submit" name="update" value="Update Tour Guide" class="form-control btn btn-success mb-1">

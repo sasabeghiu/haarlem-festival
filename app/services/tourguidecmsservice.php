@@ -40,4 +40,19 @@ class TourGuideCmsService
     {
         return $this->tourguideRepository->deleteTourguide($id);
     }
+
+    public function saveImage($imgInfo)
+    {
+        return $this->tourguideRepository->saveImage($imgInfo);
+    }
+
+    public function updateImage($imgInfo, $id)
+    {
+        return $this->tourguideRepository->updateImage($imgInfo, $id);
+    }
+
+    public function getATourguide($id)
+    {
+        return $this->tourguideRepository->getATourguide($id);
+    }
 }

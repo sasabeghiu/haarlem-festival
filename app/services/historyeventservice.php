@@ -4,19 +4,16 @@ require __DIR__ . '/../repositories/historyeventrepository.php';
 
 class HistoryEventService
 {
+    private $historyeventRepository;
+
+    function __construct()
+    {
+        $this->historyeventRepository = new HistoryEventRepository();
+    }
 
     public function getAll()
     {
         //retrieve data
-        $repository = new HistoryEventRepository();
-        $historyevents = $repository->getAll();
-        return $historyevents;
-    }
-
-    public function insert($historyevent)
-    {
-        //retrieve data
-        $repository = new HistoryEventRepository();
-        $repository->insert($historyevent);
+        return $this->historyeventRepository->getAll();
     }
 }
