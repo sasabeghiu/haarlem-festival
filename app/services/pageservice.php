@@ -14,4 +14,9 @@ class PageService
     {
         return $this->pageRepository->getOnePage($id);
     }
+
+    public function updatePage($page, $id)
+    {
+        return $this->pageRepository->updatePage($page, $id);
+    }
 }

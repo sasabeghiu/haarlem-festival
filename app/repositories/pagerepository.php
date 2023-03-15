@@ -22,4 +22,14 @@ class PageRepository extends Repository
             echo $e;
         }
     }
+
+    function updatePage($page, $id)
+    {
+        try {
+            $stmt = $this->connection->prepare("UPDATE page SET headerImg = ?, title = ?, description = ? WHERE id = ?");
+            $stmt->execute([$page->getHeaderImg(),  $page->getTitle(), $page->getDescription(), $id]);
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
 }
