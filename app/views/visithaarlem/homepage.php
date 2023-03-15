@@ -3,12 +3,12 @@
 include __DIR__ . '/../header.php';
 ?>
 
-<div style="position: relative; text-align: center; color: white;">
+<div style="position: relative; text-align: center; color: white;" class="click2edit">
     <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($page->getHeaderImg()); ?>" width="100%" height="auto">
     <div style="position: absolute; bottom: 8px; left: 16px;">
         <h4 style="display:inline;">
             </h5>
-            <h1 style="display:inline;"> <?= $page->getTitle() ?></h1>
+            <h1 style="display:inline;" class="click2edit"> <?= $page->getTitle() ?></h1>
     </div>
 </div>
 <!-- Main Content -->
@@ -32,7 +32,7 @@ include __DIR__ . '/../header.php';
                 <div class="card">
                     <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="text-center fw-bold"><?= $card->getTitle() ?></h5>
+                        <h5 class="text-center fw-bold click2edit"><?= $card->getTitle() ?></h5>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@ include __DIR__ . '/../header.php';
 </div>
 <div class="container mb-3">
     <div class="">
-        <p> <?= $page->getDescription() ?></p>
+        <p class="click2edit"> <?= $page->getDescription() ?></p>
     </div>
 </div>
 
@@ -92,15 +92,22 @@ include __DIR__ . '/../header.php';
     </div>
 </div>
 
+<script>
+    var edit = function() {
+        $(".click2edit").each(function() {
+            $(this).summernote({
+                focus: true,
+            });
+        });
+    };
 
+    var save = function() {
+        $(".click2edit").each(function() {
+            $(this).summernote("code");
+            $(this).summernote("destroy");
+        });
+    };
+</script>
 <?php
 include __DIR__ . '/../footer.php';
 ?>
-
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-</body>
-
-</html>
