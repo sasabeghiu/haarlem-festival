@@ -73,7 +73,7 @@ class UserController
                 } else if (!$this->userService->update($newUser)) {
                     echo "<script>alert('Failed to update User. ') window.location = '/user';</script>";
                 } else {
-                    echo "<script>alert('Updated successfully!'); window.location = '/home';</script>";
+                    echo "<script>alert('Updated successfully!'); window.location = '/page/festival';</script>";
                 }
             } catch (Exception $e) {
                 echo "An error occurred: " . $e->getMessage();
@@ -99,7 +99,7 @@ class UserController
             $user = $this->userService->getById($_SESSION['userId']);
             require __DIR__ . '/../views/cms/user/profile.php';
         } else {
-            echo "<script>alert('Please log in to access profile!'); window.location = '/home';</script>";
+            echo "<script>alert('Please log in to access profile!'); window.location = '/page/festival';</script>";
         }
     }
 }
