@@ -13,7 +13,7 @@ class UserController
     public function index()
     {
         $model = $this->userService->getAll();
-        $roles = $this->userService->getRoles();
+        //$roles = $this->userService->getRoles();
 
         require __DIR__ . '/../views/cms/user/index.php';
     }
