@@ -8,6 +8,7 @@ class User
     private int $roleId;
     private string $roleName;
     private string $email;
+    private string $created_at;
 
     // Getters and setters generated using https://docs.devsense.com/en/vscode/editor/code-actions
 
@@ -116,6 +117,24 @@ class User
     public function setEmail(string $email): self
     {
         $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreationDate(): string
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @param string $created_at 
+     * @return self
+     */
+    public function setCreationDate(string $created_at): self
+    {
+        $this->created_at = $created_at;
         return $this;
     }
 }

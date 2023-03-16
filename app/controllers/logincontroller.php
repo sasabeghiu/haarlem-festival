@@ -121,24 +121,33 @@ class LoginController
 
     public function verifyCode()
     {
-        //change $this
         try {
-            $code = $_GET['code'];
-
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['submit'])) {
+                $code = $_POST['code'];
                 $password1 = $_POST['password'];
                 $password2 = $_POST['confirmPassword'];
 
-                if ($this->loginService->isValid($code) && $password1 == $password2) {
-                    echo 'success';
-                } else {
-                    echo "nono";
+                $userId = $this->loginService->isValid($code);
+
+                if (!$this->loginService) {
+                    echo "<script>alert('code invalid or expired')";
+                }
+                if ($password1 != $password2) {
+                    echo "<script>alert('Passwords dont match!')";
+                }
+                if (strlen($password1) < 6) {
+                    echo "<script>alert('Password must be at least 6 characters long!')";
+                }
+                if ($this->loginService->updatePassword($userId, $password1)) { //password_hash($password1, PASSWORD_DEFAULT)
+                    echo "<script>alert('Update failed')";
+                }
+                if (!$this->loginService->deleteCode($code)) {
+                    echo "<script>alert('failed')";
                 }
             }
+            require __DIR__ . '/../views/login/newpassword.php';
         } catch (Exception $e) {
             echo $e;
         }
-
-        require __DIR__ . '/../views/login/newpassword.php';
     }
 }

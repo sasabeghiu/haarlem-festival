@@ -35,6 +35,11 @@ class LoginService
         return $this->loginRepository->getById($id);
     }
 
+    public function updatePassword($userId, $password)
+    {
+        return $this->loginRepository->updatePassword($userId, $password);
+    }
+
     public function createVerificationCode($code)
     {
         return $this->loginRepository->createVerificationCode($code);
@@ -42,6 +47,11 @@ class LoginService
 
     public function isValid($code)
     {
-        return $this->loginRepository->isValid($code);
+        return $this->loginRepository->getLast($code);
+    }
+
+    public function deleteCode($code)
+    {
+        return $this->loginRepository->deleteCode($code);
     }
 }

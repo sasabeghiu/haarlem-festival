@@ -17,6 +17,7 @@ include(__DIR__ . "/../../header.php");
                         <th scope="col">Password</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
+                        <th scope="col">Resgistration date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,7 @@ include(__DIR__ . "/../../header.php");
                             <td>********</td>
                             <td><?php echo $user->getEmail(); ?></td>
                             <td><?php echo $user->getRole();  ?></td>
+                            <td><?php echo DateTime::createFromFormat('Y-m-d H:i:s', $user->getCreationDate())->format('d-m-Y'); ?></td>
                             <td>
                                 <input name="editbtn" id="editbtn" class="btn btn-info" type="button" value="Edit" onclick="location='/user/edit?userId=<?php echo $user->getId(); ?>'">
                                 <input name="deletebtn" id="deletebtn" class="btn btn-danger" type="button" value="Delete" onclick="location='/user/delete?userId=<?php echo $user->getId(); ?>'">

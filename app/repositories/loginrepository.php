@@ -12,7 +12,7 @@ class LoginRepository extends Repository
     {
         try {
             // Insert new user
-            $query = 'INSERT INTO user (username, password, roleId, email) VALUES (:username, :password, :roleId, :email)';
+            $query = 'INSERT INTO user (username, password, roleId, email, created_at) VALUES (:username, :password, :roleId, :email, CURRENT_TIMESTAMP)';
             $stmt = $this->connection->prepare($query);
             $stmt->bindValue(':username', $username);
             $stmt->bindValue(':password', $password);
@@ -89,6 +89,22 @@ class LoginRepository extends Repository
         return $user;
     }
 
+    public function updatePassword($userId, $password)
+    {
+        try {
+            $query = 'UPDATE user SET password = :pass WHERE id = :id';
+            $stmt = $this->connection->prepare($query);
+            $stmt->bindValue(':pass', $password);
+            $stmt->bindValue(':id', $userId);
+            if ($stmt->execute()) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            print_r($e);
+        }
+        return false;
+    }
+
     public function createVerificationCode($code)
     {
         try {
@@ -104,19 +120,41 @@ class LoginRepository extends Repository
         return false;
     }
 
-    public function isValid($code)
+    public function getLast($code)
     {
         try {
-            $query = 'SELECT * FROM verification_code WHERE code = :code AND timestamp > NOW()';
+            // Set the time limit to 10 minutes
+            $timeLimit = 10; // in minutes
+            // Get the datetime 10 minutes ago
+            $datetimeLimit = date('Y-m-d H:i:s', strtotime('-' . $timeLimit . ' minutes'));
+
+            $query = 'SELECT * FROM verification_code WHERE code = :code AND timestamp > :datetimeLimit';
             $stmt = $this->connection->prepare($query);
             $stmt->bindValue(':code', $code);
+            $stmt->bindParam(':datetimeLimit', $datetimeLimit);
             $row = $stmt->fetch();
             if ($stmt->rowCount() > 0) {
-                return true;
+                return $row['userId'];
             }
         } catch (PDOException $e) {
             print_r($e);
         }
         return false;
+    }
+
+    public function deleteCode($code)
+    {
+        $query = 'DELETE FROM verification_code WHERE code = :code';
+
+        try {
+            $stmt = $this->connection->prepare($query);
+            $stmt->bindValue(':code', $code);
+            $stmt->execute();
+            if ($stmt) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            echo ($e);
+        }
     }
 }

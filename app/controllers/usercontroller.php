@@ -72,6 +72,8 @@ class UserController
                     echo "<script>alert('Username or Email already in use!'); window.location = '/user';</script>";
                 } else if (!$this->userService->update($newUser)) {
                     echo "<script>alert('Failed to update User. ') window.location = '/user';</script>";
+                } else if (strlen($newUser->getPassword()) < 6) {
+                    echo "<script>alert('Password must be at least 6 characters long!. ') window.location = '/user';</script>";
                 } else {
                     echo "<script>alert('Updated successfully!'); window.location = '/page/festival';</script>";
                 }
