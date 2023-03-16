@@ -55,19 +55,24 @@ class TourGuideCms
         $this->description = $description;
     }
 
+
     /**
-     * @return string
+     * Get the value of image
      */
-    public function getImage(): string
+    public function getImage()
     {
         return $this->image;
     }
 
     /**
-     * @param string $image
+     * Set the value of image
+     *
+     * @return  self
      */
-    public function setImage(string $image): void
+    public function setImage($image)
     {
         $this->image = $image;
+
+        return $this;
     }
 }

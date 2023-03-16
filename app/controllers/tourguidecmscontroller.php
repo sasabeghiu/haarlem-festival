@@ -26,7 +26,6 @@ class TourGuideCmsController
 
     public function cms()
     {
-
         //Functionality delete
         if (isset($_POST["delete"])) {
             $id = htmlspecialchars($_GET["deleteID"]);
@@ -42,16 +41,14 @@ class TourGuideCmsController
         if (isset($_POST["add"])) {
             $name = htmlspecialchars($_POST["name"]);
             $description = htmlspecialchars($_POST["description"]);
-            $image = htmlspecialchars($_POST["image"]);
 
             $tourguidescms = new TourGuideCms();
 
             $tourguidescms->setName($name);
             $tourguidescms->setDescription($description);
-            $tourguidescms->setImage($image);
 
             if (count($_FILES) > 0) {
-                if (is_uploaded_file($_FILES['image']['tmp_name'])){
+                if (is_uploaded_file($_FILES['image']['tmp_name'])) {
                     $image = file_get_contents($_FILES['image']['tmp_name']);
                     $tourguidescms->setImage($this->tourguideService->saveImage($image));
                 }
@@ -76,15 +73,14 @@ class TourGuideCmsController
         if (isset($_POST["update"])) {
             $name = htmlspecialchars($_POST["changedName"]);
             $description = htmlspecialchars($_POST["changedDescription"]);
-            $image = htmlspecialchars($_POST["changedImage"]);
 
             $tourguidescms = new TourGuideCms();
 
             $tourguidescms->setName($name);
             $tourguidescms->setDescription($description);
-            $tourguidescms->setImage($image);
 
             $theTourguide = $this->tourguideService->getATourguide($_GET["updateID"]);
+            
             if (count($_FILES) > 0) {
                 if (is_uploaded_file($_FILES['changeImage']['tmp_name'])) {
                     $image = file_get_contents($_FILES['changeImage']['tmp_name']);

@@ -17,7 +17,7 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetchAll();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -36,7 +36,7 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetch();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -55,23 +55,27 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetch();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
 
     //Adding Tour Guides by using the CMS
-    function addTourguide($tourguides)
+    function addTourguide(TourGuideCms $tourguides)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT into tourguide (name, description, image) VALUES (?,?,?)");
+            $stmt = $this->connection->prepare("INSERT into tourguide (name, description, image) VALUES (:name, :description, :image)");
 
-            $stmt->execute([$tourguides->getName(), $tourguides->getDescription(), $tourguides->getImage()]);
+            $stmt->bindValue(':name', $tourguides->getName());
+            $stmt->bindValue(':description', $tourguides->getDescription());
+            $stmt->bindValue(':image', $tourguides->getImage());
+
+            $stmt->execute();
 
             $tourguides->setId($this->connection->lastInsertId());
 
             return $this->getOne($tourguides->getId());
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -82,7 +86,7 @@ class TourGuideCmsRepository extends Repository
         try {
             $stmt = $this->connection->prepare("UPDATE tourguide SET name = ?, description = ?, image = ? WHERE id = ?");
             $stmt->execute([$tourguides->getName(), $tourguides->getDescription(), $tourguides->getImage(), $id]);
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -91,12 +95,13 @@ class TourGuideCmsRepository extends Repository
     function deleteTourguide($id)
     {
         try {
-            $stmt = $this->connection->prepare("DELETE FROM tourguide WHERE id = :id");
+
+            $stmt = $this->connection->prepare("DELETE t, i
+            FROM tourguide as t, images as i
+            WHERE t.id=:id AND i.id=t.image");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
-
-            return;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
         return true;
@@ -111,7 +116,7 @@ class TourGuideCmsRepository extends Repository
             $stmt->execute();
 
             return $this->connection->lastInsertId();
-        } catch(Exception $e){
+        } catch (Exception $e) {
             echo $e;
         }
     }
@@ -125,7 +130,7 @@ class TourGuideCmsRepository extends Repository
             $stmt->execute();
 
             return $id;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -141,7 +146,7 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetch();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
