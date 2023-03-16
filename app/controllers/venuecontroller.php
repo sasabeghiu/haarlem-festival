@@ -17,6 +17,7 @@ class VenueController
 
     public function dancevenues()
     {
+
         $model = $this->venueService->getAllDanceVenues();
 
         require __DIR__ . '/../views/dance/venuesoverview.php';
@@ -29,8 +30,35 @@ class VenueController
         require __DIR__ . '/../views/jazz/venuesoverview.php';
     }
 
+    function addToCart()
+    {
+        session_start();
+        if (isset($_POST['add-to-cart'])) {
+            if (isset($_SESSION['shopping-cart'])) {
+                $items_array_id = array_column($_SESSION['shopping-cart'], "product_id");
+                if (in_array($_POST['product_id'], $items_array_id)) {
+                    echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
+                } else {
+                    $count = count($_SESSION['shopping-cart']);
+                    $items_array = array(
+                        'product_id' => $_POST['product_id']
+                    );
+                    $_SESSION['shopping-cart'][$count] = $items_array;
+                }
+            } else {
+                $items_array = array(
+                    'product_id' => $_POST['product_id']
+                );
+                //Create new session variable
+                $_SESSION['shopping-cart'][0] = $items_array;
+            }
+        }
+    }
+
     public function dancevenuedetails()
     {
+        $this->addToCart();
+
         $url = getURL();
         $url_components = parse_url($url);
         parse_str($url_components['query'], $params);
@@ -44,6 +72,8 @@ class VenueController
 
     public function jazzvenuedetails()
     {
+        $this->addToCart();
+
         $url = getURL();
         $url_components = parse_url($url);
         parse_str($url_components['query'], $params);
@@ -56,7 +86,6 @@ class VenueController
     }
 
     // cms part
-
     public function addVenue()
     {
         $name = htmlspecialchars($_POST["name"]);

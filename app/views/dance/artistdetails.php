@@ -73,7 +73,10 @@ include __DIR__ . '/../header.php';
                                 <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
                             </div>
                             <div class="card-footer text-light bg-dark text-center">
-                                <button class="btn btn-secondary">Add to cart</button>
+                                <form action="/artist/danceartistdetails?id=<?= $model->getId() ?>" method="post">
+                                    <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                                    <input type="hidden" name="product_id" value="<?= $event->getProduct_id() ?>">
+                                </form>
                             </div>
                         </div>
                     </div>

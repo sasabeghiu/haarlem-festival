@@ -1,5 +1,7 @@
 <?php
-//session_start();
+if (!isset($_SESSION)) {
+  session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +17,8 @@
   <!-- include jquery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="/css/shoppingcartstyle.css">
 </head>
 
 <body>
@@ -93,6 +97,20 @@
 
           <li class="nav-item">
             <a class="nav-link" href="/page/">Visit Haarlem</a>
+          </li>
+
+          <li class="nav-item">
+          <a class="nav-link" href="/shoppingcart">
+                  <i class="fas fa-shopping-cart"></i>
+                  Shopping Cart
+                  <?php
+                  if (isset($_SESSION['shopping-cart'])) {
+                    $count = count($_SESSION['shopping-cart']);
+                    echo "<span id='card_count' class='text-dark bg-light fw-bold'>$count</span>";
+                  } else {
+                    echo "<span id='card_count' class='text-dark bg-light fw-bold'>0</span>";
+                  }
+                  ?></a>
           </li>
         </ul>
       </div>

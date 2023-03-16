@@ -23,69 +23,73 @@ include __DIR__ . '/../header.php';
         <?php
         foreach ($model as $historyevent) {
         ?>
-            <div class="card mt-3"">
-        <div class=" card-header">
-                <h1 class="text-center" style="color: darkred;">Guide Group: <?= $historyevent->getTourguideName() ?></h1>
-                <div class="row">
-                    <div class="col-md-6">
-                        <img class="card-img" style="opacity: 70%;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($historyevent->getImage()); ?>">
+            <div class="card mt-3">
+                <div class=" card-header">
+                    <h1 class="text-center" style="color: darkred;">Guide Group: <?= $historyevent->getTourguideName() ?></h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="card-img" style="opacity: 70%;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($historyevent->getImage()); ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="card-text">
+                                <h3 class="card-title">Description</h3><?= $historyevent->getTourguideDescription() ?>
+                            </h4>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <h4 class="card-text">
-                            <h3 class="card-title">Description</h3><?= $historyevent->getTourguideDescription() ?>
-                        </h4>
+                    <div class="card-body">
+                        <?php
+                        if ($historyevent->getTicketsAvailable() <= 0) {
+                        ?>
+                            <h4 class="text-secondary fw-bold">SOLD OUT 😢</h4>
+                        <?php
+                        } elseif ($historyevent->getTicketsAvailable() <= 10) {
+                        ?>
+                            <h4 class="text-danger fw-bold">Only <?= ucfirst($historyevent->getTicketsAvailable()) ?> tickets left!</h4>
+                            <div class="card-button">
+                                <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
+                            </div>
+                        <?php
+                        } elseif ($historyevent->getTicketsAvailable() > 10) {
+                        ?>
+                            <h4 class="text-success fw-bold">Tickets available: <?= ucfirst($historyevent->getTicketsAvailable()) ?></h4>
+                            <div class="card-button">
+                                <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
+                                <form action="/historyevent" method="post">
+                                    <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                                    <input type="hidden" name="product_id" value="<?= $historyevent->getProduct_id() ?>">
+                                </form>
+                            </div>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
-                <div class="card-body">
-                    <?php
-                    if ($historyevent->getTicketsAvailable() <= 0) {
-                    ?>
-                        <h4 class="text-secondary fw-bold">SOLD OUT 😢</h4>
-                    <?php
-                    } elseif ($historyevent->getTicketsAvailable() <= 10) {
-                    ?>
-                        <h4 class="text-danger fw-bold">Only <?= ucfirst($historyevent->getTicketsAvailable()) ?> tickets left!</h4>
-                        <div class="card-button">
-                            <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
+                <div class="card-footer text-center">
+                    <div class="row">
+                        <div class="row-2">
+                            <div class="col-md-12">
+                                <p class="text-muted">Location:</p>
+                            </div>
                         </div>
-                    <?php
-                    } elseif ($historyevent->getTicketsAvailable() > 10) {
-                    ?>
-                        <h4 class="text-success fw-bold">Tickets available: <?= ucfirst($historyevent->getTicketsAvailable()) ?></h4>
-                        <div class="card-button">
-                            <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
+                        <div class="col-ml-1">
+                            <small class="text-muted">at</small>
                         </div>
-                    <?php
-                    }
-                    ?>
+                        <div class="col-md-3" style="padding-right: 50px;">
+                            <small class="text-muted"><?= $historyevent->getLocation() ?></small>
+                        </div>
+                        <div class="col-2-md-3" style="padding-right: 50px;">
+                            <small class="text-muted">on</small>
+                        </div>
+                        <div class="col-1-md-3">
+                            <small class="text-muted"><?= $historyevent->getFormattedDate() ?></small>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card-footer text-center">
-                <div class="row">
-                    <div class="row-2">
-                        <div class="col-md-12">
-                            <p class="text-muted">Location:</p>
-                        </div>
-                    </div>
-                    <div class="col-ml-1">
-                        <small class="text-muted">at</small>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 50px;">
-                        <small class="text-muted"><?= $historyevent->getLocation() ?></small>
-                    </div>
-                    <div class="col-2-md-3" style="padding-right: 50px;">
-                        <small class="text-muted">on</small>
-                    </div>
-                    <div class="col-1-md-3">
-                        <small class="text-muted"><?= $historyevent->getFormattedDate() ?></small>
-                    </div>
-                </div>
-            </div>
-    </div>
-<?php
+        <?php
         }
-?>
-</div>
+        ?>
+    </div>
 </div>
 
 <?php

@@ -22,7 +22,7 @@ class HistoryEventRepository
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, history_event.venueID, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, history_event.venueID, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription, history_event.product_id
                                                       FROM history_event
                                                       JOIN images ON history_event.image=images.id
                                                       JOIN tourguide ON history_event.tourguideID=tourguide.id");

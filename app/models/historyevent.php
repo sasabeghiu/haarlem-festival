@@ -19,6 +19,7 @@ class HistoryEvent implements JsonSerializable
     private ?int $tourguideID;
     private string $tourguideName;
     private string $tourguideDescription;
+    private int $product_id;
 
     /**
      * @return int
@@ -201,5 +202,25 @@ class HistoryEvent implements JsonSerializable
     {
         $date = new DateTime($this->datetime);
         return $date->format('d - F - Y - H:i:s');
+    }
+
+    /**
+     * Get the value of product_id
+     */ 
+    public function getProduct_id()
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * Set the value of product_id
+     *
+     * @return  self
+     */ 
+    public function setProduct_id($product_id)
+    {
+        $this->product_id = $product_id;
+
+        return $this;
     }
 }
