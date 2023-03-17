@@ -23,6 +23,9 @@ class FoodService
     {
         return $this->foodRepository->getRestaurantById();
     }
+    public function getSessionForRestaurant() {
+        return $this->foodRepository->getSessionForRestaurant();
+    }
     public function getSessions()
     {
         return $this->foodRepository->getSessions();

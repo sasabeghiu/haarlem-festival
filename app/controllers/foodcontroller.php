@@ -19,6 +19,7 @@ class FoodController
     public function about()
     {
         $restaurant = $this->foodService->getRestaurantById();
+        $session = $this->foodService->getSessionForRestaurant();
         require __DIR__ . '/../views/food/restaurantabout.php';
     }
     public function yummy()

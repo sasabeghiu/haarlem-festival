@@ -20,6 +20,7 @@
         <div class="col overview">
             <h6 class="text-center">overview</h6>
             <a class="text-center" href="/theater">Theater</a>
+            <a class="text-center" href="/theater">Museum</a>
             <a class="text-center" href="/history">History</a>
             <a class="text-center" href="/food">Food</a>
             <!-- <a>Children</a> -->
