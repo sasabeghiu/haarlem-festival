@@ -1,6 +1,6 @@
 <?php
 
-class HistoryEvent
+class HistoryEventCms
 {
 
     private int $id;
