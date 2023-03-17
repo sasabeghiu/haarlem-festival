@@ -38,60 +38,33 @@ include __DIR__ . '/../navbar.php';
         <!--For this hardcoded part I can call a foreach loop in which I use the same title with the other foreachloop as well
         and use the location as the description of those cards, instead of keeping it as a null. As well call the links
         in the loop when the above steps are finished.-->
-        <div class="card-group d-flex flex-wrap justify-content-center">
+        <div class="card-group d-flex flex-wrap justify-content-center" style="width:100%; display: flex;">
 
-            <div class="card my-4 card-sm" style="gap: 1rem;">
-                <div class="card-body d-flex flex-row">
-                    <div class="mx-auto">
-                        <h5 class="card-text text-center font-weight-bold mb-2">Haarlems Origins</h5>
-                    </div>
-                </div>
-                <div class="bg-image">
-                    <img src="https://expatshaarlem.nl/wp-content/uploads/2020/04/eH-article-Lucile_2020-04_history-pic1.jpg" class="img-fluid h-100">
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">Learn about Haarlem officially becoming a city.</a>
-                    </div>
-                </div>
-                <a class="btn btn-light" href="https://en.wikipedia.org/wiki/History_of_Harlem">Learn more</a>
-            </div>
+            <?php
+            foreach ($pagecards as $firstcards) {
+            ?>
 
-            <div class="card my-4 card-sm" style="gap: 1rem;">
-                <div class="card-body d-flex flex-row">
-                    <div class="mx-auto">
-                        <h5 class="card-text text-center font-weight-bold mb-2">Anno Haarlem</h5>
+                <div class="card my-4 card-sm" style="flex: 1; margin-right: 4rem;">
+                    <div class="card-body d-flex flex-row">
+                        <div class="mx-auto">
+                            <h5 class="card-text text-center font-weight-bold mb-2"><?= $firstcards->getTitle() ?></h5>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-image">
-                    <img src="https://www.visithaarlem.com/wp-content/uploads/2022/06/I3L2hhYXJsZW0tYmV6b2VrZXJzY2VudHJ1bS1hbm5vLWhhYXJsZW0tYmV6b2VrcnVpbXRlLmpwZw.jpg" class="img-fluid h-100">
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">Experience the entire history of Haarlem and the culture it used to and still follows.</a>
+                    <div class="bg-image">
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($firstcards->getImage()); ?>" class="w-100 h-100">
                     </div>
-                </div>
-                <a class="btn btn-light" href="https://www.visithaarlem.com/ontdekken/historie/anno-haarlem/">Learn more</a>
-            </div>
-
-            <div class="card my-4 card-sm" style="gap: 1rem;">
-                <div class="card-body d-flex flex-row">
-                    <div class="mx-auto">
-                        <h5 class="card-text text-center font-weight-bold mb-2">Haarlem Trivia</h5>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text"><?= $firstcards->getLocation() ?></a>
+                        </div>
                     </div>
+                    <a class="btn btn-light" href="<?= $firstcards->getLink() ?>">Learn more</a>
                 </div>
-                <div class="bg-image">
-                    <img src="https://i.pinimg.com/originals/98/e3/cc/98e3cc1f32d10869963c8deacfcfff3c.jpg" class="img-fluid">
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">Learn some interesting trivia facts about Haarlem.</a>
-                    </div>
-                </div>
-                <a class="btn btn-light" href="https://haarleminsight.wordpress.com/say-hello-to-haarlem/">Learn more</a>
-            </div>
-
+            <?php
+            }
+            ?>
         </div>
+
 
         <?php
         foreach ($pagecards as $card) {
