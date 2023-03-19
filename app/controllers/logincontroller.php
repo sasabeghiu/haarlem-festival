@@ -101,16 +101,16 @@ class LoginController
                 $_SESSION['username'] = $user->getUsername();
                 $verificationCode = mt_rand(100000, 999999);
 
-                print_r($verificationCode);
+                //print_r($verificationCode);
                 $receiver = $user->getEmail();
                 $receiver_name = $user->getUsername();
                 $subject = "Verification Code - Haarlem Festival Support";
                 $link = "http://localhost/login/verifyCode?code=" . $verificationCode;
                 $body_string = 'Click on the link to reset your password: ' . $link;
                 if (!$this->loginService->createVerificationCode($verificationCode) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
-                    echo "something failed in the process.";
+                    echo "<script>alert('Error creating verification code'); window.location = '/login/createCode';</script>";
                 } else {
-                    echo "alles gut";
+                    echo "<script>alert('Email sent successfully!'); window.location = '/login';</script>";
                 }
             }
         } catch (Exception $e) {
