@@ -18,14 +18,14 @@ require __DIR__ . '/../header.php';
             <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->getImage1()); ?>" class="image-fluid" alt="Loading image...">
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-around">
         <div class="col-2">
             <h3>Details</h3>
-            <p>Price: session.price</p>
+            <p>Price: <?= $session->getPrice() ?></p>
             <p>Cuisine: <?= $restaurant->getCuisine() ?> </p>
             <p>Rating: <?= $restaurant->getStars() ?> Stars</p>
         </div>
-        <div class="col-2">
+        <div class="col-4">
             <image src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->getImage2()); ?>" class="image-fluid" alt="Loading image..." />
         </div>
         <div class="col-3">
@@ -36,13 +36,17 @@ require __DIR__ . '/../header.php';
         </div>
     </div>
     <div class="row justify-content-around">
-        <div class="col-2">
+        <div class="col-4">
             <image src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->getImage3()); ?>" class="image-fluid" alt="Loading image..." />
         </div>
         <div class="col-6">
             <h3>Make a reservation</h3>
             <form method="POST">
                 <div class="form-field">
+                    <div class="mb-3">
+                        <label for="name" class="form-label"><b>Name:</b></label>
+                        <input type="text" class="form-control" name="name" id="name">
+                    </div>
                     <label><b>Number of people:</b> </label>
                     <select name="formguests">
                         <option value="1">1</option>
@@ -61,7 +65,27 @@ require __DIR__ . '/../header.php';
                         <option value="sunday">Sunday</option>
                     </select>
                 </div>
-                <!-- Add form options for the rest of the session details -->
+                <div class="form-field">
+                    <label><b>Session:</b> </label>
+                    <select name="session">
+                        <?php
+                        //The loop for adding session options. The first session starttime is in the database, for all sessions after 
+                        //the length of the session is added to this time
+                        for ($i = 0; $i < $session->getSessions(); $i++) {
+                            $date_input = strtotime($session->getFirst_session());
+                            $date = date('H:i', $date_input);
+                            $minutesToAdd = $i * $session->getSession_length() * 60; //You can not add .5 hours to a date variable in php so minutes are used instead
+                            $sessionTime = date('H:i', strtotime($date . ' + ' . $minutesToAdd . ' minutes'));
+                        ?>
+                            <option value="<?= $sessionTime ?>">Session <?= $i + 1 ?>: <?= $sessionTime ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="request" class="form-label"><b>Special requests:</b></label>
+                    <input type="text" class="form-control" name="request" id="request">
+                </div>
+                <button type="submit" class="btn btn-success">Add reservation</button>
             </form>
         </div>
     </div>
