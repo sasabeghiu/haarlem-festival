@@ -13,13 +13,16 @@ include __DIR__ . '/header.php';
                 $total = 0;
                 if (isset($_SESSION['shopping-cart']) && count($_SESSION['shopping-cart']) > 0) {
                     foreach ($products as $product) {
+                        $date_string = $product->getEvent_datetime();
+                        $date = new DateTime($date_string);
+                        $formated = $date->format("l, j F Y h:i A");
                 ?>
                         <form action="/shoppingcart?action=remove&id=<?= $product->getEvent_id() ?>" method="post" class="cart-items product-data">
                             <div class="">
                                 <div class="row border border-dark rounded">
                                     <div class="col-md-6">
                                         <h5 class="pt-2">Event name: <?= $product->getEvent_name() ?></h5>
-                                        <h5 class="pt-2">Datetime: <?= $product->getEvent_datetime() ?></h5>
+                                        <h5 class="pt-2">Datetime: <?php echo $formated; ?></h5>
                                         <h5 class="pt-2">Location: <?= $product->getEvent_location() ?></h5>
                                         <h5 class="pt-2">Price per ticket: &euro; <?= $product->getEvent_price() ?></h5>
                                         <h5 class="pt-2">Available stock: <?= $product->getTickets_available() ?></h5>
@@ -72,6 +75,7 @@ include __DIR__ . '/header.php';
                 </div>
                 <hr>
                 <a class="btn btn-success d-flex justify-content-center mb-3" href="#">Proceed to checkout</a>
+                <a class="btn btn-primary d-flex justify-content-center mb-3" href="#">Share your shopping cart with a friend</a>
             </div>
         </div>
     </div>
