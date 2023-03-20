@@ -35,7 +35,7 @@ if (!isset($_SESSION)) {
               Food
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/food/yummy">Yummy</a>
+              <a class="dropdown-item" href="/yummy">Yummy</a>
             </div>
           </div>
           <div class="dropdown show">

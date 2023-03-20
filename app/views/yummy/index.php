@@ -33,7 +33,7 @@ include __DIR__ . '/../header.php';
                         <p> <?= $restaurants[$i]->getCuisine() ?></p>
                     </div>
                     <div class="card-footer text-center">
-                        <a href="/food/about?restaurantid=<?= $restaurants[$i]->getId() ?>" class="btn btn-primary stretched-link"> Learn more</a>
+                        <a href="/yummy/about?restaurantid=<?= $restaurants[$i]->getId() ?>" class="btn btn-primary stretched-link"> Learn more</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@ include __DIR__ . '/../header.php';
                         <p> <?= $restaurant->getCuisine() ?></p>
                     </div>
                     <div class="card-footer text-center">
-                        <a class="btn btn-primary stretched-link" href="/food/about?restaurantid=<?= $restaurant->getId() ?>"> Learn more</a>
+                        <a class="btn btn-primary stretched-link" href="/yummy/about?restaurantid=<?= $restaurant->getId() ?>"> Learn more</a>
                     </div>
                 </div>
             </div>

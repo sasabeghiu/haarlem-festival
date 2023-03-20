@@ -47,7 +47,7 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="/food">Food</a>
+                        <a class="nav-link" href="/page/food">Food</a>
                     </li>
 
                     <li class="nav-item">
