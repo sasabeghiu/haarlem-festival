@@ -4,8 +4,11 @@ class Reservation {
     private string $name;
     private int $restaurantID;
     private string $restaurantName;
+	private int $sessionID;
     private int $seats;
     private string $date;
+	private ?string $request;
+	private float $price;
     private bool $status;
 
 	public function getId() : int {
@@ -40,6 +43,14 @@ class Reservation {
 		$this->restaurantName = $value;
 	}
 
+	public function getSessionID() : int {
+		return $this->sessionID;
+	}
+
+	public function setSessionID(int $value) {
+		$this->sessionID = $value;
+	}
+
 	public function getSeats() : int {
 		return $this->seats;
 	}
@@ -54,6 +65,22 @@ class Reservation {
 
 	public function setDate(string $value) {
 		$this->date = $value;
+	}
+
+	public function getRequest() : string {
+		return $this->request;
+	}
+
+	public function setRequest(string $value) {
+		$this->request = $value;
+	}
+
+	public function getPrice() : float {
+		return $this->price;
+	}
+
+	public function setPrice(float $value) {
+		$this->price = $value;
 	}
 
 	public function getStatus() : bool {

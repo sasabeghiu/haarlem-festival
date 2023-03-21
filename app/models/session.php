@@ -3,12 +3,11 @@ class Session {
     private int $id; 
     private int $restaurantid;
     private string $restaurantname;
-    private int $sessions;
     private float $price;
     private float $reducedprice;
-    private string $first_session;
+    private string $starttime;
     private float $session_length;
-    private int $seats;
+    private int $available_seats;
 
 	public function getId() : int {
 		return $this->id;
@@ -18,20 +17,20 @@ class Session {
 		$this->id = $value;
 	}
 
+	public function getRestaurantid() : int {
+		return $this->restaurantid;
+	}
+
+	public function setRestaurantid(int $value) {
+		$this->restaurantid = $value;
+	}
+
 	public function getRestaurantname() : string {
 		return $this->restaurantname;
 	}
 
 	public function setRestaurantname(string $value) {
 		$this->restaurantname = $value;
-	}
-
-	public function getSessions() : int {
-		return $this->sessions;
-	}
-
-	public function setSessions(int $value) {
-		$this->sessions = $value;
 	}
 
 	public function getPrice() : float {
@@ -50,12 +49,12 @@ class Session {
 		$this->reducedprice = $value;
 	}
 
-	public function getFirst_session() : string {
-		return $this->first_session;
+	public function getStarttime() : string {
+		return $this->starttime;
 	}
 
-	public function setFirst_session(string $value) {
-		$this->first_session = $value;
+	public function setStarttime(string $value) {
+		$this->starttime = $value;
 	}
 
 	public function getSession_length() : float {
@@ -66,19 +65,11 @@ class Session {
 		$this->session_length = $value;
 	}
 
-	public function getSeats() : int {
-		return $this->seats;
+	public function getAvailable_seats() : int {
+		return $this->available_seats;
 	}
 
-	public function setSeats(int $value) {
-		$this->seats = $value;
-	}
-
-	public function getRestaurantid() : int {
-		return $this->restaurantid;
-	}
-
-	public function setRestaurantid(int $value) {
-		$this->restaurantid = $value;
+	public function setAvailable_seats(int $value) {
+		$this->available_seats = $value;
 	}
 }

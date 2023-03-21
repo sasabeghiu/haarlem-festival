@@ -6,7 +6,7 @@ require __DIR__ . '/../models/reservation.php';
 require __DIR__ . '/../models/page.php';
 require __DIR__ . '/../models/pagecard.php';
 
-class FoodRepository extends Repository
+class YummyRepository extends Repository
 {
     function getFoodPageContent() {
         $stmt = $this->connection->prepare("SELECT page.id, images.image, page.title, page.description FROM `page` 
@@ -79,8 +79,8 @@ class FoodRepository extends Repository
     public function getSessions()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.sessions, fs.price, fs.reducedprice, fs.first_session,
-                                                fs.session_length, fs.seats FROM `food_session` AS fs 
+            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.price, fs.reducedprice, fs.starttime,
+                                                fs.session_length, fs.available_seats FROM `food_session` AS fs 
                                                 JOIN restaurant ON fs.restaurantid = restaurant.id");
             $stmt->execute();
 
@@ -97,8 +97,8 @@ class FoodRepository extends Repository
         $id = htmlspecialchars($_GET["sessionid"]);
 
         try {
-            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.sessions, fs.price, fs.reducedprice, fs.first_session,
-                                                fs.session_length, fs.seats FROM `food_session` AS fs 
+            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.price, fs.reducedprice, fs.starttime,
+                                                fs.session_length, fs.available_seats FROM `food_session` AS fs 
                                                 JOIN restaurant ON fs.restaurantid = restaurant.id
                                                 WHERE fs.id = :id");
             $stmt->bindParam(':id', $id);
@@ -116,8 +116,8 @@ class FoodRepository extends Repository
         $id = htmlspecialchars($_GET["restaurantid"]);
 
         try {
-            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.sessions, fs.price, fs.reducedprice, fs.first_session,
-                                                fs.session_length, fs.seats FROM `food_session` AS fs 
+            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.price, fs.reducedprice, fs.starttime,
+                                                fs.session_length, fs.available_seats FROM `food_session` AS fs 
                                                 JOIN restaurant ON fs.restaurantid = restaurant.id
                                                 WHERE fs.restaurantid = :id");
             $stmt->bindParam(':id', $id);
@@ -136,24 +136,23 @@ class FoodRepository extends Repository
         try {
             if ($session->getId() != 0) {
                 // Update existing session
-                $stmt = $this->connection->prepare("UPDATE `food_session` SET restaurantid = :restaurantid, sessions = :sessions, price = :price, reducedprice = :reducedprice, 
-                                                    first_session = :first_session, session_length = :session_length, seats = :seats 
+                $stmt = $this->connection->prepare("UPDATE `food_session` SET restaurantid = :restaurantid, price = :price, reducedprice = :reducedprice, 
+                                                    starttime = :starttime, session_length = :session_length, available_seats = :available_seats 
                                                     WHERE id = :id");
                 $stmt->bindValue(':id', $session->getId());
             } else {
                 // Insert new session
-                $stmt = $this->connection->prepare("INSERT INTO `food_session` (restaurantid, sessions, price, reducedprice, 
-                                                    first_session, session_length, seats) VALUES (:restaurantid, :sessions, :price, 
-                                                    :reducedprice, :first_session, :session_length, :seats)");
+                $stmt = $this->connection->prepare("INSERT INTO `food_session` (restaurantid, price, reducedprice, 
+                                                    starttime, session_length, available_seats) VALUES (:restaurantid, :price, 
+                                                    :reducedprice, :starttime, :session_length, :available_seats)");
             }
 
             $stmt->bindValue(':restaurantid', $session->getRestaurantid());
-            $stmt->bindValue(':sessions', $session->getSessions());
             $stmt->bindValue(':price', $session->getPrice());
             $stmt->bindValue(':reducedprice', $session->getReducedprice());
-            $stmt->bindValue(':first_session', $session->getFirst_session());
+            $stmt->bindValue(':starttime', $session->getStarttime());
             $stmt->bindValue(':session_length', $session->getSession_length());
-            $stmt->bindValue(':seats', $session->getSeats());
+            $stmt->bindValue(':available_seats', $session->getAvailable_seats());
 
             $stmt->execute();
         } catch (PDOException $e) {
@@ -248,7 +247,8 @@ class FoodRepository extends Repository
     public function getReservations() {
         try {
             $stmt = $this->connection->prepare("SELECT reservation.id, reservation.name, reservation.restaurantID, 
-                                                restaurant.name AS restaurantName, reservation.seats, reservation.date, reservation.status 
+                                                restaurant.name AS restaurantName, reservation.sessionID, reservation.seats, reservation.date, reservation.request, 
+                                                reservation.price, reservation.status 
                                                 FROM reservation
                                                 JOIN restaurant ON reservation.restaurantID = restaurant.id");
             $stmt->execute();
