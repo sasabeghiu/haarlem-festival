@@ -75,7 +75,8 @@ class UserController
                 $newUser->setRole(htmlspecialchars(isset($_POST['role']) ? $_POST['role'] : 2)); //default customer
 
                 //prepare email
-                $receiver = $newUser->getEmail();
+                $existingUser = $this->userService->getById($newUser->getId());
+                $receiver = $existingUser->getEmail();
                 $receiver_name = $newUser->getUsername();
                 $subject = "Password change - Haarlem Festival Support";
                 $body_string = 'Your password has been changed by an administrator ';

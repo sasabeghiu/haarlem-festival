@@ -101,12 +101,12 @@ class LoginController
                 $_SESSION['username'] = $user->getUsername();
                 $verificationCode = mt_rand(100000, 999999);
 
-                print_r($verificationCode);
                 $receiver = $user->getEmail();
                 $receiver_name = $user->getUsername();
                 $subject = "Verification Code - Haarlem Festival Support";
                 $link = "http://localhost/login/verifyCode?code=" . $verificationCode; //replace localhost with domain name
                 $body_string = 'Click on the link to reset your password: ' . $link;
+
                 if (!$this->loginService->createVerificationCode($verificationCode, $user->getId()) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
                     echo "<script>alert('Error while sending email'); window.location = '/login/createCode';</script>";
                 } else {
@@ -154,11 +154,10 @@ class LoginController
                 if (password_verify($password1, $newUser->getPassword())) {
                     echo "<script>alert('Password updated successfully!'); window.location = '/login';</script>";
                 }
-                //$this->loginService->deleteCode($userid);
+                //$this->loginService->deleteCode($userId);
             } else {
                 echo "Passwords do not match!";
             }
         }
-        //$pass =  $this->loginService->updatePassword($userId, $password); //returns password
     }
 }
