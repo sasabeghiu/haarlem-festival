@@ -9,4 +9,9 @@ class PageCardService
     {
         $this->pageCardRepository = new PageCardRepository();
     }
+
+    public function getAllCardsByPageId($id)
+    {
+        return $this->pageCardRepository->getAllCardsByPageId($id);
+    }
 }

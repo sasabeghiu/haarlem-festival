@@ -1,7 +1,5 @@
 <?php
 include __DIR__ . '/../header.php';
-
-include __DIR__ . '/../footer.php';
 ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -39,10 +37,27 @@ include __DIR__ . '/../footer.php';
                     </div>
                 </div>
                 <div class="card-body">
-                    <h4 class="text-success fw-bold"> Tickets available: <?= ucfirst($historyevent->getTicketsAvailable()) ?></h4>
-                    <div class="card-button">
-                        <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
-                    </div>
+                    <?php
+                    if ($historyevent->getTicketsAvailable() <= 0) {
+                    ?>
+                        <h4 class="text-secondary fw-bold">SOLD OUT 😢</h4>
+                    <?php
+                    } elseif ($historyevent->getTicketsAvailable() <= 10) {
+                    ?>
+                        <h4 class="text-danger fw-bold">Only <?= ucfirst($historyevent->getTicketsAvailable()) ?> tickets left!</h4>
+                        <div class="card-button">
+                            <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
+                        </div>
+                    <?php
+                    } elseif ($historyevent->getTicketsAvailable() > 10) {
+                    ?>
+                        <h4 class="text-success fw-bold">Tickets available: <?= ucfirst($historyevent->getTicketsAvailable()) ?></h4>
+                        <div class="card-button">
+                            <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <div class="card-footer text-center">
@@ -73,18 +88,6 @@ include __DIR__ . '/../footer.php';
 </div>
 </div>
 
-
-<!--<div class="card-deck">
-    <div class="card">
-        <img class="card-img-top w-50 " src="data:image/jpg;charset=utf8;base64,<?php /*echo base64_encode($historyevent->getImage());*/ ?>" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title"><?/*= $historyevent->getTourguideName()*/ ?></h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card-button pt-4">
-            <a class="btn btn-info" href="#">Book for <?/*= $historyevent->getPrice()*/ ?>€</a>
-        </div>
-        <div class="card-footer">
-            <small class="text-muted"><?/*= $historyevent->getFormattedDate()*/ ?></small>
-        </div>
-    </div>-->
+<?php
+include __DIR__ . '/../footer.php';
+?>

@@ -3,15 +3,15 @@ class PageCard
 {
     private int $id;
     private string $title;
-    private string $opening_time;
-    private string $closing_time;
-    private string $location;
-    private float $rating;
-    private float $adult_price;
-    private float $kids_price;
+    private ?string $opening_time;
+    private ?string $closing_time;
+    private ?string $location;
+    private ?float $rating;
+    private ?float $adult_price;
+    private ?float $kids_price;
     private string $image;
-    private string $link;
-    private string $description;
+    private ?string $link;
+    private ?string $description;
     private int $pageId;
 
     /**

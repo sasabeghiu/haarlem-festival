@@ -3,10 +3,34 @@ require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/restaurant.php';
 require __DIR__ . '/../models/session.php';
 require __DIR__ . '/../models/reservation.php';
+require __DIR__ . '/../models/page.php';
+require __DIR__ . '/../models/pagecard.php';
 
 class FoodRepository extends Repository
 {
+    function getFoodPageContent() {
+        $stmt = $this->connection->prepare("SELECT page.id, images.image, page.title, page.description FROM `page` 
+                                            JOIN images ON page.headerImg = images.id
+                                            WHERE page.id = 7");
+        $stmt->execute();
 
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'page');
+        $page = $stmt->fetchAll();
+
+        return $page[0];
+    }
+    function getFoodPageCards() {
+        $stmt = $this->connection->prepare("SELECT pagecard.id, pagecard.title, pagecard.description, pagecard.link, images.image
+                                            FROM pagecard
+                                            JOIN images ON pagecard.image = images.id
+                                            WHERE pagecard.pageId = 7");
+        $stmt->execute();
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'pagecard');
+        $cards = $stmt->fetchAll();
+
+        return $cards;
+    }
     function getRestaurants()
     {
         try {
@@ -77,6 +101,25 @@ class FoodRepository extends Repository
                                                 fs.session_length, fs.seats FROM `food_session` AS fs 
                                                 JOIN restaurant ON fs.restaurantid = restaurant.id
                                                 WHERE fs.id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
+            $sessions = $stmt->fetchAll();
+
+            return $sessions[0];
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+    public function getSessionForRestaurant() {
+        $id = htmlspecialchars($_GET["restaurantid"]);
+
+        try {
+            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.sessions, fs.price, fs.reducedprice, fs.first_session,
+                                                fs.session_length, fs.seats FROM `food_session` AS fs 
+                                                JOIN restaurant ON fs.restaurantid = restaurant.id
+                                                WHERE fs.restaurantid = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 

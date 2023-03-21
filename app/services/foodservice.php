@@ -9,6 +9,12 @@ class FoodService
     {
         $this->foodRepository = new FoodRepository();
     }
+    public function getFoodPageContent() {
+        return $this->foodRepository->getFoodPageContent();
+    }
+    public function getFoodPageCards() {
+        return $this->foodRepository->getFoodPageCards();
+    }
     public function getRestaurants()
     {
         return $this->foodRepository->getRestaurants();
@@ -16,6 +22,9 @@ class FoodService
     public function getRestaurantById()
     {
         return $this->foodRepository->getRestaurantById();
+    }
+    public function getSessionForRestaurant() {
+        return $this->foodRepository->getSessionForRestaurant();
     }
     public function getSessions()
     {

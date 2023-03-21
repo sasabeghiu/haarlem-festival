@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../services/foodservice.php';
 
-class FoodController
+class YummyController
 {
     private $foodService;
 
@@ -10,19 +10,22 @@ class FoodController
         $this->foodService = new FoodService();
     }
 
-    public function index()
-    {
-        require __DIR__ . '/../views/food/food.php';
-    }
+    // public function index()
+    // {
+    //     $page = $this->foodService->getFoodPageContent();
+    //     $cards = $this->foodService->getFoodPageCards();
+    //     require __DIR__ . '/../views/food/food.php';
+    // }
     public function about()
     {
         $restaurant = $this->foodService->getRestaurantById();
-        require __DIR__ . '/../views/food/restaurantabout.php';
+        $session = $this->foodService->getSessionForRestaurant();
+        require __DIR__ . '/../views/yummy/restaurantabout.php';
     }
-    public function yummy()
+    public function index()
     {
         $restaurants = $this->foodService->getRestaurants();
-        require __DIR__ . '/../views/food/yummy.php';
+        require __DIR__ . '/../views/yummy/index.php';
     }
 
     //--------------------------------------------CMS functionality---------------------------------------------------------------------
