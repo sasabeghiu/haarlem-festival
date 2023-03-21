@@ -13,7 +13,6 @@ class PageController
     private $historyEventService;
 
 
-
     function __construct()
     {
         $this->pageService = new PageService();
