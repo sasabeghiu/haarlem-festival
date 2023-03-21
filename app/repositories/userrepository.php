@@ -79,6 +79,7 @@ class UserRepository extends Repository
         $user->setEmail($row['email']);
         $user->setRole($row['roleId']);
         $user->setRoleName($row['roleName']);
+        $user->setCreationDate($row['created_at']);
 
         return $user;
     }
@@ -99,7 +100,7 @@ class UserRepository extends Repository
     {
         try {
             // Insert new user
-            $query = "INSERT INTO user (username, password, roleId, email) VALUES (:username, :password, :roleId, :email)";
+            $query = "INSERT INTO user (username, password, roleId, email, created_at) VALUES (:username, :password, :roleId, :email, CURRENT_TIMESTAMP)";
             $stmt = $this->connection->prepare($query);
             $stmt->bindValue(':username', $user->getUsername());
             $stmt->bindValue(':password', $user->getPassword());

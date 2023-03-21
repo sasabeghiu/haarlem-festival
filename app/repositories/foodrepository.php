@@ -112,6 +112,25 @@ class FoodRepository extends Repository
             echo $e;
         }
     }
+    public function getSessionForRestaurant() {
+        $id = htmlspecialchars($_GET["restaurantid"]);
+
+        try {
+            $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.sessions, fs.price, fs.reducedprice, fs.first_session,
+                                                fs.session_length, fs.seats FROM `food_session` AS fs 
+                                                JOIN restaurant ON fs.restaurantid = restaurant.id
+                                                WHERE fs.restaurantid = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
+            $sessions = $stmt->fetchAll();
+
+            return $sessions[0];
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
     public function saveSession(Session $session)
     {
         try {
