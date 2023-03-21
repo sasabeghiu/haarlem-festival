@@ -35,7 +35,9 @@ class ArtistController
 
     function addToCart()
     {
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         if (isset($_POST['add-to-cart'])) {
             if (isset($_SESSION['shopping-cart'])) {
                 $items_array_id = array_column($_SESSION['shopping-cart'], "product_id");

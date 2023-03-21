@@ -3,7 +3,7 @@ class Product
 {
     private int $event_id;
     private string $event_name;
-    private int $event_price;
+    private float $event_price;
     private string $event_datetime;
     private string $event_location;
     private int $tickets_available;
