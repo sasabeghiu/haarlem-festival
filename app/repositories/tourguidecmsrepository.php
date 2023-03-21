@@ -64,7 +64,7 @@ class TourGuideCmsRepository extends Repository
     function addTourguide(TourGuideCms $tourguides)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT into tourguide (name, description, image) VALUES (:name, :description, :image)");
+            $stmt = $this->connection->prepare("INSERT INTO tourguide (name, description, image) VALUES (:name, :description, :image)");
 
             $stmt->bindValue(':name', $tourguides->getName());
             $stmt->bindValue(':description', $tourguides->getDescription());
@@ -95,10 +95,10 @@ class TourGuideCmsRepository extends Repository
     function deleteTourguide($id)
     {
         try {
-
-            $stmt = $this->connection->prepare("DELETE t, i
-            FROM tourguide as t, images as i
-            WHERE t.id=:id AND i.id=t.image");
+            $stmt = $this->connection->prepare("DELETE t, img 
+                                                FROM tourguide AS t, images AS img 
+                                                WHERE t.id=:id AND img.id=t.image");
+            
             $stmt->bindParam(':id', $id);
             $stmt->execute();
         } catch (PDOException $e) {

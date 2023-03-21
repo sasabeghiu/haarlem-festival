@@ -8,53 +8,64 @@ class TourGuideCms
     private string $image;
 
     /**
-     * @return int
+     * Get the value of id
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * Set the value of id
+     * 
+     * @return self
      */
-    public function setId(int $id): void
+    public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * Get the value of name
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * Set the value of name
+     * 
+     * @return self
      */
-    public function setName(string $name): void
+    public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * Get the value of description
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * Set the value of description 
+     * 
+     * @return self
      */
-    public function setDescription(string $description): void
+    public function setDescription($description)
     {
         $this->description = $description;
-    }
 
+        return $this;
+    }
 
     /**
      * Get the value of image
@@ -65,9 +76,7 @@ class TourGuideCms
     }
 
     /**
-     * Set the value of image
-     *
-     * @return  self
+     * @param string $image
      */
     public function setImage($image)
     {

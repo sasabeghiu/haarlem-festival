@@ -35,63 +35,74 @@ include __DIR__ . '/../navbar.php';
         <button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit EVERYTHING</button>
         <button id="save" class="btn btn-primary" onclick="save()" type="button">Save ALL</button>
 
-        <!--For this hardcoded part I can call a foreach loop in which I use the same title with the other foreachloop as well
-        and use the location as the description of those cards, instead of keeping it as a null. As well call the links
-        in the loop when the above steps are finished.-->
-        <div class="card-group d-flex flex-wrap justify-content-center">
+        <div class="card-group d-flex flex-wrap justify-content-center" style="width:100%; display: flex;">
 
-            <div class="card my-4 card-sm" style="gap: 1rem;">
-                <div class="card-body d-flex flex-row">
-                    <div class="mx-auto">
-                        <h5 class="card-text text-center font-weight-bold mb-2">Haarlems Origins</h5>
-                    </div>
-                </div>
-                <div class="bg-image">
-                    <img src="https://expatshaarlem.nl/wp-content/uploads/2020/04/eH-article-Lucile_2020-04_history-pic1.jpg" class="img-fluid h-100">
-                </div>
+            <div class="card click2edit mb-4 my-4" style="flex: 3; margin-right: 4rem;">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">Learn about Haarlem officially becoming a city.</a>
-                    </div>
+                    <h3 class="card-title">About</h3>
+                    <p class="card-text">Take a stroll through the History of Haarlem! Haarlem is a city with a rich history, the cultural influences of which can still be seen even today. From the awe-inspiring interior of the St. Bavo church to the works of many great artists displayed in the various museums located in the city, we at the festival want to give you the opportunity to experience the beauty of Haarlem's history for yourself.
+                        <br> </br>
+                        Use the schedule displayed below to see the timeslots for the tours we offer. Additional information such as the entry price and duration can be found there as well.
+                    </p>
+                    <h3 class="card-title">Important:</h3>
+                    <p class="card-text">Tours for the history event start at the St. Bavo church at the Grote markt in Haarlem.
+                        Look for the giant flag that marks the exact starting location. The minimum age for taking the tours is 12 years old.
+                        Usage of strollers is not allowed during the event.
+                        Please do not book an English tour if you are a Dutch or Dutch speaking citizen, we at the Haarlem festival would hate to turn down foreign visitors because the tour slots with their preferred language are full.</p>
                 </div>
-                <a class="btn btn-light" href="https://en.wikipedia.org/wiki/History_of_Harlem">Learn more</a>
             </div>
 
-            <div class="card my-4 card-sm" style="gap: 1rem;">
-                <div class="card-body d-flex flex-row">
-                    <div class="mx-auto">
-                        <h5 class="card-text text-center font-weight-bold mb-2">Anno Haarlem</h5>
-                    </div>
-                </div>
-                <div class="bg-image">
-                    <img src="https://www.visithaarlem.com/wp-content/uploads/2022/06/I3L2hhYXJsZW0tYmV6b2VrZXJzY2VudHJ1bS1hbm5vLWhhYXJsZW0tYmV6b2VrcnVpbXRlLmpwZw.jpg" class="img-fluid h-100">
-                </div>
+            <div class="card click2edit mb-4 my-4" style="flex: 2; margin-right: 4rem;">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">Experience the entire history of Haarlem and the culture it used to and still follows.</a>
-                    </div>
+                    <h3 class="card-title">Location</h3>
+                    <p class="card-text">Take some time to read up on the locations you will visit on our history tours.</p>
+                    <h6>The locations that will be visited are: </h6>
+                    <a href="/historyevent">Church of St.Bavo - Starting location</a>
+                    <br></br>
+                    <a href="/historyevent">De Hallen</a>
+                    <br></br>
+                    <a href="/historyevent">Proveniershof</a>
+                    <br></br>
+                    <a href="/historyevent">Jopenkerk - Break location</a>
+                    <br></br>
+                    <a href="/historyevent">Waalse kerk Haarlem</a>
+                    <br></br>
+                    <a href="/historyevent">Molen deAdriaan</a>
+                    <br></br>
+                    <a href="/historyevent">Amsterdamse poort</a>
+                    <br></br>
+                    <a href="/historyevent">Hof vanBakenes</a>
                 </div>
-                <a class="btn btn-light" href="https://www.visithaarlem.com/ontdekken/historie/anno-haarlem/">Learn more</a>
             </div>
-
-            <div class="card my-4 card-sm" style="gap: 1rem;">
-                <div class="card-body d-flex flex-row">
-                    <div class="mx-auto">
-                        <h5 class="card-text text-center font-weight-bold mb-2">Haarlem Trivia</h5>
-                    </div>
-                </div>
-                <div class="bg-image">
-                    <img src="https://i.pinimg.com/originals/98/e3/cc/98e3cc1f32d10869963c8deacfcfff3c.jpg" class="img-fluid">
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">Learn some interesting trivia facts about Haarlem.</a>
-                    </div>
-                </div>
-                <a class="btn btn-light" href="https://haarleminsight.wordpress.com/say-hello-to-haarlem/">Learn more</a>
-            </div>
-
         </div>
+
+        <div class="card-group d-flex flex-wrap justify-content-center" style="width:100%; display: flex;">
+
+            <?php
+            foreach ($pagecards as $firstcards) {
+            ?>
+
+                <div class="card my-4 card-sm" style="flex: 1; margin-right: 4rem;">
+                    <div class="card-body d-flex flex-row">
+                        <div class="mx-auto">
+                            <h5 class="card-text text-center font-weight-bold mb-2"><?= $firstcards->getTitle() ?></h5>
+                        </div>
+                    </div>
+                    <div class="bg-image">
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($firstcards->getImage()); ?>" class="w-100 h-100">
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text"><?= $firstcards->getLocation() ?></a>
+                        </div>
+                    </div>
+                    <a class="btn btn-light" href="<?= $firstcards->getLink() ?>">Learn more</a>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
+
 
         <?php
         foreach ($pagecards as $card) {

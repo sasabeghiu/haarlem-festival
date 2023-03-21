@@ -39,6 +39,7 @@ class TourGuideCmsController
         }
         //Functionality Add
         if (isset($_POST["add"])) {
+
             $name = htmlspecialchars($_POST["name"]);
             $description = htmlspecialchars($_POST["description"]);
 
@@ -53,7 +54,7 @@ class TourGuideCmsController
                     $tourguidescms->setImage($this->tourguideService->saveImage($image));
                 }
             } else {
-                echo "Problem Occured!";
+                echo "Problem Occured! ";
             }
 
             $this->tourguideService->addTourguide($tourguidescms);

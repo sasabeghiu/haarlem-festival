@@ -20,6 +20,24 @@ include __DIR__ . '/../header.php';
 
 <div class="row container mx-auto" style="max-width: 1000px;">
     <div class="mt-4">
+        <div class="my-3 text-center">
+            <form method="POST" class="d-inline-block">
+                <input type="submit" name="events" value="All Events" class="btn btn-success mx-3 filterbtn"></a>
+            </form>
+            <form method="POST" class="d-inline-block">
+                <input type="submit" name="friday" value="Friday 28" class="btn btn-primary mx-3 filterbtn"></a>
+            </form>
+            <form method="POST" class="d-inline-block">
+                <input type="submit" name="saturday" value="Saturday 29" class="btn btn-primary mx-3 filterbtn"></a>
+            </form>
+            <form method="POST" class="d-inline-block">
+                <input type="submit" name="sunday" value="Sunday 30" class="btn btn-primary mx-3 filterbtn"></a>
+            </form>
+            <form method="POST" class="d-inline-block">
+                <input type="submit" name="monday" value="Monday 31" class="btn btn-primary mx-3 filterbtn"></a>
+            </form>
+        </div>
+
         <?php
         foreach ($model as $historyevent) {
         ?>
@@ -42,7 +60,7 @@ include __DIR__ . '/../header.php';
                         ?>
                             <h4 class="text-secondary fw-bold">SOLD OUT 😢</h4>
                         <?php
-                        } elseif ($historyevent->getTicketsAvailable() <= 10) {
+                        } elseif ($historyevent->getTicketsAvailable() <= 3) {
                         ?>
                             <h4 class="text-danger fw-bold">Only <?= ucfirst($historyevent->getTicketsAvailable()) ?> tickets left!</h4>
                             <div class="card-button">
@@ -53,10 +71,10 @@ include __DIR__ . '/../header.php';
                                 </form>
                             </div>
                         <?php
-                        } elseif ($historyevent->getTicketsAvailable() > 10) {
+                        } elseif ($historyevent->getTicketsAvailable() > 3) {
                         ?>
-                            <h4 class="text-success fw-bold">Tickets available: <?= ucfirst($historyevent->getTicketsAvailable()) ?></h4>
-                            <div class="card-button">
+                            <h4 class="text-success fw-bold">Seats available: <?= ucfirst($historyevent->getTicketsAvailable()) ?></h4>
+                            <div class="card-button col-xs-1">
                                 <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
                                 <form action="/historyevent" method="post">
                                     <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
