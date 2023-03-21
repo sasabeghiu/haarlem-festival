@@ -26,7 +26,7 @@ class Mailer
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = 'haarlemfestivalrecovery@gmail.com';                     //SMTP username
-        $mail->Password   = 'mtuqddqpstsesrer';                               //SMTP password
+        $mail->Password   = 'xphrkgclstdpkrav';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $mail->Port       = 587;
         //-------------------------------------------

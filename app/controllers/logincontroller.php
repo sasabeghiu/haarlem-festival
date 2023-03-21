@@ -34,7 +34,7 @@ class LoginController
                         session_start();
                         $_SESSION['userId'] = $user->getId();
                         $_SESSION['loggedin'] = true;
-                        header('Location: /page/festival');
+                        header('Location: /page/index');
                     }
                 }
                 echo "Login error: Username or password incorrect.";
@@ -101,16 +101,16 @@ class LoginController
                 $_SESSION['username'] = $user->getUsername();
                 $verificationCode = mt_rand(100000, 999999);
 
-                //print_r($verificationCode);
+                print_r($verificationCode);
                 $receiver = $user->getEmail();
                 $receiver_name = $user->getUsername();
                 $subject = "Verification Code - Haarlem Festival Support";
-                $link = "http://localhost/login/verifyCode?code=" . $verificationCode;
+                $link = "http://localhost/login/verifyCode?code=" . $verificationCode; //replace localhost with domain name
                 $body_string = 'Click on the link to reset your password: ' . $link;
-                if (!$this->loginService->createVerificationCode($verificationCode) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
-                    echo "<script>alert('Error creating verification code'); window.location = '/login/createCode';</script>";
+                if (!$this->loginService->createVerificationCode($verificationCode, $user->getId()) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
+                    echo "<script>alert('Error while sending email'); window.location = '/login/createCode';</script>";
                 } else {
-                    echo "<script>alert('Email sent successfully!'); window.location = '/login';</script>";
+                    echo "<script>alert('Email sent successfully! You can now close this window'); window.location = '/login/';</script>";
                 }
             }
         } catch (Exception $e) {
@@ -122,32 +122,43 @@ class LoginController
     public function verifyCode()
     {
         try {
-            if (isset($_POST['submit'])) {
-                $code = $_POST['code'];
-                $password1 = $_POST['password'];
-                $password2 = $_POST['confirmPassword'];
+            $code = isset($_GET['code']) ? $_GET['code'] : "";
+            echo $code;
+            $user = $this->loginService->isValid($code);
 
-                $userId = $this->loginService->isValid($code);
-
-                if (!$this->loginService) {
-                    echo "<script>alert('code invalid or expired')";
-                }
-                if ($password1 != $password2) {
-                    echo "<script>alert('Passwords dont match!')";
-                }
-                if (strlen($password1) < 6) {
-                    echo "<script>alert('Password must be at least 6 characters long!')";
-                }
-                if ($this->loginService->updatePassword($userId, $password1)) { //password_hash($password1, PASSWORD_DEFAULT)
-                    echo "<script>alert('Update failed')";
-                }
-                if (!$this->loginService->deleteCode($code)) {
-                    echo "<script>alert('failed')";
-                }
+            if (!$user) {
+                echo "<script>alert('Error validating code'); window.location = '/login';</script>";
+            } else {
+                require __DIR__ . '/../views/login/newpassword.php';
             }
-            require __DIR__ . '/../views/login/newpassword.php';
         } catch (Exception $e) {
             echo $e;
         }
+    }
+
+    public function updatePassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $userId = $_POST['userId'];
+            $password1 = $_POST['password'];
+            $password2 = $_POST['confirmPassword'];
+
+            if ($password1 == $password2) {
+                $password = password_hash($password1, PASSWORD_DEFAULT);
+                $this->loginService->updatePassword($userId, $password);
+                echo $userId;
+                $newUser = $this->loginService->getById($userId);
+                if (!$newUser) {
+                    echo "<script>alert('Error updating password'); window.location = '/login/updatePassword';</script>";
+                }
+                if (password_verify($password1, $newUser->getPassword())) {
+                    echo "<script>alert('Password updated successfully!'); window.location = '/login';</script>";
+                }
+                //$this->loginService->deleteCode($userid);
+            } else {
+                echo "Passwords do not match!";
+            }
+        }
+        //$pass =  $this->loginService->updatePassword($userId, $password); //returns password
     }
 }

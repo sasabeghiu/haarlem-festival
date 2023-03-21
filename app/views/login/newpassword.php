@@ -19,9 +19,9 @@
         <div class="container mt-4">
             <h2>Reset Password</h2>
             <p>Enter your password.</p>
-            <form method="post" action="/login/verifyCode">
+            <form method="post" action="/login/updatePassword">
                 <div class="form-group">
-                    <input type="hidden" class="form-control" name="code" value="<?php echo $code; ?>">
+                    <input type="hidden" class="form-control" name="userId" value="<?php echo $user->getId(); ?>">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
