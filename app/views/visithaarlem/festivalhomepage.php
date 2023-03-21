@@ -19,8 +19,12 @@
     <div class="container mb-3">
 
         <div class="container mb-3">
-            <div class="">
+            <div class="mb-3">
                 <p class="click2edit"> <?= $page->getDescription() ?></p>
+            </div>
+            <div>
+                <button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit EVERYTHING</button>
+                <button id="save" class="btn btn-primary" onclick="save()" type="button">Save ALL</button>
             </div>
         </div>
 

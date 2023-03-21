@@ -100,12 +100,7 @@ class LoginController
                 $user = $this->loginService->getByUsername($username);
                 $_SESSION['username'] = $user->getUsername();
                 $verificationCode = mt_rand(100000, 999999);
-<<<<<<<<< Temporary merge branch 1
 
-=========
-                
->>>>>>>>> Temporary merge branch 2
-                print_r($verificationCode);
                 $receiver = $user->getEmail();
                 $receiver_name = $user->getUsername();
                 $subject = "Verification Code - Haarlem Festival Support";
