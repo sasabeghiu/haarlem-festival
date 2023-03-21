@@ -12,7 +12,7 @@
         <div style="position: absolute; bottom: 8px; left: 16px;">
             <h4 style="display:inline;">
                 </h5>
-                <h1 style="display:inline;" class="click2edit"> <?= $page->getTitle() ?></h1>
+                <h1 style="display:inline;" class="click2edit" data-id="title"> <?= $page->getTitle() ?></h1>
         </div>
     </div>
     <!-- Main Content -->
@@ -20,7 +20,7 @@
 
         <div class="container mb-3">
             <div class="mb-3">
-                <p class="click2edit"> <?= $page->getDescription() ?></p>
+                <p class="click2edit" data-id="description"> <?= $page->getDescription() ?></p>
             </div>
             <div>
                 <button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit EVERYTHING</button>
@@ -166,9 +166,27 @@
         };
 
         var save = function() {
+            var contents = [];
             $(".click2edit").each(function() {
-                $(this).summernote("code");
+                var content = $(this).summernote("code");
+                var id = $(this).attr("data-id"); // Assuming that you have an attribute called "data-id" to identify each editable element
                 $(this).summernote("destroy");
+                contents.push({
+                    id: id,
+                    content: content
+                });
+            });
+
+            // send this data as an array to a php function
+            $.ajax({
+                url: "/page/save", // Change this to the URL of your PHP script
+                method: "POST",
+                data: {
+                    contents: contents
+                },
+                success: function(response) {
+
+                }
             });
         };
     </script>
