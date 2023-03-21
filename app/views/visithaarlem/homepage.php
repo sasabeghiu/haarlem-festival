@@ -3,6 +3,10 @@
 include __DIR__ . '/../navbar.php';
 ?>
 
+<head>
+    <link rel="stylesheet" href="/css/homepgepage.css">
+</head>
+
 <div style="position: relative; text-align: center; color: white;">
     <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($page->getHeaderImg()); ?>" width="100%" height="auto">
     <div style="position: absolute; bottom: 8px; left: 16px;">
@@ -23,10 +27,12 @@ include __DIR__ . '/../navbar.php';
         ?>
             <div class="col">
                 <div class="card">
-                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="text-center fw-bold click2edit"><?= $card->getTitle() ?></h5>
-                    </div>
+                    <a href="<?= $card->getLink() ?>">
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="text-center fw-bold click2edit"><?= $card->getTitle() ?></h5>
+                        </div>
+                    </a>
                 </div>
             </div>
         <?php
