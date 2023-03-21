@@ -40,15 +40,14 @@ class TourGuideCmsController
         }
         //Functionality Add
         if (isset($_POST["add"])) {
+
             $name = htmlspecialchars($_POST["name"]);
             $description = htmlspecialchars($_POST["description"]);
-            $image = htmlspecialchars($_POST["image"]);
 
             $tourguidescms = new TourGuideCms();
 
             $tourguidescms->setName($name);
             $tourguidescms->setDescription($description);
-            $tourguidescms->setImage($image);
 
             if (count($_FILES) > 0) {
                 if (is_uploaded_file($_FILES['image']['tmp_name'])){
@@ -56,7 +55,7 @@ class TourGuideCmsController
                     $tourguidescms->setImage($this->tourguideService->saveImage($image));
                 }
             } else {
-                echo "Problem Occured!";
+                echo "Problem Occured! ";
             }
 
             $this->tourguideService->addTourguide($tourguidescms);
@@ -76,13 +75,11 @@ class TourGuideCmsController
         if (isset($_POST["update"])) {
             $name = htmlspecialchars($_POST["changedName"]);
             $description = htmlspecialchars($_POST["changedDescription"]);
-            $image = htmlspecialchars($_POST["changedImage"]);
 
             $tourguidescms = new TourGuideCms();
 
             $tourguidescms->setName($name);
             $tourguidescms->setDescription($description);
-            $tourguidescms->setImage($image);
 
             $theTourguide = $this->tourguideService->getATourguide($_GET["updateID"]);
             if (count($_FILES) > 0) {

@@ -26,7 +26,7 @@ class TourGuideCmsService
         return $this->tourguideRepository->getOneTourguideByName($name);
     }
 
-    public function addTourguide($tourguides)
+    public function addTourguide(TourGuideCms $tourguides)
     {
         return $this->tourguideRepository->addTourguide($tourguides);
     }

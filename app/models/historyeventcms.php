@@ -1,6 +1,6 @@
 <?php
 
-class HistoryEvent
+class HistoryEventCms
 {
 
     private int $id;
@@ -13,8 +13,6 @@ class HistoryEvent
     private ?int $tourguideID;
     private string $tourguideName;
     private string $tourguideDescription;
-    private int $product_id;
-    private int $ticketpassPrice;
 
     /**
      * @return int
@@ -179,40 +177,6 @@ class HistoryEvent
     public function setTourguideDescription(string $tourguideDescription): void
     {
         $this->tourguideDescription = $tourguideDescription;
-    }
-
-     /**
-     * @return int
-     */
-    public function getProductID(): int
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * @param int $product_id
-     */
-
-    public function setProductID(int $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-     /**
-     * @return int
-     */
-    public function getTicketPassPrice(): int
-    {
-        return $this->ticketpassPrice;
-    }
-
-    /**
-     * @param int $ticketpassPrice
-     */
-
-    public function setTicketPassPrice(int $ticketpassPrice): void
-    {
-        $this->ticketpassPrice = $ticketpassPrice;
     }
 
     public function getFormattedDate()

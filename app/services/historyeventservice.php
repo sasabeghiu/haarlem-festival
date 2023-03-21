@@ -16,4 +16,9 @@ class HistoryEventService
         //retrieve data
         return $this->historyeventRepository->getAll();
     }
+
+    public function getHistoryEventsByDate($datetime)
+    {
+        return $this->historyeventRepository->getHistoryEventsByDate($datetime);
+    }
 }
