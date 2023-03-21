@@ -10,14 +10,14 @@ class LoginService
         $this->loginRepository = new LoginRepository();
     }
 
-    public function login($username, $password)
-    {
-        return $this->loginRepository->login($username, $password);
-    }
-
     public function register($username, $password, $email)
     {
         return $this->loginRepository->register($username, $password, $email);
+    }
+
+    public function updatePassword($userId, $password)
+    {
+        return $this->loginRepository->updatePassword($userId, $password);
     }
 
     public function getByUsername($username)
@@ -35,9 +35,9 @@ class LoginService
         return $this->loginRepository->getById($id);
     }
 
-    public function createVerificationCode($code)
+    public function createVerificationCode($code, $userId)
     {
-        return $this->loginRepository->createVerificationCode($code);
+        return $this->loginRepository->createVerificationCode($code, $userId);
     }
 
     public function isValid($code)

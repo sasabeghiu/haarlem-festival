@@ -19,7 +19,10 @@
         <div class="container mt-4">
             <h2>Reset Password</h2>
             <p>Enter your password.</p>
-            <form method="post" action="/login/verifyCode">
+            <form method="post" action="/login/updatePassword">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" name="userId" value="<?php echo $user->getId(); ?>">
+                </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
@@ -32,31 +35,6 @@
                 <a href="/login" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-4">
-
-            </div>
-            <div class="col-md-4">
-                <br />
-                <div class="card">
-                    <div class="card-header">
-                        Email verification
-                    </div>
-                    <div class="card-body">
-                    </div>
-                    <form action="/login/passwordReset" method="post">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Enter your username and you will receive a verification code in the email associated with the account.</label>
-                            <input type="text" class="form-control" name="username" id="username" aria-describedby="username" placeholder="enter your username" required>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col"><button type="submit" class="btn btn-primary">Send verification code</button></div>
-                            <div class="col"><a name="" id="" class="btn btn-secondary" href="/login/index" role="button">Cancel</a></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> -->
 
     </main>
     <footer>
