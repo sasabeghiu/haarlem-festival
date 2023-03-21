@@ -45,7 +45,6 @@ class HistoryEventCmsController
             $price = htmlspecialchars($_POST["price"]);
             $datetime = htmlspecialchars($_POST["datetime"]);
             $location = htmlspecialchars($_POST["location"]);
-            $venueID = htmlspecialchars($_POST["venueID"]);
             $tourguideID = htmlspecialchars($_POST["tourguideID"]);
 
             $historyeventcms = new HistoryEventCms();
@@ -54,7 +53,6 @@ class HistoryEventCmsController
             $historyeventcms->setPrice($price);
             $historyeventcms->setDateTime($datetime);
             $historyeventcms->setLocation($location);
-            $historyeventcms->setVenueID($venueID);
             $historyeventcms->setTourguideID($tourguideID);
 
             if (count($_FILES) > 0) {
@@ -85,7 +83,6 @@ class HistoryEventCmsController
             $price = htmlspecialchars($_POST["changedPrice"]);
             $datetime = htmlspecialchars($_POST["changedDatetime"]);
             $location = htmlspecialchars($_POST["changedLocation"]);
-            $venueID = htmlspecialchars($_POST["changedVenueID"]);
             $tourguideID = htmlspecialchars($_POST["changedTourguideID"]);
 
             $historyeventcms = new HistoryEventCms();
@@ -94,7 +91,6 @@ class HistoryEventCmsController
             $historyeventcms->setPrice($price);
             $historyeventcms->setDateTime($datetime);
             $historyeventcms->setLocation($location);
-            $historyeventcms->setVenueID($venueID);
             $historyeventcms->setTourguideID($tourguideID);
 
             $theHistoryEvent = $this->historyeventService->getAHistoryEvent($_GET["updateID"]);

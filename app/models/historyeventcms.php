@@ -9,7 +9,6 @@ class HistoryEventCms
     private string $price;
     private string $datetime;
     private string $location;
-    private ?int $venueID;
     private string $image;
     private ?int $tourguideID;
     private string $tourguideName;
@@ -109,22 +108,6 @@ class HistoryEventCms
     public function setLocation(string $location): void
     {
         $this->location = $location;
-    }
-
-    /**
-     * @return ?int
-     */
-    public function getVenueID(): ?int
-    {
-        return $this->venueID;
-    }
-
-    /**
-     * @param ?int $venueID
-     */
-    public function setVenueID(?int $venueID): void
-    {
-        $this->venueID = $venueID;
     }
 
     /**

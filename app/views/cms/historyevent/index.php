@@ -44,19 +44,13 @@ include __DIR__ . '/../../header.php';
             <div class="form-group row mb-1">
                 <label for="datetime" class="col-sm-2 col-form-label">Datetime:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="datetime" name="datetime" placeholder="Insert History Event Datetime" required></textarea>
+                    <input type="datetime-local" class="form-control datepicker" id="datetime" name="datetime" data-date-format="dd/mm/yyyy" placeholder="Insert History Event Datetime" required></input>
                 </div>
             </div>
             <div class="form-group row mb-1">
                 <label for="location" class="col-sm-2 col-form-label">Location:</label>
                 <div class="col-sm-10">
                     <textarea class="form-control" id="location" name="location" placeholder="Insert History Event Location" required></textarea>
-                </div>
-            </div>
-            <div class="form-group row mb-1">
-                <label for="venueid" class="col-sm-2 col-form-label">VenueID:</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="venueid" name="venueid" placeholder="Insert History Event VenueID" required></textarea>
                 </div>
             </div>
             <div class="form-group row mb-1">
@@ -84,7 +78,6 @@ include __DIR__ . '/../../header.php';
                 <th scope="col">Price</th>
                 <th scope="col">Date Time</th>
                 <th scope="col">Location</th>
-                <th scope="col">Venue ID</th>
                 <th scope="col">Image</th>
                 <th scope="col">Tourguide ID</th>
                 <th scope="col" colspan="2" class="text-center">Actions</th>
@@ -100,7 +93,6 @@ include __DIR__ . '/../../header.php';
                     <td style="width: 2%;"><?= $historyevent->getPrice() ?></td>
                     <td style="width: 2%;"><?= $historyevent->getDateTime() ?></td>
                     <td style="width: 2%;"><?= $historyevent->getLocation() ?></td>
-                    <td style="width: 2%;"><?= $historyevent->getVenueID() ?></td>
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($historyevent->getImage()) . '"  height="100px"/>'; ?></td>
                     <td style="width: 2%;"><?= $historyevent->getTourguideID() ?></td>
                     <td style="width: 2%">
@@ -144,7 +136,7 @@ include __DIR__ . '/../../header.php';
                 <div class="form-group row mb-1">
                     <label for="changedPrice" class="col-sm-2 col-form-label">Date Time:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="changedDateTime" name="changedDateTime" value="<?= $updateHistoryEvent->getDateTime() ?>" required>
+                        <input type="datetime-local" class="form-control" id="changedDateTime" name="changedDateTime" data-date-format="dd/mm/yyyy" value="<?= $updateHistoryEvent->getDateTime() ?>" required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">
@@ -184,5 +176,11 @@ include __DIR__ . '/../../header.php';
     document.getElementById('show-adding-form').addEventListener('click', function() {
         document.getElementById('form-add-container').style.display = 'block';
     });
+
+    $(function (){
+        $('#datepicker5').datetimepicker({
+            use24hours: true
+        });
+    }); 
 </script>
 <?php include __DIR__ . '/../../footer.php'; ?>

@@ -9,11 +9,12 @@ class HistoryEvent
     private string $price;
     private string $datetime;
     private string $location;
-    private ?int $venueID;
     private string $image;
     private ?int $tourguideID;
     private string $tourguideName;
     private string $tourguideDescription;
+    private int $product_id;
+    private int $ticketpassPrice;
 
     /**
      * @return int
@@ -112,22 +113,6 @@ class HistoryEvent
     }
 
     /**
-     * @return ?int
-     */
-    public function getVenueID(): ?int
-    {
-        return $this->venueID;
-    }
-
-    /**
-     * @param ?int $venueID
-     */
-    public function setVenueID(?int $venueID): void
-    {
-        $this->venueID = $venueID;
-    }
-
-    /**
      * Get the value of image
      */
     public function getImage()
@@ -194,6 +179,40 @@ class HistoryEvent
     public function setTourguideDescription(string $tourguideDescription): void
     {
         $this->tourguideDescription = $tourguideDescription;
+    }
+
+     /**
+     * @return int
+     */
+    public function getProductID(): int
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * @param int $product_id
+     */
+
+    public function setProductID(int $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+     /**
+     * @return int
+     */
+    public function getTicketPassPrice(): int
+    {
+        return $this->ticketpassPrice;
+    }
+
+    /**
+     * @param int $ticketpassPrice
+     */
+
+    public function setTicketPassPrice(int $ticketpassPrice): void
+    {
+        $this->ticketpassPrice = $ticketpassPrice;
     }
 
     public function getFormattedDate()

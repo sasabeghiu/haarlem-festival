@@ -8,7 +8,7 @@ class HistoryEventCmsRepository extends Repository
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, history_event.venueID, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
                                                         FROM history_event
                                                         JOIN images ON history_event.image=images.id
                                                         JOIN tourguide ON history_event.tourguideID=tourguide.id");
@@ -26,7 +26,7 @@ class HistoryEventCmsRepository extends Repository
     function getOne($id)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, history_event.venueID, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
                                                         FROM history_event
                                                         JOIN images ON history_event.image=images.id
                                                         JOIN tourguide ON history_event.tourguideID=tourguide.id
@@ -43,16 +43,15 @@ class HistoryEventCmsRepository extends Repository
         }
     }
 
-    function addHistoryEvent(HistoryEvent $historyevent)
+    function addHistoryEvent(HistoryEventCms $historyevent)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO history_event (tickets_available, price, datetime, location, venueID, image, tourguideID) VALUES (:tickets_available, :price, :datetime, :location, :venueID, :image, tourguideID)");
+            $stmt = $this->connection->prepare("INSERT INTO history_event (tickets_available, price, datetime, location, image, tourguideID) VALUES (:tickets_available, :price, :datetime, :location, :image, tourguideID)");
 
             $stmt->bindValue(':tickets_available', $historyevent->getTicketsAvailable());
             $stmt->bindValue(':price', $historyevent->getPrice());
             $stmt->bindValue(':datetime', $historyevent->getDateTime());
             $stmt->bindValue(':location', $historyevent->getLocation());
-            $stmt->bindValue(':venueID', $historyevent->getVenueID());
             $stmt->bindValue(':image', $historyevent->getImage());
             $stmt->bindValue(':tourguideID', $historyevent->getTourguideID());
 
@@ -69,9 +68,9 @@ class HistoryEventCmsRepository extends Repository
     function updateHistoryEvent($historyevent, $id)
     {
         try {
-            $stmt = $this->connection->prepare("UPDATE history_event SET tickets_available = ?, price = ?, datetime = ?, location = ?, venueID = ?, image = ?, tourguideID = ? WHERE id = ?");
+            $stmt = $this->connection->prepare("UPDATE history_event SET tickets_available = ?, price = ?, datetime = ?, location = ?, image = ?, tourguideID = ? WHERE id = ?");
 
-            $stmt->execute([$historyevent->getTicketsAvailable(), $historyevent->getPrice(), $historyevent->getDateTime(), $historyevent->getLocation(), $historyevent->getVenueID(), $historyevent->getImage(), $historyevent->getTourguideID(), $id]);
+            $stmt->execute([$historyevent->getTicketsAvailable(), $historyevent->getPrice(), $historyevent->getDateTime(), $historyevent->getLocation(), $historyevent->getImage(), $historyevent->getTourguideID(), $id]);
             
         } catch (PDOException $e){
             echo $e;
