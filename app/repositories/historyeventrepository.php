@@ -32,7 +32,7 @@ class HistoryEventRepository
             $historyevents = $stmt->fetchAll();
 
             return $historyevents;
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
