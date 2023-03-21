@@ -20,20 +20,20 @@ include __DIR__ . '/../header.php';
 
 <div class="row container mx-auto" style="max-width: 1000px;">
     <div class="mt-4">
-        <div class="center my-3">
-            <form method="POST">
+        <div class="my-3 text-center">
+            <form method="POST" class="d-inline-block">
                 <input type="submit" name="events" value="All Events" class="btn btn-success mx-3 filterbtn"></a>
             </form>
-            <form method="POST">
+            <form method="POST" class="d-inline-block">
                 <input type="submit" name="friday" value="Friday 28" class="btn btn-primary mx-3 filterbtn"></a>
             </form>
-            <form method="POST">
+            <form method="POST" class="d-inline-block">
                 <input type="submit" name="saturday" value="Saturday 29" class="btn btn-primary mx-3 filterbtn"></a>
             </form>
-            <form method="POST">
+            <form method="POST" class="d-inline-block">
                 <input type="submit" name="sunday" value="Sunday 30" class="btn btn-primary mx-3 filterbtn"></a>
             </form>
-            <form method="POST">
+            <form method="POST" class="d-inline-block">
                 <input type="submit" name="monday" value="Monday 31" class="btn btn-primary mx-3 filterbtn"></a>
             </form>
         </div>
@@ -72,7 +72,6 @@ include __DIR__ . '/../header.php';
                             <h4 class="text-success fw-bold">Seats available: <?= ucfirst($historyevent->getTicketsAvailable()) ?></h4>
                             <div class="card-button col-xs-1">
                                 <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
-                                <a class="btn btn-info" href="#">Family ticket(max. 4 participants) <?= $historyevent->getTicketPassPrice() ?>€</a>
                             </div>
                         <?php
                         }

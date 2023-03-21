@@ -22,11 +22,10 @@ class HistoryEventRepository
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription, history_event.product_id, ticketpass.price AS ticketpassPrice
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription, history_event.product_id
                                                       FROM history_event
                                                       JOIN images ON history_event.image=images.id
                                                       JOIN tourguide ON history_event.tourguideID=tourguide.id
-                                                      JOIN ticketpass ON history_event.product_id=ticketpass.id
                                                       ORDER BY history_event.datetime");
             $stmt->execute();
 
@@ -42,12 +41,11 @@ class HistoryEventRepository
     function getHistoryEventsByDate($datetime)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription, history_event.product_id, ticketpass.price AS ticketpassPrice
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription, history_event.product_id
                                                       FROM history_event
                                                       JOIN images ON history_event.image=images.id
                                                       JOIN tourguide ON history_event.tourguideID=tourguide.id
-                                                      JOIN ticketpass ON history_event.product_id=ticketpass.id
-                                                      WHERE history_event.datetime = :datetime
+                                                      WHERE history_event.datetime LIKE :datetime
                                                       ORDER BY history_event.datetime");
             $stmt->bindParam(':datetime', $datetime);
 
