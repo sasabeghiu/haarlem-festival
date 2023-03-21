@@ -111,9 +111,9 @@ class HistoryEvent
     }
 
     /**
-     * Get the value of image
+     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }

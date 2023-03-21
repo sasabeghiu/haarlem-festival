@@ -12,7 +12,7 @@ class PageController
     private $eventService;
     private $historyEventService;
 
-    
+
     function __construct()
     {
         $this->pageService = new PageService();
@@ -76,7 +76,8 @@ class PageController
 
         require __DIR__ . '/../views/visithaarlem/music.php';
     }
-    public function food() {
+    public function food()
+    {
         $page = $this->pageService->getOnePage(7);
         $pageCards = $this->pageCardService->getAllCardsByPageId(7);
 
@@ -94,5 +95,11 @@ class PageController
         $page->setDescription($description);
 
         $this->pageService->updatePage($page, 6);
+    }
+
+    public function savePage()
+    {
+        $contents = $_POST["contents"];
+        echo $contents;
     }
 }
