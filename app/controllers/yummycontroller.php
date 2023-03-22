@@ -137,7 +137,7 @@ class YummyController
 
         $datetime = $_POST['date'] . " " . $_POST['session'];
         $reservation->setDate($datetime);
-        $reservation->setRequest(isset($_POST['request']) ? $_POST['request'] : "None");
+        $reservation->setRequest($_POST['request'] != "" ? $_POST['request'] : "None");
         $reservation->setPrice($seats * 10);
 
         $this->yummyservice->reservationTEMP($reservation);
