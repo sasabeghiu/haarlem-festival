@@ -24,7 +24,7 @@ class YummyController
     public function about()
     {
         $restaurant = $this->yummyservice->getRestaurantById();
-        $session = $this->yummyservice->getSessionForRestaurant();
+        $sessions = $this->yummyservice->getSessionsForRestaurant();
         require __DIR__ . '/../views/yummy/restaurantabout.php';
     }
 
@@ -40,11 +40,13 @@ class YummyController
         $session = $this->yummyservice->getSessionById();
         require __DIR__ . '/../views/cms/food/editsession.php';
     }
-    public function addSession() {
+    public function addSession()
+    {
         $restaurants = $this->yummyservice->getRestaurants();
-        require __DIR__ .'/../views/cms/food/addsession.php';
+        require __DIR__ . '/../views/cms/food/addsession.php';
     }
-    public function deleteSession() {
+    public function deleteSession()
+    {
         $this->yummyservice->deleteSession();
         require __DIR__ . '/../views/cms/food/deletesession.php';
     }
@@ -75,10 +77,12 @@ class YummyController
         $restaurant = $this->yummyservice->getRestaurantById();
         require __DIR__ . '/../views/cms/food/editrestaurant.php';
     }
-    public function addRestaurant() {
-        require __DIR__ .'/../views/cms/food/addrestaurant.php';    
+    public function addRestaurant()
+    {
+        require __DIR__ . '/../views/cms/food/addrestaurant.php';
     }
-    public function deleteRestaurant() {
+    public function deleteRestaurant()
+    {
         $this->yummyservice->deleteRestaurant();
         require __DIR__ . '/../views/cms/food/deleterestaurant.php';
     }
@@ -96,26 +100,48 @@ class YummyController
             $newRestaurant->setPhonenumber(isset($_POST['phonenumber']) ? $_POST['phonenumber'] : null);
 
             if (count($_FILES) > 0) {
-                for($i = 1; $i <= 3; $i++) {
+                for ($i = 1; $i <= 3; $i++) {
                     if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
                         $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
                         $setMethod = "setImage" . $i;
                         $newRestaurant->$setMethod($this->yummyservice->saveImage($imgData, $newRestaurant));
+                    }
                 }
-                
-            }}
+            }
 
             $this->yummyservice->saveRestaurant($newRestaurant);
 
             $this->manageRestaurants();
         }
     }
-    public function manageReservations() {
+    public function manageReservations()
+    {
         $reservations = $this->yummyservice->getReservations();
         require __DIR__ . '/../views/cms/food/managereservations.php';
     }
-    public function deactivateReservation() {
+    public function deactivateReservation()
+    {
         $this->yummyservice->deactivateReservation();
         require __DIR__ . '/../views/cms/food/deactivatereservation.php';
+    }
+    public function reservationTEMP()
+    {
+        $restaurantid = htmlspecialchars($_GET['restaurantid']);
+
+        $reservation = new Reservation();
+        $reservation->setName(isset($_POST['name']) ? $_POST['name'] : null);
+        $reservation->setRestaurantID($restaurantid);
+        $reservation->setSessionID(isset($_POST['session']) ? $_POST['session'] : null);
+        $seats = $_POST['formguestsadult'] + $_POST['formguestskids'];
+        $reservation->setSeats($seats);
+
+        $datetime = $_POST['date'] . " " . $_POST['session'];
+        $reservation->setDate($datetime);
+        $reservation->setRequest(isset($_POST['request']) ? $_POST['request'] : "None");
+        $reservation->setPrice($seats * 10);
+
+        $this->yummyservice->reservationTEMP($reservation);
+
+        header('Location: /yummy');
     }
 }

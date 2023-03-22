@@ -23,8 +23,8 @@ class YummyService
     {
         return $this->yummyrepository->getRestaurantById();
     }
-    public function getSessionForRestaurant() {
-        return $this->yummyrepository->getSessionForRestaurant();
+    public function getSessionsForRestaurant() {
+        return $this->yummyrepository->getSessionsForRestaurant();
     }
     public function getSessions()
     {
@@ -61,5 +61,8 @@ class YummyService
     public function deactivateReservation()
     {
         $this->yummyrepository->deactivateReservation();
+    }
+    public function reservationTEMP(Reservation $reservation) {
+        $this->yummyrepository->reservationTEMP($reservation);
     }
 }

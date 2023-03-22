@@ -102,4 +102,8 @@ class UserController
             echo "<script>alert('Please log in to access profile!'); window.location = '/page/festival';</script>";
         }
     }
+
+    public function manageApiKeys() {
+        
+    }
 }

@@ -9,7 +9,7 @@ class Reservation {
     private string $date;
 	private ?string $request;
 	private float $price;
-    private bool $status;
+    private bool $status; 
 
 	public function getId() : int {
 		return $this->id;

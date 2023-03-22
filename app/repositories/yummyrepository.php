@@ -112,7 +112,7 @@ class YummyRepository extends Repository
             echo $e;
         }
     }
-    public function getSessionForRestaurant() {
+    public function getSessionsForRestaurant() {
         $id = htmlspecialchars($_GET["restaurantid"]);
 
         try {
@@ -126,7 +126,7 @@ class YummyRepository extends Repository
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
             $sessions = $stmt->fetchAll();
 
-            return $sessions[0];
+            return $sessions;
         } catch (PDOException $e) {
             echo $e;
         }
@@ -272,5 +272,19 @@ class YummyRepository extends Repository
         } catch (PDOException $e) {
             echo ($e);
         }
+    }
+    public function reservationTEMP(Reservation $reservation) {
+        $stmt = $this->connection->prepare("INSERT INTO `reservation` (`name`, `restaurantID`, `sessionID`, `seats`, `date`, 
+                                            `request`, `price`, `status`) VALUES (:name, :restaurantID,:sessionID, :seats,
+                                            :date, :request, :price, 1 )");
+        $stmt->bindValue(':name', $reservation->getName());
+        $stmt->bindValue(':restaurantID', $reservation->getRestaurantID());
+        $stmt->bindValue(':sessionID', $reservation->getSessionID());
+        $stmt->bindValue(':seats', $reservation->getSeats());
+        $stmt->bindValue(':date', $reservation->getDate());
+        $stmt->bindValue(':request', $reservation->getRequest());
+        $stmt->bindValue(':price', $reservation->getPrice());
+
+        $stmt->execute();
     }
 }
