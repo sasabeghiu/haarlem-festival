@@ -10,6 +10,7 @@ class TourGuideCmsController
     function __construct()
     {
         $this->tourguideService = new TourGuideCmsService();
+        session_start();
     }
 
     public function tourGuideDetails()

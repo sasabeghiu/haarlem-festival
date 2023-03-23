@@ -100,8 +100,8 @@
               <i class="fas fa-shopping-cart"></i>
               Shopping Cart
               <?php
-              if ($count > 0) {
-                echo "<span id='card_count' class='text-dark bg-light fw-bold'>$count</span>";
+              if (isset($_SESSION['cartcount'])) {
+                echo "<span id='card_count' class='text-dark bg-light fw-bold'>{$_SESSION['cartcount']}</span>";
               } else {
                 echo "<span id='card_count' class='text-dark bg-light fw-bold'>0</span>";
               }

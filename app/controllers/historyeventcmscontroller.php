@@ -10,6 +10,7 @@ class HistoryEventCmsController
     function __construct()
     {
         $this->historyeventService = new HistoryEventCmsService();
+        session_start();
     }
 
     public function historyEventDetails()

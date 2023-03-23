@@ -22,24 +22,33 @@ class EventController
         $this->venueService = new VenueService();
         $this->ticketpassService = new TicketPassService();
         $this->cartService = new ShoppingCartService();
+        session_start();
     }
 
     function addToCart()
     {
         if (isset($_POST['add-to-cart'])) {
-            $user_id = 1;
-            $product_id = htmlspecialchars($_POST["product_id"]);
-            $qty = 1;
+            if (isset($_SESSION['userId'])) {
+                $user_id = $_SESSION['userId'];
+                $product_id = htmlspecialchars($_POST["product_id"]);
+                $qty = 1;
 
-            $cartItem = new ShoppingCartItem();
+                $cartItem = new ShoppingCartItem();
 
-            $cartItem->setUser_id($user_id);
-            $cartItem->setProduct_id($product_id);
-            $cartItem->setQty($qty);
-            if ($this->cartService->checkIfProductExistsInCart($user_id, $product_id)) {
-                echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
+                $cartItem->setUser_id($user_id);
+                $cartItem->setProduct_id($product_id);
+                $cartItem->setQty($qty);
+                if ($this->cartService->checkIfProductExistsInCart($user_id, $product_id)) {
+                    echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
+                } else {
+                    $this->cartService->addProductToCart($cartItem);
+                    $_SESSION['cartcount']++;
+                }
             } else {
-                $this->cartService->addProductToCart($cartItem);
+                echo "<script>
+                alert('You have to be logged in to add to cart.');
+                window.location.href = '/login/index'
+                </script>";
             }
         }
     }
