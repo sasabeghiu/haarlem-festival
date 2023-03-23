@@ -96,17 +96,17 @@
           </li>
 
           <li class="nav-item">
-          <a class="nav-link" href="/shoppingcart">
-                  <i class="fas fa-shopping-cart"></i>
-                  Shopping Cart
-                  <?php
-                  if (isset($_SESSION['shopping-cart'])) {
-                    $count = count($_SESSION['shopping-cart']);
-                    echo "<span id='card_count' class='text-dark bg-light fw-bold'>$count</span>";
-                  } else {
-                    echo "<span id='card_count' class='text-dark bg-light fw-bold'>0</span>";
-                  }
-                  ?></a>
+            <a class="nav-link" href="/shoppingcart">
+              <i class="fas fa-shopping-cart"></i>
+              Shopping Cart
+              <?php
+              if ($count > 0) {
+                echo "<span id='card_count' class='text-dark bg-light fw-bold'>$count</span>";
+              } else {
+                echo "<span id='card_count' class='text-dark bg-light fw-bold'>0</span>";
+              }
+              ?>
+            </a>
           </li>
         </ul>
       </div>

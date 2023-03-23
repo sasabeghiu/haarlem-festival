@@ -3,6 +3,7 @@ require __DIR__ . '/../services/eventservice.php';
 require __DIR__ . '/../services/artistservice.php';
 require __DIR__ . '/../services/venueservice.php';
 require __DIR__ . '/../services/ticketpassservice.php';
+require __DIR__ . '/../services/shoppingcartservice.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
@@ -12,6 +13,7 @@ class EventController
     private $artistService;
     private $venueService;
     private $ticketpassService;
+    private $cartService;
 
     function __construct()
     {
@@ -19,31 +21,25 @@ class EventController
         $this->artistService = new ArtistService();
         $this->venueService = new VenueService();
         $this->ticketpassService = new TicketPassService();
+        $this->cartService = new ShoppingCartService();
     }
 
     function addToCart()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
         if (isset($_POST['add-to-cart'])) {
-            if (isset($_SESSION['shopping-cart'])) {
-                $items_array_id = array_column($_SESSION['shopping-cart'], "product_id");
-                if (in_array($_POST['product_id'], $items_array_id)) {
-                    echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
-                } else {
-                    $count = count($_SESSION['shopping-cart']);
-                    $items_array = array(
-                        'product_id' => $_POST['product_id']
-                    );
-                    $_SESSION['shopping-cart'][$count] = $items_array;
-                }
+            $user_id = 1;
+            $product_id = htmlspecialchars($_POST["product_id"]);
+            $qty = 1;
+
+            $cartItem = new ShoppingCartItem();
+
+            $cartItem->setUser_id($user_id);
+            $cartItem->setProduct_id($product_id);
+            $cartItem->setQty($qty);
+            if ($this->cartService->checkIfProductExistsInCart($user_id, $product_id)) {
+                echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
             } else {
-                $items_array = array(
-                    'product_id' => $_POST['product_id']
-                );
-                //Create new session variable
-                $_SESSION['shopping-cart'][0] = $items_array;
+                $this->cartService->addProductToCart($cartItem);
             }
         }
     }
