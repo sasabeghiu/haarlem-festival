@@ -8,6 +8,7 @@ class YummyController
     public function __construct()
     {
         $this->foodService = new FoodService();
+        session_start();
     }
 
     // public function index()

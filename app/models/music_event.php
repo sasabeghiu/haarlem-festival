@@ -11,6 +11,7 @@ class Music_Event
     private string $datetime;
     private string $image;
     private string $name;
+    private int $product_id;
 
     /**
      * Get the value of id
@@ -188,6 +189,26 @@ class Music_Event
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of product_id
+     */ 
+    public function getProduct_id()
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * Set the value of product_id
+     *
+     * @return  self
+     */ 
+    public function setProduct_id($product_id)
+    {
+        $this->product_id = $product_id;
 
         return $this;
     }

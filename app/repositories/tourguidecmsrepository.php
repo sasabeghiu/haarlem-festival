@@ -17,7 +17,7 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetchAll();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -36,7 +36,7 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetch();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -55,7 +55,7 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetch();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -75,7 +75,7 @@ class TourGuideCmsRepository extends Repository
             $tourguides->setId($this->connection->lastInsertId());
 
             return $this->getOne($tourguides->getId());
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -86,7 +86,7 @@ class TourGuideCmsRepository extends Repository
         try {
             $stmt = $this->connection->prepare("UPDATE tourguide SET name = ?, description = ?, image = ? WHERE id = ?");
             $stmt->execute([$tourguides->getName(), $tourguides->getDescription(), $tourguides->getImage(), $id]);
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -101,9 +101,7 @@ class TourGuideCmsRepository extends Repository
             
             $stmt->bindParam(':id', $id);
             $stmt->execute();
-
-            return;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
         return true;
@@ -118,7 +116,7 @@ class TourGuideCmsRepository extends Repository
             $stmt->execute();
 
             return $this->connection->lastInsertId();
-        } catch(Exception $e){
+        } catch (Exception $e) {
             echo $e;
         }
     }
@@ -132,7 +130,7 @@ class TourGuideCmsRepository extends Repository
             $stmt->execute();
 
             return $id;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -148,7 +146,7 @@ class TourGuideCmsRepository extends Repository
             $tourguidescms = $stmt->fetch();
 
             return $tourguidescms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
