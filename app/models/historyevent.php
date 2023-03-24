@@ -14,7 +14,6 @@ class HistoryEvent
     private string $tourguideName;
     private string $tourguideDescription;
     private int $product_id;
-    private int $ticketpassPrice;
 
     /**
      * @return int
@@ -198,26 +197,29 @@ class HistoryEvent
         $this->product_id = $product_id;
     }
 
-     /**
-     * @return int
-     */
-    public function getTicketPassPrice(): int
-    {
-        return $this->ticketpassPrice;
-    }
-
-    /**
-     * @param int $ticketpassPrice
-     */
-
-    public function setTicketPassPrice(int $ticketpassPrice): void
-    {
-        $this->ticketpassPrice = $ticketpassPrice;
-    }
-
     public function getFormattedDate()
     {
         $date = new DateTime($this->datetime);
         return $date->format('d - F - Y - H:i:s');
+    }
+
+    /**
+     * Get the value of product_id
+     */ 
+    public function getProduct_id()
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * Set the value of product_id
+     *
+     * @return  self
+     */ 
+    public function setProduct_id($product_id)
+    {
+        $this->product_id = $product_id;
+
+        return $this;
     }
 }

@@ -3,16 +3,20 @@
 use PHPMailer\Mailer;
 
 require __DIR__ . '/../services/loginservice.php';
+require __DIR__ . '/../services/shoppingcartservice.php';
+
 require __DIR__ . '/../utils/mailer.php';
 
 class LoginController
 {
     private $loginService;
+    private $shoppingcartService;
     private $mailer;
 
     function __construct()
     {
         $this->loginService = new LoginService();
+        $this->shoppingcartService = new ShoppingCartService();
         $this->mailer = new Mailer();
     }
 
@@ -34,6 +38,8 @@ class LoginController
                         session_start();
                         $_SESSION['userId'] = $user->getId();
                         $_SESSION['loggedin'] = true;
+                        $shoppingCartCount = $this->shoppingcartService->countProducts($_SESSION['userId']);
+                        $_SESSION['cartcount'] = $shoppingCartCount;
                         header('Location: /page/index');
                     }
                 }

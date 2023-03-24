@@ -76,9 +76,7 @@ class TourGuideCms
     }
 
     /**
-     * Set value of image
-     * 
-     * @return self
+     * @param string $image
      */
     public function setImage($image)
     {

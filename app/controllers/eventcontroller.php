@@ -2,6 +2,8 @@
 require __DIR__ . '/../services/eventservice.php';
 require __DIR__ . '/../services/artistservice.php';
 require __DIR__ . '/../services/venueservice.php';
+require __DIR__ . '/../services/ticketpassservice.php';
+require __DIR__ . '/../services/shoppingcartservice.php';
 
 include_once __DIR__ . '/../views/getURL.php';
 
@@ -10,16 +12,51 @@ class EventController
     private $eventService;
     private $artistService;
     private $venueService;
+    private $ticketpassService;
+    private $cartService;
 
     function __construct()
     {
         $this->eventService = new EventService();
         $this->artistService = new ArtistService();
         $this->venueService = new VenueService();
+        $this->ticketpassService = new TicketPassService();
+        $this->cartService = new ShoppingCartService();
+        session_start();
+    }
+
+    function addToCart()
+    {
+        if (isset($_POST['add-to-cart'])) {
+            if (isset($_SESSION['userId'])) {
+                $user_id = $_SESSION['userId'];
+                $product_id = htmlspecialchars($_POST["product_id"]);
+                $qty = 1;
+
+                $cartItem = new ShoppingCartItem();
+
+                $cartItem->setUser_id($user_id);
+                $cartItem->setProduct_id($product_id);
+                $cartItem->setQty($qty);
+                if ($this->cartService->checkIfProductExistsInCart($user_id, $product_id)) {
+                    echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
+                } else {
+                    $this->cartService->addProductToCart($cartItem);
+                    $_SESSION['cartcount']++;
+                }
+            } else {
+                echo "<script>
+                alert('You have to be logged in to add to cart.');
+                window.location.href = '/login/index'
+                </script>";
+            }
+        }
     }
 
     public function danceevents()
     {
+        $this->addToCart();
+
         if (isset($_POST["thursday"])) {
             $model = $this->eventService->getDanceEventsByDate('%2023-07-27%');
         } else if (isset($_POST["friday"])) {
@@ -30,11 +67,15 @@ class EventController
             $model = $this->eventService->getAllDanceEvents();
         }
 
+        $passes = $this->ticketpassService->getDancePasses();
+
         require __DIR__ . '/../views/dance/eventsoverview.php';
     }
 
     public function jazzevents()
     {
+        $this->addToCart();
+
         if (isset($_POST["wednesday"])) {
             $model = $this->eventService->getJazzEventsByDate('%2023-07-26%');
         } else if (isset($_POST["thursday"])) {
@@ -47,11 +88,12 @@ class EventController
             $model = $this->eventService->getAllJazzEvents();
         }
 
+        $passes = $this->ticketpassService->getJazzPasses();
+
         require __DIR__ . '/../views/jazz/eventsoverview.php';
     }
 
     // cms part
-
     public function addEvent()
     {
         $type = htmlspecialchars($_POST["type"]);
