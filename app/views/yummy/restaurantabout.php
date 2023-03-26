@@ -21,11 +21,11 @@ require __DIR__ . '/../header.php';
     <div class="row justify-content-around">
         <div class="col-2">
             <h3>Details</h3>
-            <p>Price: <?= $session->getPrice() ?></p>
+            <p>Price: <?= $sessions[0]->getPrice() ?></p>
             <p>Cuisine: <?= $restaurant->getCuisine() ?> </p>
             <p>Rating: <?= $restaurant->getStars() ?> Stars</p>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <image src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->getImage2()); ?>" class="image-fluid" alt="Loading image..." />
         </div>
         <div class="col-3">
@@ -39,46 +39,61 @@ require __DIR__ . '/../header.php';
         <div class="col-4">
             <image src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->getImage3()); ?>" class="image-fluid" alt="Loading image..." />
         </div>
-        <div class="col-6">
+        <div class="col-5">
             <h3>Make a reservation</h3>
-            <form method="POST">
+            <form action="/yummy/reservationTEMP?restaurantid=<?= $restaurant->getId() ?>" method="POST">
                 <div class="form-field">
                     <div class="mb-3">
                         <label for="name" class="form-label"><b>Name:</b></label>
                         <input type="text" class="form-control" name="name" id="name">
                     </div>
-                    <label><b>Number of people:</b> </label>
-                    <select name="formguests">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
+                    <p><b>Guests</b></p>
+                    <div class="row" id="guests-select">
+                        <div class="col">
+                            <label><b>Adults:</b> </label>
+                            <select name="formguestsadult">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label><b>Children:</b> </label>
+                            <select name="formguestskids">
+                                <option value="0">None</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-field">
                     <label><b>Day:</b> </label>
                     <select name="date">
-                        <option value="thursday">Thursday</option>
-                        <option value="friday">Friday</option>
-                        <option value="saturday">Saturday</option>
-                        <option value="sunday">Sunday</option>
+                        <option value="2023-06-26">Thursday July 26th</option>
+                        <option value="2023-06-27">Friday July 27th</option>
+                        <option value="2023-06-28">Saturday July 28th</option>
+                        <option value="2023-06-29">Sunday July 29th</option>
                     </select>
                 </div>
                 <div class="form-field">
                     <label><b>Session:</b> </label>
                     <select name="session">
                         <?php
-                        //The loop for adding session options. The first session starttime is in the database, for all sessions after 
-                        //the length of the session is added to this time
-                        for ($i = 0; $i < $session->getSessions(); $i++) {
-                            $date_input = strtotime($session->getFirst_session());
-                            $date = date('H:i', $date_input);
-                            $minutesToAdd = $i * $session->getSession_length() * 60; //You can not add .5 hours to a date variable in php so minutes are used instead
-                            $sessionTime = date('H:i', strtotime($date . ' + ' . $minutesToAdd . ' minutes'));
+                        $i = 1;
+                        foreach ($sessions as $session) {
+                            $date_input = strtotime($session->getStarttime());
+                            $time = date('H:i', $date_input);
                         ?>
-                            <option value="<?= $sessionTime ?>">Session <?= $i + 1 ?>: <?= $sessionTime ?></option>
-                        <?php } ?>
+                            <option value="<?= $session->getId() ?>">Session <?= $i ?>: <?= $time ?></option>
+                        <?php
+                            $i++;
+                        } ?>
                     </select>
                 </div>
                 <div class="mb-3">
