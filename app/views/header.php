@@ -70,7 +70,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/user/profile">Edit Profile</a>
               <a class="dropdown-item" href="/login/logout">Logout</a>
-              <a class="dropdown-item" href="/login/logout">API</a>
+              <a class="dropdown-item" href="/api/keys">API</a>
             </div>
           </div>
           <div class="dropdown show">
