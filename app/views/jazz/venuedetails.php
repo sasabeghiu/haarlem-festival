@@ -48,7 +48,10 @@ include __DIR__ . '/../header.php';
                         </div>
                         <div class="card-footer text-light bg-dark text-center">
                             <p class="text-center"><a href="/artist/jazzartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
-                            <button class="btn btn-secondary">Add to cart</button>
+                            <form action="/venue/jazzvenuedetails?id=<?= $model->getId() ?>" method="post">
+                                <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                                <input type="hidden" name="product_id" value="<?= $event->getProduct_id() ?>">
+                            </form>
                         </div>
                     </div>
                 </div>

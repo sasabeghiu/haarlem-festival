@@ -1,19 +1,26 @@
 <?php
+
+use PHPMailer\Mailer;
+
+require __DIR__ . '/../utils/mailer.php';
 require __DIR__ . '/../services/userservice.php';
 
 class UserController
 {
     private $userService;
+    private $mailer;
 
     function __construct()
     {
         $this->userService = new UserService();
+        $this->mailer = new Mailer();
+        session_start();
     }
 
     public function index()
     {
         $model = $this->userService->getAll();
-        $roles = $this->userService->getRoles();
+        //$roles = $this->userService->getRoles();
 
         require __DIR__ . '/../views/cms/user/index.php';
     }
@@ -63,17 +70,29 @@ class UserController
                 $newUser = new User();
                 $newUser->setId(htmlspecialchars(isset($_POST['id']) ? $_POST['id'] : ""));
                 $newUser->setUsername(htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : ""));
-                $hashedPass = isset($_POST['password']) ? $_POST['password'] : "";
-                $newUser->setPassword($hashedPass);
+                $password = isset($_POST['password']) ? $_POST['password'] : "";
+                $newUser->setPassword(password_hash($password, PASSWORD_DEFAULT));
                 $newUser->setEmail(htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : ""));
                 $newUser->setRole(htmlspecialchars(isset($_POST['role']) ? $_POST['role'] : 2)); //default customer
 
-                if ($this->userService->validateUser($newUser, $_POST['id'])) { //returns true is user.username an user.email do not exist in db excluding id
+                //prepare email
+                $existingUser = $this->userService->getById($newUser->getId());
+                $receiver = $existingUser->getEmail();
+                $receiver_name = $newUser->getUsername();
+                $subject = "Password change - Haarlem Festival Support";
+                $body_string = 'Your password has been changed by an administrator ';
+
+                if (strlen($newUser->getPassword() < 6) && strlen($newUser->getPassword() > 0)) {
+                    echo "<script>alert('Password must be at least 6 characters long!'); window.location = '/user';</script>";
+                } else if ($this->userService->validateUser($newUser, $_POST['id'])) { //returns true if user.username and user.email do not exist in db excluding id
                     echo "<script>alert('Username or Email already in use!'); window.location = '/user';</script>";
+                } else if (!$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
+                    echo "<script>alert('Error while sending confirmation email'); window.location = '/user';</script>";
                 } else if (!$this->userService->update($newUser)) {
-                    echo "<script>alert('Failed to update User. ') window.location = '/user';</script>";
+                    echo "<script>alert('Failed to update User. '); window.location = '/user';</script>";
                 } else {
-                    echo "<script>alert('Updated successfully!'); window.location = '/page/festival';</script>";
+                    //header('Location: /user');
+                    echo "<script>alert('Updated successfully!'); window.location = '/user';</script>";
                 }
             } catch (Exception $e) {
                 echo "An error occurred: " . $e->getMessage();

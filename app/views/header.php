@@ -1,6 +1,3 @@
-<?php
-//session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +12,8 @@
   <!-- include jquery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="/css/shoppingcartstyle.css">
 </head>
 
 <body>
@@ -85,6 +84,7 @@
               <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
               <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
               <a class="dropdown-item" href="/tourguidecms/cms">Tour Guide CMS</a>
+              <a class="dropdown-item" href="/historyeventcms/cms">History Events CMS</a>
               <a class="dropdown-item" href="/yummy/manageSessions">Yummy</a>
               <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
               <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
@@ -93,6 +93,20 @@
 
           <li class="nav-item">
             <a class="nav-link" href="/page/">Visit Haarlem</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/shoppingcart">
+              <i class="fas fa-shopping-cart"></i>
+              Shopping Cart
+              <?php
+              if (isset($_SESSION['cartcount'])) {
+                echo "<span id='card_count' class='text-dark bg-light fw-bold'>{$_SESSION['cartcount']}</span>";
+              } else {
+                echo "<span id='card_count' class='text-dark bg-light fw-bold'>0</span>";
+              }
+              ?>
+            </a>
           </li>
         </ul>
       </div>
