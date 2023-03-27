@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../models/shoppingcartitem.php';
+require __DIR__ . '/../models/orders.php';
 
 class ShoppingCartRepository
 {
@@ -155,6 +156,50 @@ class ShoppingCartRepository
 
             return $rows[0];
         } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function placeOneOrder($id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber
+                                                FROM orders
+                                                WHERE orders.id = :id");
+            
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
+            $placeorder = $stmt->fetch();
+
+            return $placeorder;
+        } catch (PDOException $e){
+            echo $e;
+        }
+    }
+
+    function placeOrder(Orders $placeorder)
+    {
+        try {
+            $stmt = $this->connection->prepare("INSERT INTO orders (firstName, lastName, birthdate, emailAddress, streetAddress, country, zipCode, phoneNumber)
+                                                VALUES (:firstName, :lastName, :birthdate, :emailAddress, :streetAddress, :country, :zipCode, :phoneNumber)");
+
+            $stmt->bindValue(':firstName', $placeorder->getFirstName());
+            $stmt->bindValue(':lastName', $placeorder->getLastName());
+            $stmt->bindValue(':birthdate', $placeorder->getBirthDate());
+            $stmt->bindValue(':emailAddress', $placeorder->getEmailAddress());
+            $stmt->bindValue(':streetAddress', $placeorder->getStreetAddress());
+            $stmt->bindValue(':country', $placeorder->getCountry());
+            $stmt->bindValue(':zipCode', $placeorder->getZipCode());
+            $stmt->bindValue(':phoneNumber', $placeorder->getPhoneNumber());
+
+            $stmt->execute();
+
+            $placeorder->setId($this->connection->lastInsertId());
+
+            return $this->placeOneOrder($placeorder->getId());
+        } catch (PDOException $e){
             echo $e;
         }
     }

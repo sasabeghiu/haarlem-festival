@@ -50,7 +50,7 @@ class HistoryEventCmsController
 
             $historyeventcms = new HistoryEventCms();
 
-            $historyeventcms->setTicketsAvailable($$tickets_available);
+            $historyeventcms->setTicketsAvailable($tickets_available);
             $historyeventcms->setPrice($price);
             $historyeventcms->setDateTime($datetime);
             $historyeventcms->setLocation($location);

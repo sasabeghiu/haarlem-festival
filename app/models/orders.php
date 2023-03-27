@@ -1,6 +1,6 @@
 <?php
 
-class Order
+class Orders
 {
     private int $id;
     private string $firstName;
@@ -8,9 +8,8 @@ class Order
     private string $birthdate;
     private string $emailAddress;
     private string $streetAddress;
-    private float $vat;
-    private string $city;
-    private string $postalCode;
+    private string $country;
+    private string $zipCode;
     private string $phoneNumber;
 
     /**
@@ -110,51 +109,35 @@ class Order
     }
 
      /**
-     * @return float
+     * @return string
      */
-    public function getVAT(): float
+    public function getCountry(): string
     {
-        return $this->vat;
+        return $this->country;
     }
 
     /**
-     * @param float $vat
+     * @param string $country
      */
-    public function setVAT(float $vat): void
+    public function setCountry(string $country): void
     {
-        $this->vat = $vat;
+        $this->country = $country;
     }
 
      /**
      * @return string
      */
-    public function getCity(): string
+    public function getZipCode(): string
     {
-        return $this->city;
+        return $this->zipCode;
     }
 
     /**
-     * @param string $city
+     * @param string $zipCode
      */
-    public function setCity(string $city): void
+    public function setZipCode(string $zipCode): void
     {
-        $this->city = $city;
-    }
-
-     /**
-     * @return string
-     */
-    public function getPostalCode(): string
-    {
-        return $this->postalCode;
-    }
-
-    /**
-     * @param string $postalCode
-     */
-    public function setPostalCode(string $postalCode): void
-    {
-        $this->postalCode = $postalCode;
+        $this->zipCode = $zipCode;
     }
 
      /**

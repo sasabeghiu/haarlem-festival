@@ -81,6 +81,7 @@ include __DIR__ . '/../header.php';
                     </span>
                 </h4>
                 <?php
+                $subtotal = 0;
                 $total = 0;
                 if ($count > 0) {
                     foreach ($cartItems as $cartItem) {
@@ -97,13 +98,17 @@ include __DIR__ . '/../header.php';
                                 <span class="muted">&euro;<?= $cartItem->getEvent_price() ?></span>
                             </li>
                     <?php
-                        $subtotal = $cartItem->getSubtotal();
-                        $total += $subtotal;
+                        $subtotal += $cartItem->getSubtotal();
+                        $total = $subtotal + ($subtotal * (21 / 100));
                     }
                 }
                     ?>
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (EUR)</span>
+                        <span>Subtotal (EUR)</span>
+                        <strong>&euro;<?php echo $subtotal; ?> </strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total(incl. VAT 21%) (EUR)</span>
                         <strong>&euro;<?php echo $total; ?> </strong>
                     </li>
                         </ul>
@@ -115,49 +120,63 @@ include __DIR__ . '/../header.php';
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label">First name</label>
-                            <input type="text" class="form-control" name="firstName" placeholder="" value="" required>
+                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="" required>
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="lastName" class="form-label">Last name</label>
-                            <input type="text" class="form-control" name="lastName" placeholder="" value="" required>
+                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="" required>
                             <div class="invalid-feedback">
                                 Valid last name is required.
                             </div>
                         </div>
                         <div class="col-12">
+                            <label for="email" class="form-label">Birth Date</label>
+                            <input type="date" class="form-control datepicker" data-date-format="dd/mm/yyyy" name="birthdate" id="birthdate">
+                            <div class="invalid-feedback">
+                                Please enter your birth date.
+                            </div>
+                        </div>
+                        <div class="col-12">
                             <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-                            <input type="email" class="form-control" name="email" placeholder="you@example.com">
+                            <input type="email" class="form-control" name="emailAddress" id="emailAddress" placeholder="you@example.com">
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" name="address" placeholder="1234 Main St" required>
+                            <input type="text" class="form-control" name="streetAddress" id="streetAddress" placeholder="1234 Main St" required>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="country" class="form-label">Country</label>
-                            <input type="text" class="form-control" name="country" placeholder="" value="" required>
+                            <input type="text" class="form-control" name="country" id="country" placeholder="" value="" required>
                             <div class="invalid-feedback">
                                 Valid country is required.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="zipCode" class="form-label">Zip Code</label>
-                            <input type="text" class="form-control" name="zipCode" placeholder="" value="" required>
+                            <input type="text" class="form-control" name="zipCode" id="zipCode" placeholder="" value="" required>
                             <div class="invalid-feedback">
                                 Valid zip code is required.
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                                Valid phone number is required.
+                            </div>
+                        </div>
                     </div>
                     <hr class="my-4">
-                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="placeOrder">Place order</button>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="placeorder">Place order</button>
                 </form>
             </div>
         </div>

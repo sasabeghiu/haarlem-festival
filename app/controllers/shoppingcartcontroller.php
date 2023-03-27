@@ -51,7 +51,6 @@ class ShoppingcartController
 
     public function checkout()
     {
-        session_start();
         if (isset($_SESSION['userId'])) {
 
             $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
@@ -64,5 +63,40 @@ class ShoppingcartController
                 window.location.href = '/login/index'
                 </script>";
         }
+        if (isset($_POST["placeorder"])) {
+
+            $firstName = htmlspecialchars($_POST["firstName"]);
+            $lastName = htmlspecialchars($_POST["lastName"]);
+            $birthdate = htmlspecialchars($_POST["birthdate"]);
+            $emailAddress = htmlspecialchars($_POST["emailAddress"]);
+            $streetAddress = htmlspecialchars($_POST["streetAddress"]);
+            $country = htmlspecialchars($_POST["country"]);
+            $zipCode = htmlspecialchars($_POST["zipCode"]);
+            $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
+
+            $placeorder = new Orders();
+
+            $placeorder->setFirstName($firstName);
+            $placeorder->setLastName($lastName);
+            $placeorder->setBirthDate($birthdate);
+            $placeorder->setEmailAddress($emailAddress);
+            $placeorder->setStreetAddress($streetAddress);
+            $placeorder->setCountry($country);
+            $placeorder->setZipCode($zipCode);
+            $placeorder->setPhoneNumber($phoneNumber);
+
+            $this->shoppingcartService->placeOrder($placeorder);
+
+            if ($this->shoppingcartService) {
+                echo "<script>alert('Order placed successfully! ')</script>";
+            } else {
+                echo "<script>alert('Failed to place order. ')</script>";
+            }
+        }
+    }
+
+    public function payment()
+    {
+
     }
 }
