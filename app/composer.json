@@ -1,5 +1,6 @@
 {
-    "require": {
-        "phpmailer/phpmailer": "^6.8"
-    }
+  "require": {
+    "phpmailer/phpmailer": "^6.8",
+    "mollie/mollie-api-php": "^2.0"
+  }
 }

@@ -6,29 +6,37 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573
 {
-    public static $prefixLengthsPsr4 = array (
-        'P' => 
-        array (
+    public static $prefixLengthsPsr4 = array(
+        'P' =>
+        array(
             'PHPMailer\\PHPMailer\\' => 20,
         ),
-        'F' => 
-        array (
-            'Firebase\\JWT\\' => 13,
+        'M' =>
+        array(
+            'Mollie\\Api\\' => 11,
+        ),
+        'C' =>
+        array(
+            'Composer\\CaBundle\\' => 18,
         ),
     );
 
-    public static $prefixDirsPsr4 = array (
-        'PHPMailer\\PHPMailer\\' => 
-        array (
+    public static $prefixDirsPsr4 = array(
+        'PHPMailer\\PHPMailer\\' =>
+        array(
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'Firebase\\JWT\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        'Mollie\\Api\\' =>
+        array(
+            0 => __DIR__ . '/..' . '/mollie/mollie-api-php/src',
+        ),
+        'Composer\\CaBundle\\' =>
+        array(
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
         ),
     );
 
-    public static $classMap = array (
+    public static $classMap = array(
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
@@ -38,7 +46,6 @@ class ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573
             $loader->prefixLengthsPsr4 = ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573::$classMap;
-
         }, null, ClassLoader::class);
     }
 }
