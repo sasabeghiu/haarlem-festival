@@ -6,57 +6,53 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573
 {
-    public static $files = array (
+    public static $files = array(
         'a9ed0d27b5a698798a89181429f162c5' => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib/Common/customFunctions.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'Z' => 
-        array (
+    public static $prefixLengthsPsr4 = array(
+        'Z' =>
+        array(
             'Zxing\\' => 6,
         ),
-        'P' => 
-        array (
+        'P' =>
+        array(
             'PHPMailer\\PHPMailer\\' => 20,
         ),
-        'E' => 
-        array (
+        'E' =>
+        array(
             'Endroid\\QrCode\\' => 15,
         ),
-        'D' => 
-        array (
+        'D' =>
+        array(
             'DASPRiD\\Enum\\' => 13,
         ),
-        'B' => 
-        array (
+        'B' =>
+        array(
             'BaconQrCode\\' => 12,
         ),
+        'P' =>
+        array(
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'M' =>
+        array(
+            'Mollie\\Api\\' => 11,
+        ),
+        'C' =>
+        array(
+            'Composer\\CaBundle\\' => 18,
+        ),
     );
 
-    public static $prefixDirsPsr4 = array (
-        'Zxing\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib',
-        ),
-        'PHPMailer\\PHPMailer\\' => 
-        array (
+    public static $prefixDirsPsr4 = array(
+        'PHPMailer\\PHPMailer\\' =>
+        array(
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'Endroid\\QrCode\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/endroid/qr-code/src',
-        ),
-        'DASPRiD\\Enum\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/dasprid/enum/src',
-        ),
-        'BaconQrCode\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
-        ),
     );
 
-    public static $classMap = array (
+    public static $classMap = array(
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
@@ -66,7 +62,6 @@ class ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573
             $loader->prefixLengthsPsr4 = ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573::$classMap;
-
         }, null, ClassLoader::class);
     }
 }
