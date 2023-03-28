@@ -21,7 +21,7 @@ class EventRepository
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
@@ -41,7 +41,7 @@ class EventRepository
     function getAllDanceEvents()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
@@ -62,7 +62,7 @@ class EventRepository
     function getAllJazzEvents()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
@@ -83,7 +83,7 @@ class EventRepository
     function getOne($id)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
@@ -105,7 +105,7 @@ class EventRepository
     function getDanceEventsByDate($datetime)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
@@ -127,7 +127,7 @@ class EventRepository
     function getJazzEventsByDate($datetime)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
@@ -149,7 +149,7 @@ class EventRepository
     function getEventsByArtistName($artistName)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, a1.name as artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, a1.name as artist, v.name as venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN venue as v ON e.venue=v.id
             JOIN artist as a1 ON e.name=a1.id
@@ -171,7 +171,7 @@ class EventRepository
     function getEventsByVenueID($venueID)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, e.venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name, e.product_id
+            $stmt = $this->connection->prepare("SELECT e.id, e.type, e.artist, e.venue, e.ticket_price, e.tickets_available, e.datetime, i.image, a1.name
             FROM music_event as e 
             JOIN artist as a1 ON e.name=a1.id
             JOIN images as i ON a1.thumbnailImg=i.id
@@ -192,7 +192,7 @@ class EventRepository
     function addEvent($event)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO music_event (type, artist, venue, ticket_price, tickets_available, datetime, image, name, product_id) VALUES (?,?,?,?,?,?,?,?, ?)");
+            $stmt = $this->connection->prepare("INSERT INTO music_event (type, artist, venue, ticket_price, tickets_available, datetime, image, name) VALUES (?,?,?,?,?,?,?,?)");
             $stmt->execute([$event->getType(), $event->getArtist(), $event->getVenue(), $event->getTicket_Price(), $event->getTickets_Available(), $event->getDatetime(), $event->getImage(), $event->getName()]);
             $event->setId($this->connection->lastInsertId());
             $event->setProduct_id($this->connection->lastInsertId());
@@ -206,8 +206,8 @@ class EventRepository
     function updateEvent($event, $id)
     {
         try {
-            $stmt = $this->connection->prepare("UPDATE music_event SET type = ?, artist = ?, venue = ?, ticket_price = ?, tickets_available = ?, datetime = ?, image = ?, name = ?, product_id = ? WHERE id = ?");
-            $stmt->execute([$event->getType(), $event->getArtist(), $event->getVenue(), $event->getTicket_Price(), $event->getTickets_Available(), $event->getDatetime(), $event->getImage(), $event->getName(), $id, $id]);
+            $stmt = $this->connection->prepare("UPDATE music_event SET type = ?, artist = ?, venue = ?, ticket_price = ?, tickets_available = ?, datetime = ?, image = ?, name = ? WHERE id = ?");
+            $stmt->execute([$event->getType(), $event->getArtist(), $event->getVenue(), $event->getTicket_Price(), $event->getTickets_Available(), $event->getDatetime(), $event->getImage(), $event->getName(), $id]);
         } catch (PDOException $e) {
             echo $e;
         }

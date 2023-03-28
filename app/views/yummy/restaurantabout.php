@@ -100,7 +100,7 @@ require __DIR__ . '/../header.php';
                     <label for="request" class="form-label"><b>Special requests:</b></label>
                     <input type="text" class="form-control" name="request" id="request">
                 </div>
-                <button type="submit" class="btn btn-success">Add reservation</button>
+                <button type="submit" class="btn btn-success" name="add-to-cart">Add reservation</button>
             </form>
         </div>
     </div>

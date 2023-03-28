@@ -287,4 +287,15 @@ class YummyRepository extends Repository
 
         $stmt->execute();
     }
+
+    public function getReservationIdByName($name)
+    {
+        $stmt=$this->connection->prepare("SELECT id from reservation WHERE name=:name");
+        $stmt->bindValue(':name', $name);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Reservation');
+        $reservation = $stmt->fetch();
+
+        return $reservation->getId();
+    }
 }

@@ -9,10 +9,12 @@ class YummyService
     {
         $this->yummyrepository = new YummyRepository();
     }
-    public function getFoodPageContent() {
+    public function getFoodPageContent()
+    {
         return $this->yummyrepository->getFoodPageContent();
     }
-    public function getFoodPageCards() {
+    public function getFoodPageCards()
+    {
         return $this->yummyrepository->getFoodPageCards();
     }
     public function getRestaurants()
@@ -23,7 +25,8 @@ class YummyService
     {
         return $this->yummyrepository->getRestaurantById();
     }
-    public function getSessionsForRestaurant() {
+    public function getSessionsForRestaurant()
+    {
         return $this->yummyrepository->getSessionsForRestaurant();
     }
     public function getSessions()
@@ -62,7 +65,12 @@ class YummyService
     {
         $this->yummyrepository->deactivateReservation();
     }
-    public function reservationTEMP(Reservation $reservation) {
+    public function reservationTEMP(Reservation $reservation)
+    {
         $this->yummyrepository->reservationTEMP($reservation);
+    }
+    public function getReservationIdByName($name)
+    {
+        return $this->yummyrepository->getReservationIdByName($name);
     }
 }

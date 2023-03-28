@@ -13,7 +13,6 @@ class HistoryEvent
     private ?int $tourguideID;
     private string $tourguideName;
     private string $tourguideDescription;
-    private int $product_id;
 
     /**
      * @return int
@@ -180,46 +179,9 @@ class HistoryEvent
         $this->tourguideDescription = $tourguideDescription;
     }
 
-     /**
-     * @return int
-     */
-    public function getProductID(): int
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * @param int $product_id
-     */
-
-    public function setProductID(int $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
     public function getFormattedDate()
     {
         $date = new DateTime($this->datetime);
         return $date->format('d - F - Y - H:i:s');
-    }
-
-    /**
-     * Get the value of product_id
-     */ 
-    public function getProduct_id()
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * Set the value of product_id
-     *
-     * @return  self
-     */ 
-    public function setProduct_id($product_id)
-    {
-        $this->product_id = $product_id;
-
-        return $this;
     }
 }
