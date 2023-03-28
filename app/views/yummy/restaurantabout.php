@@ -82,15 +82,15 @@ require __DIR__ . '/../header.php';
                     </select>
                 </div>
                 <div class="form-field">
-                    <label><b>Session:</b> </label>
-                    <select name="session">
+                    <label><b>Time:</b> </label>
+                    <select name="session" id="time-select">
                         <?php
                         $i = 1;
                         foreach ($sessions as $session) {
                             $date_input = strtotime($session->getStarttime());
                             $time = date('H:i', $date_input);
                         ?>
-                            <option value="<?= $session->getId() ?>">Session <?= $i ?>: <?= $time ?></option>
+                            <option value="<?= $session->getId() ?>-<?= $time?>"><?= $time ?></option>
                         <?php
                             $i++;
                         } ?>

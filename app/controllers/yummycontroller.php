@@ -7,12 +7,8 @@ class YummyController
 
     public function __construct()
     {
-<<<<<<< HEAD
         $this->yummyservice = new YummyService();
-=======
-        $this->foodService = new FoodService();
         session_start();
->>>>>>> 58b87484facd422d2e5f499c6673cd77d32eb1b7
     }
 
     // public function index()
@@ -136,14 +132,17 @@ class YummyController
         $reservation = new Reservation();
         $reservation->setName(isset($_POST['name']) ? $_POST['name'] : null);
         $reservation->setRestaurantID($restaurantid);
-        $reservation->setSessionID(isset($_POST['session']) ? $_POST['session'] : null);
+
+        $sessionData = explode('-', $_POST['session']);
+
+        $reservation->setSessionID($sessionData[0]);
         $seats = $_POST['formguestsadult'] + $_POST['formguestskids'];
         $reservation->setSeats($seats);
 
-        $datetime = $_POST['date'] . " " . $_POST['session'];
+        $datetime = $_POST['date'] . " " . $sessionData[1];    //'Session' is required for both the session ID and the time of the reservation
         $reservation->setDate($datetime);
         $reservation->setRequest($_POST['request'] != "" ? $_POST['request'] : "None");
-        $reservation->setPrice($seats * 10);
+        $reservation->setPrice($seats * 10);    //Visitors pay €10 per person when making a reservation, the rest is payed at the restaurant
 
         $this->yummyservice->reservationTEMP($reservation);
 
