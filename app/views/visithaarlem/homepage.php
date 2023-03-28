@@ -4,7 +4,7 @@ include __DIR__ . '/../navbar.php';
 ?>
 
 <head>
-    <link rel="stylesheet" href="/css/homepgepage.css">
+    <link rel="stylesheet" href="/css/festivalpage.css">
 </head>
 
 <div style="position: relative; text-align: center; color: white;">
@@ -26,14 +26,6 @@ include __DIR__ . '/../navbar.php';
         foreach ($pagecards as $card) {
         ?>
             <div class="col">
-                <div class="card">
-                    <a href="<?= $card->getLink() ?>">
-                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="text-center fw-bold click2edit"><?= $card->getTitle() ?></h5>
-                        </div>
-                    </a>
-                </div>
                 <a href="<?= $card->getLink() ?>">
                     <div class="card">
                         <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img-top">
