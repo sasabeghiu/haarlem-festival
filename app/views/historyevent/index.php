@@ -67,7 +67,7 @@ include __DIR__ . '/../header.php';
                                 <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
                                 <form action="/historyevent" method="post">
                                     <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                                    <input type="hidden" name="product_id" value="<?= $historyevent->getProduct_id() ?>">
+                                    <input type="hidden" name="product_id" value="<?= $historyevent->getId() ?>">
                                 </form>
                             </div>
                         <?php
@@ -78,7 +78,7 @@ include __DIR__ . '/../header.php';
                                 <a class="btn btn-info" href="#">Book for <?= $historyevent->getPrice() ?>€</a>
                                 <form action="/historyevent" method="post">
                                     <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                                    <input type="hidden" name="product_id" value="<?= $historyevent->getProduct_id() ?>">
+                                    <input type="hidden" name="product_id" value="<?= $historyevent->getId() ?>">
                                 </form>
                             </div>
                         <?php

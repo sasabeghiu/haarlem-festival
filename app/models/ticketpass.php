@@ -6,7 +6,6 @@ class TicketPass
     private int $price;
     private string $type;
     private string $datetime;
-    private int $product_id;
 
     /**
      * Get the value of id
@@ -104,26 +103,6 @@ class TicketPass
     public function setDatetime($datetime)
     {
         $this->datetime = $datetime;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of product_id
-     */
-    public function getProduct_id()
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * Set the value of product_id
-     *
-     * @return  self
-     */
-    public function setProduct_id($product_id)
-    {
-        $this->product_id = $product_id;
 
         return $this;
     }

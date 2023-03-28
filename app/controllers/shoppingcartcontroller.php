@@ -51,7 +51,6 @@ class ShoppingcartController
 
     public function checkout()
     {
-        session_start();
         if (isset($_SESSION['userId'])) {
 
             $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);

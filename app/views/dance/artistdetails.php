@@ -75,7 +75,7 @@ include __DIR__ . '/../header.php';
                             <div class="card-footer text-light bg-dark text-center">
                                 <form action="/artist/danceartistdetails?id=<?= $model->getId() ?>" method="post">
                                     <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                                    <input type="hidden" name="product_id" value="<?= $event->getProduct_id() ?>">
+                                    <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
                                 </form>
                             </div>
                         </div>

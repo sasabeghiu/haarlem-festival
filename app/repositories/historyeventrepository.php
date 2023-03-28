@@ -22,7 +22,7 @@ class HistoryEventRepository
     function getAll()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription, history_event.product_id
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
                                                       FROM history_event
                                                       JOIN images ON history_event.image=images.id
                                                       JOIN tourguide ON history_event.tourguideID=tourguide.id
@@ -33,7 +33,7 @@ class HistoryEventRepository
             $historyevents = $stmt->fetchAll();
 
             return $historyevents;
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -41,7 +41,7 @@ class HistoryEventRepository
     function getHistoryEventsByDate($datetime)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription, history_event.product_id
+            $stmt = $this->connection->prepare("SELECT history_event.id, history_event.tickets_available, history_event.price, history_event.datetime, history_event.location, images.image, history_event.tourguideID, tourguide.name AS tourguideName, tourguide.description AS tourguideDescription
                                                       FROM history_event
                                                       JOIN images ON history_event.image=images.id
                                                       JOIN tourguide ON history_event.tourguideID=tourguide.id
