@@ -130,17 +130,22 @@ class YummyController
     }
     public function reservationTEMP()
     {
-        $restaurantid = htmlspecialchars($_GET['restaurantid']);
+        try {
+            $restaurantid = htmlspecialchars($_GET['restaurantid']);
 
-        $reservation = new Reservation();
-        $reservation->setName(isset($_POST['name']) ? $_POST['name'] : null);
-        $reservation->setRestaurantID($restaurantid);
+            $reservation = new Reservation();
 
-        $sessionData = explode('-', $_POST['session']);
+            if (!isset($_POST['name']))
+                throw new Exception("Please enter the name you want the reservation to be on");
 
-        $reservation->setSessionID($sessionData[0]);
-        $seats = $_POST['formguestsadult'] + $_POST['formguestskids'];
-        $reservation->setSeats($seats);
+            $reservation->setName(htmlspecialchars($_POST['name']));
+            $reservation->setRestaurantID($restaurantid);
+
+            $sessionData = explode('-', $_POST['session']);
+
+            $reservation->setSessionID($sessionData[0]);
+            $seats = $_POST['formguestsadult'] + $_POST['formguestskids'];
+            $reservation->setSeats($seats);
 
         $datetime = $_POST['date'] . " " . $sessionData[1];    //'Session' is required for both the session ID and the time of the reservation
         $reservation->setDate($datetime);
@@ -148,7 +153,7 @@ class YummyController
         //$reservation->setPrice($seats * 10);    //Visitors pay €10 per person when making a reservation, the rest is payed at the restaurant
         $reservation->setPrice(10);
 
-        $this->yummyservice->reservationTEMP($reservation);
+            $this->yummyservice->reservationTEMP($reservation);
 
         if (isset($_SESSION['userId'])) {
             $user_id = $_SESSION['userId'];
