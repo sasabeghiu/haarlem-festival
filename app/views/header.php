@@ -69,8 +69,8 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/user/profile">Edit Profile</a>
               <a class="dropdown-item" href="/login/logout">Logout</a>
+              <a class="dropdown-item" href="/api/keys">API</a>
             </div>
-
           </div>
           <div class="dropdown show">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,9 +86,9 @@
               <a class="dropdown-item" href="/tourguidecms/cms">Tour Guide CMS</a>
               <a class="dropdown-item" href="/historyeventcms/cms">History Events CMS</a>
               <a class="dropdown-item" href="/orderscms/cms">Orders CMS</a>
-              <a class="dropdown-item" href="/food/manageSessions">Yummy</a>
-              <a class="dropdown-item" href="/food/manageRestaurants">Restaurants</a>
-              <a class="dropdown-item" href="/food/manageReservations">Reservations</a>
+              <a class="dropdown-item" href="/yummy/manageSessions">Yummy</a>
+              <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
+              <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
             </div>
           </div>
 

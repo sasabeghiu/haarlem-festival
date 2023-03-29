@@ -1,2 +1,2 @@
 <?php
-header('Location: /food/manageSessions');
+header('Location: /yummy/manageSessions');

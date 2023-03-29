@@ -55,7 +55,7 @@ include __DIR__ . '/../header.php';
                         <p class="text-center"><a href="/artist/jazzartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
                         <form action="/event/jazzevents" method="post">
                             <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                            <input type="hidden" name="product_id" value="<?= $event->getProduct_id() ?>">
+                            <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
                         </form>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ include __DIR__ . '/../header.php';
                     <div class="card-footer text-center">
                         <form action="/event/jazzevents" method="post">
                             <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                            <input type="hidden" name="product_id" value="<?= $pass->getProduct_id() ?>">
+                            <input type="hidden" name="product_id" value="<?= $pass->getId() ?>">
                         </form>
                     </div>
                 </div>

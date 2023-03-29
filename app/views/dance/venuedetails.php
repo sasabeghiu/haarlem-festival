@@ -50,7 +50,7 @@ include __DIR__ . '/../header.php';
                             <p class="text-center"><a href="/artist/danceartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
                             <form action="/venue/dancevenuedetails?id=<?= $model->getId() ?>" method="post">
                                 <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                                <input type="hidden" name="product_id" value="<?= $event->getProduct_id() ?>">
+                                <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
                             </form>
                         </div>
                     </div>
