@@ -160,7 +160,7 @@ class ShoppingCartRepository
         }
     }
 
-    function placeOneOrder($id)
+    function getOnePlacedOrder($id)
     {
         try {
             $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber
@@ -198,7 +198,7 @@ class ShoppingCartRepository
 
             $placeorder->setId($this->connection->lastInsertId());
 
-            return $this->placeOneOrder($placeorder->getId());
+            return $this->getOnePlacedOrder($placeorder->getId());
         } catch (PDOException $e){
             echo $e;
         }

@@ -40,9 +40,9 @@ class ShoppingCartService
         return $this->shoppingcartRepository->countProducts($user_id);
     }
 
-    public function placeOneOrder($id)
+    public function getOnePlacedOrder($id)
     {
-        return $this->shoppingcartRepository->placeOneOrder($id);
+        return $this->shoppingcartRepository->getOnePlacedOrder($id);
     }
 
     public function placeOrder(Orders $placeorder)

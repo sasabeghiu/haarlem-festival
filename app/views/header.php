@@ -85,6 +85,7 @@
               <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
               <a class="dropdown-item" href="/tourguidecms/cms">Tour Guide CMS</a>
               <a class="dropdown-item" href="/historyeventcms/cms">History Events CMS</a>
+              <a class="dropdown-item" href="/orderscms/cms">Orders CMS</a>
               <a class="dropdown-item" href="/food/manageSessions">Yummy</a>
               <a class="dropdown-item" href="/food/manageRestaurants">Restaurants</a>
               <a class="dropdown-item" href="/food/manageReservations">Reservations</a>

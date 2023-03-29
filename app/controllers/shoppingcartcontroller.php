@@ -94,9 +94,4 @@ class ShoppingcartController
             }
         }
     }
-
-    public function payment()
-    {
-
-    }
 }
