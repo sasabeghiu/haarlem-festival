@@ -145,7 +145,7 @@ class YummyController
         $datetime = $_POST['date'] . " " . $sessionData[1];    //'Session' is required for both the session ID and the time of the reservation
         $reservation->setDate($datetime);
         $reservation->setRequest($_POST['request'] != "" ? $_POST['request'] : "None");
-        //$reservation->setPrice($seats * 10);    //Visitors pay €10 per person when making a reservation, the rest is payed at the restaurant
+        // $reservation->setPrice($seats * 10);    //Visitors pay €10 per person when making a reservation, the rest is payed at the restaurant
         $reservation->setPrice(10);
 
         $this->yummyservice->reservationTEMP($reservation);
@@ -153,7 +153,7 @@ class YummyController
         if (isset($_SESSION['userId'])) {
             $user_id = $_SESSION['userId'];
             $product_id = $this->yummyservice->getReservationIdByName($reservation->getName());
-            $qty = 1;
+            $qty = $seats;
 
             $cartItem = new ShoppingCartItem();
 
