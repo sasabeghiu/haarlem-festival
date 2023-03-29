@@ -1,60 +1,10 @@
 <?php
-//incl new navbar
 include __DIR__ . '/../navbar.php';
 ?>
 
-<style>
-    .links {
-        display: inline-block;
-        padding: 10px 20px;
-        border-radius: 50px;
-        background-color: orangered;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-    }
-
-    #header-img {
-        position: relative;
-        text-align: center;
-        color: white;
-    }
-
-    .rounded-pill {
-        border-radius: 50px;
-    }
-
-    hr {
-        width: 30%;
-        margin-left: 0;
-        background-color: black;
-        height: 1px;
-        position: relative;
-    }
-
-    hr::before,
-    hr::after {
-        content: "";
-        display: inline-block;
-        position: absolute;
-        top: -3px;
-        /* adjust the vertical position */
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background-color: black;
-    }
-
-    hr::before {
-        left: -1px;
-        /* adjust the horizontal position */
-    }
-
-    hr::after {
-        right: -1px;
-        /* adjust the horizontal position */
-    }
-</style>
+<head>
+    <link rel="stylesheet" href="/css/homepages.css">
+</head>
 
 <div style="position: relative; text-align: center; color: white;" class="click2edit">
     <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($page->getHeaderImg()); ?>" width="100%" height="auto">
