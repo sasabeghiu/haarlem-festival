@@ -22,11 +22,12 @@ class PaymentController
     public function pay()
     {
         try {
-            $amount = $_POST['amount'];
-            $formatted_amount = number_format((float)$amount, 2, '.', '');
-            $orderId = time();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $amount = $_POST['amount'];
+                $formatted_amount = number_format((float)$amount, 2, '.', '');
+                $orderId = time();
 
-            /*
+                /*
              * Payment parameters:
              *   amount        Amount in EUROs. This example creates a € 10,- payment.
              *   description   Description of the payment.
@@ -34,19 +35,20 @@ class PaymentController
              *   webhookUrl    Webhook location, used to report when the payment changes state.
              *   metadata      Custom metadata that is stored with the payment.
              */
-            $payment = $this->mollie->payments->create([
-                "amount" => [
-                    "currency" => "EUR",
-                    "value" => (string)$formatted_amount,
-                ],
-                "description" => "Order #{orderId}",
-                "redirectUrl" => "http://localhost\payment\status?orderId=1",
-                "webhookUrl" => "http://localhost\payment\webhook",
-                "metadata" => [
-                    "order_id" => 1,
-                ],
-                "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null,
-            ]);
+                $payment = $this->mollie->payments->create([
+                    "amount" => [
+                        "currency" => "EUR",
+                        "value" => (string)$formatted_amount,
+                    ],
+                    "description" => "Order #{orderId}",
+                    "redirectUrl" => "http://localhost\payment\status?orderId=1",
+                    "webhookUrl" => "http://localhost\payment\webhook",
+                    "metadata" => [
+                        "order_id" => 1,
+                    ],
+                    "issuer" => !empty($_POST["issuer"]) ? $_POST["issuer"] : null,
+                ]);
+            }
 
             //$this->orderService->saveStatus($orderId, $payment->status);
 
@@ -57,6 +59,7 @@ class PaymentController
     }
     public function status()
     {
+        echo "payment complete" . "<br><a href='/payment'>Return</a>";
         //$status = $this->orderService->getStatus($_GET["order_id"]));
 
 

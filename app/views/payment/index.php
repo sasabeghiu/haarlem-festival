@@ -34,21 +34,23 @@
                             </div>
                             <div class="mb-3">
                                 <label for="issuer" class="form-label">Issuer</label>
-                                <select class="form-control" name="issuer">
-                                    <?php foreach ($method->issuers() as $issuer) { ?>
-                                        <option value="<?php echo htmlspecialchars($issuer->name) ?>"> </option>
-                                    <?php } ?>
+                                <select name="issuer" class="form-control">
+                                    <?php foreach ($method->issuers() as $issuer) {
+                                        echo "<option value='$issuer->id'>$issuer->name</option>";
+                                    }
+                                    ?>
                                     <option value="">or select later</option>
                                 </select>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary">Pay</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col"><button type="submit" class="btn btn-primary">Pay</button></div>
-                    </div>
-                    </form>
                 </div>
             </div>
-        </div>
         </div>
         </div>
 
