@@ -78,7 +78,7 @@ include __DIR__ . '/../header.php';
                 </div>
                 <hr>
                 <a class="btn btn-success d-flex justify-content-center mb-3" href="/shoppingcart/checkout">Proceed to checkout</a>
-                <a class="btn btn-primary d-flex justify-content-center mb-3" href="">Share your shopping cart with a friend</a>
+                <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart" href="#">Share your shopping cart with a friend</a>
             </div>
         </div>
     </div>
@@ -92,6 +92,14 @@ include __DIR__ . '/../header.php';
 
             window.location.href = "/shoppingcart?action=update&id=" + id + "&qty=" + quantity;
             return false;
+        });
+    });
+
+    $(document).ready(function() {
+        $('.btn-share-cart').on('click', function() {
+            var cartItems = JSON.stringify(<?php echo json_encode($cartItems); ?>);
+            var shareUrl = 'localhost/shoppingcart?cartc=' + btoa(cartItems);
+            window.prompt("Copy the link below to share your shopping cart", shareUrl);
         });
     });
 </script>

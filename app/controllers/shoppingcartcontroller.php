@@ -46,6 +46,21 @@ class ShoppingcartController
                 </script>";
         }
 
+
+        if (isset($_GET['cartc'])) {
+            $cartItems = json_decode(base64_decode(urldecode($_GET['cartc'])), true);
+            // $cartItems = urldecode($_GET['cart']);
+            foreach ($cartItems as $cartItem) {
+                $test = new ShoppingCartItem();
+                $test->setUser_id($_SESSION['userId']);
+                $test->setProduct_id($cartItem);
+                $test->setQty($cartItem);
+
+                $this->shoppingcartService->addProductToCart($test);
+            }
+        } 
+
+
         require __DIR__ . '/../views/orders/shopping-cart.php';
     }
 
