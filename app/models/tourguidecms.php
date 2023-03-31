@@ -1,5 +1,4 @@
 <?php
-
 class TourGuideCms
 {
     private int $id;

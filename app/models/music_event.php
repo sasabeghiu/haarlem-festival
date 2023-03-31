@@ -1,7 +1,6 @@
 <?php
 class Music_Event
 {
-    //change types 
     private int $id;
     private string $type;
     private string $artist;

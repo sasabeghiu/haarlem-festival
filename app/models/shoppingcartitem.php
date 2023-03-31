@@ -1,6 +1,11 @@
 <?php
-class ShoppingCartItem
+class ShoppingCartItem implements JsonSerializable
 {
+    public function jsonSerialize(): mixed
+    {
+        return get_object_vars($this);
+    }
+
     private int $id;
     private int $user_id;
     private int $product_id;
