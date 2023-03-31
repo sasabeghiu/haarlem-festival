@@ -47,19 +47,18 @@ class ShoppingcartController
         }
 
 
-        if (isset($_GET['cartc'])) {
-            $cartItems = json_decode(base64_decode(urldecode($_GET['cartc'])), true);
-            // $cartItems = urldecode($_GET['cart']);
-            foreach ($cartItems as $cartItem) {
-                $test = new ShoppingCartItem();
-                $test->setUser_id($_SESSION['userId']);
-                $test->setProduct_id($cartItem);
-                $test->setQty($cartItem);
+        // if (isset($_GET['cartc'])) {
+        //     $cartItems = json_decode(base64_decode(urldecode($_GET['cartc'])), true);
+        //     // $cartItems = urldecode($_GET['cart']);
+        //     foreach ($cartItems as $cartItem) {
+        //         $test = new ShoppingCartItem();
+        //         $test->setUser_id($_SESSION['userId']);
+        //         $test->setProduct_id($cartItem->getProduct_id());
+        //         $test->setQty($cartItem);
 
-                $this->shoppingcartService->addProductToCart($test);
-            }
-        } 
-
+        //         $this->shoppingcartService->addProductToCart($test);
+        //     }
+        // }
 
         require __DIR__ . '/../views/orders/shopping-cart.php';
     }
@@ -78,5 +77,26 @@ class ShoppingcartController
                 window.location.href = '/login/index'
                 </script>";
         }
+    }
+
+    public function sharedCart()
+    {
+        if (isset($_SESSION['userId'])) {
+            if (isset($_GET['id']) && isset($_GET['qty'])) {
+                $ids = $_GET['id'];
+                $qtys = $_GET['qty'];
+                for ($i = 0; $i < count($ids); $i++) {
+                    $cartItem = new ShoppingCartItem();
+                    $cartItem->setUser_id($_SESSION['userId']);
+                    $cartItem->setProduct_id(intval($ids[$i]));
+                    $cartItem->setQty(intval($qtys[$i]));
+
+                    $this->shoppingcartService->addProductToCart($cartItem);
+                }
+            }
+        }
+        $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
+        $count = $this->shoppingcartService->countProducts($_SESSION['userId']);
+        require __DIR__ . '/../views/orders/shopping-cart.php';
     }
 }
