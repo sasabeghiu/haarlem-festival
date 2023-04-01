@@ -1,7 +1,7 @@
 <?php
 
-class tourGuide implements JsonSerializable {
-
+class tourGuide implements JsonSerializable
+{
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
@@ -75,5 +75,4 @@ class tourGuide implements JsonSerializable {
     {
         $this->image = $image;
     }
-
 }

@@ -78,7 +78,7 @@ include __DIR__ . '/../header.php';
                 </div>
                 <hr>
                 <a class="btn btn-success d-flex justify-content-center mb-3" href="/shoppingcart/checkout">Proceed to checkout</a>
-                <a class="btn btn-primary d-flex justify-content-center mb-3" href="">Share your shopping cart with a friend</a>
+                <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart" href="#">Share your shopping cart with a friend</a>
             </div>
         </div>
     </div>
@@ -94,6 +94,32 @@ include __DIR__ . '/../header.php';
             return false;
         });
     });
+
+    $(document).ready(function() {
+        $('.btn-share-cart').on('click', function() {
+            var cartItems = <?php echo json_encode($cartItems); ?>;
+            var shareUrl = 'http://localhost/shoppingcart/sharedCart?';
+
+            if (cartItems.length > 0) {
+                for (var i = 0; i < cartItems.length; i++) {
+                    var id = cartItems[i]['id'];
+                    var qty = cartItems[i]['qty'];
+
+                    console.log(id, qty); // check values of id and qty
+
+                    if (typeof id === 'number' && typeof qty === 'number') {
+                        shareUrl += 'id[]=' + id + '&qty[]=' + qty + '&';
+                    }
+                }
+                shareUrl = shareUrl.slice(0, -1); // remove the last '&'
+
+                console.log(shareUrl);
+                window.prompt("Copy the link below to share your shopping cart", shareUrl);
+            }
+        });
+    });
+
+    // http://localhost/shoppingcart/sharedCart?id[]=46&qty[]=2&id[]=1&qty[]=1&id[]=47&qty[]=1&id[]=18&qty[]=1
 </script>
 
 <?php

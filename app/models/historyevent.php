@@ -1,8 +1,6 @@
 <?php
-
 class HistoryEvent
 {
-
     private int $id;
     private string $nameOfTours;
     private int $tickets_available;

@@ -151,33 +151,38 @@ class YummyController
             $reservation->setDate($datetime);
             $reservation->setRequest($_POST['request'] != "" ? $_POST['request'] : "None");
             $reservation->setPrice($seats * 10);    //Visitors pay €10 per person when making a reservation, the rest is payed at the restaurant
-
-            $this->yummyservice->reservationTEMP($reservation);
-
             if (isset($_SESSION['userId'])) {
                 $user_id = $_SESSION['userId'];
                 $product_id = $this->yummyservice->getReservationIdByName($reservation->getName());
-                $qty = 1;
+                $qty = $seats;
 
-                $cartItem = new ShoppingCartItem();
+                $this->yummyservice->reservationTEMP($reservation);
 
-                $cartItem->setUser_id($user_id);
-                $cartItem->setProduct_id($product_id);
-                $cartItem->setQty($qty);
-                if ($this->cartService->checkIfProductExistsInCart($user_id, $product_id)) {
-                    echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
+        if (isset($_SESSION['userId'])) {
+            $user_id = $_SESSION['userId'];
+            $product_id = $this->yummyservice->getReservationIdByName($reservation->getName());
+            $qty = $seats;
+
+                    $cartItem = new ShoppingCartItem();
+
+                    $cartItem->setUser_id($user_id);
+                    $cartItem->setProduct_id($product_id);
+                    $cartItem->setQty($qty);
+                    if ($this->cartService->checkIfProductExistsInCart($user_id, $product_id)) {
+                        echo "<script>alert('This product is already in your shopping cart. You can change the quantity in the shopping cart page.')</script>";
+                    } else {
+                        $this->cartService->addProductToCart($cartItem);
+                        $_SESSION['cartcount']++;
+                    }
                 } else {
-                    $this->cartService->addProductToCart($cartItem);
-                    $_SESSION['cartcount']++;
-                }
-            } else {
-                echo "<script>
+                    echo "<script>
                     alert('You have to be logged in to add to cart.');
                     window.location.href = '/login/index'
                     </script>";
-            }
+                }
 
-            echo "<script>window.location.href = '/yummy'</script>";
+                echo "<script>window.location.href = '/yummy'</script>";
+            }
         } catch (Exception $error) {
             echo '<script type="text/javascript">
                 errorHandling($error);
