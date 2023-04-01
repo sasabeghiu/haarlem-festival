@@ -1,6 +1,6 @@
 <?php
 
-class tourGuide implements JsonSerializable {
+class TourGuide implements JsonSerializable {
 
     public function jsonSerialize(): mixed
     {

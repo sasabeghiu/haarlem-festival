@@ -100,6 +100,7 @@ include __DIR__ . '/../header.php';
                     <?php
                         $subtotal += $cartItem->getSubtotal();
                         $total = $subtotal + ($subtotal * (21 / 100));
+                        $_SESSION['totalprice'] = number_format($total, 2, '.');
                     }
                 }
                     ?>
@@ -109,7 +110,7 @@ include __DIR__ . '/../header.php';
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total(incl. VAT 21%) (EUR)</span>
-                        <strong>&euro;<?php echo $total; ?> </strong>
+                        <strong>&euro;<?php echo number_format($total, 2, '.'); ?> </strong>
                     </li>
                         </ul>
             </div>
@@ -140,8 +141,8 @@ include __DIR__ . '/../header.php';
                             </div>
                         </div>
                         <div class="col-12">
-                            <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-                            <input type="email" class="form-control" name="emailAddress" id="emailAddress" placeholder="you@example.com">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" name="emailAddress" id="emailAddress" value="<?= $_SESSION['userEmail']; ?>" readonly>
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -174,6 +175,7 @@ include __DIR__ . '/../header.php';
                                 Valid phone number is required.
                             </div>
                         </div>
+
                     </div>
                     <hr class="my-4">
                     <button class="w-100 btn btn-primary btn-lg" type="submit" name="placeorder">Place order</button>

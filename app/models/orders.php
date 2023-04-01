@@ -11,6 +11,8 @@ class Orders
     private string $country;
     private string $zipCode;
     private string $phoneNumber;
+    private int $user_id;
+    private float $totalprice;
 
     /**
      * @return int
@@ -154,5 +156,41 @@ class Orders
     public function setPhoneNumber(string $phoneNumber): void
     {
         $this->phoneNumber = $phoneNumber;
+    }
+
+        /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     */
+    public function setUserId(int $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * Get the value of totalprice
+     */ 
+    public function getTotalPrice()
+    {
+        return $this->totalprice;
+    }
+
+    /**
+     * Set the value of totalprice
+     *
+     * @return  float $totalprice
+     */ 
+    public function setTotalPrice(float $totalprice)
+    {
+        $this->totalprice = $totalprice;
+
+        return $this;
     }
 }

@@ -72,13 +72,13 @@ include __DIR__ . '/../../header.php';
                     <td style="width: 50%;"><?= $tourguide->getDescription() ?></td>
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($tourguide->getImage()) . '"  height="100px"/>'; ?></td>
                     <td style="width: 2%">
-                        <form action="/tourguidecms/cms?updateID=<?= $tourguide->getId() ?>" method="POST">
+                        <form action="/tourguide/cms?updateID=<?= $tourguide->getId() ?>" method="POST">
                             <input type="hidden" name="edit" value="<?= $tourguide->getId() ?>">
                             <input type="submit" name="submit" value="Edit" class="btn btn-warning">
                         </form>
                     </td>
                     <td style="width: 2%">
-                        <form action="/tourguidecms/cms?deleteID=<?= $tourguide->getId() ?>" method="POST">
+                        <form action="/tourguide/cms?deleteID=<?= $tourguide->getId() ?>" method="POST">
                             <input type="hidden" name="delete" onclick="" value="<?= $tourguide->getId() ?>">
                             <input type="submit" name="submit" value="Delete" class="btn btn-danger">
                         </form>
