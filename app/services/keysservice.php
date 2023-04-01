@@ -9,9 +9,15 @@ class KeysService
     {
         $this->keysrepository = new KeysRepository();
     }
-
+    public function getAllKeys()
+    {
+        return $this->keysrepository->getAllKeys();
+    }
     public function addKey($jwt)
     {
         $this->keysrepository->addKey($jwt);
+    }
+    public function deactivateKey($keyid) {
+        $this->keysrepository->deactivateKey($keyid);
     }
 }

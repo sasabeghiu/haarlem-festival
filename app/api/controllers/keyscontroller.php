@@ -1,18 +1,18 @@
 <?php
-require __DIR__ . '/../../services/keysservice.php';
+require __DIR__ . '/../../services/KeysService.php';
 
-use \Firebase\JWT\JWT;
-
-class KeysController {
-
+class KeysController
+{
     private $keysService;
 
     function __construct()
     {
         $this->keysService = new KeysService();
+        //session_start();
     }
 
-    public function index() {
+    public function index()
+    {
         // header("Access-Control-Allow-Origin: *");
         // header("Access-Control-Allow-Headers: *");
         // header("Access-Control-Allow-Methods: *");
@@ -25,40 +25,41 @@ class KeysController {
         //     header('Content-Type: application/json');
         //     echo json_encode($articles);
         // }
-        
-        if(!$_SESSION || !$_SESSION['loggedin'])
-            http_response_code(401);
+
+        $keys = $this->keysService->getAllKeys();
 
         require __DIR__ . '/../../views/api/manageapikeys.php';
     }
 
-    public function createKey() {
+    public function createKey()
+    {
+        $key = $this->getGUID();
+        $this->keysService->addKey($key);
 
-        $secret_key = "H44Rl3M";
+        header('location: /api/keys');
+    }
 
-        $issuer = "Haarlem_Festival"; // this can be the domain/servername that issues the token
-        $audience = "Finance.inc"; // this can be the domain/servername that checks the token
+    function getGUID()
+    {
+        if (function_exists('com_create_guid')) {
+            return trim(com_create_guid(), '{}');
+        } else {
+            mt_srand((float)microtime() * 10000); //optional for php 4.2.0 and up.
+            $charid = strtoupper(md5(uniqid(rand(), true)));
+            $hyphen = chr(45); // "-"
+            $uuid = substr($charid, 0, 8) . $hyphen
+                . substr($charid, 8, 4) . $hyphen
+                . substr($charid, 12, 4) . $hyphen
+                . substr($charid, 16, 4) . $hyphen
+                . substr($charid, 20, 12);
+            return $uuid;
+        }
+    }
 
-        $issuedAt = time(); // issued at
-        $notbefore = $issuedAt; //not valid before 
-        $expire = $issuedAt + 600; // expiration time is set at +600 seconds (10 minutes)
+    public function deactivateKey() {
+        $keyid = htmlspecialchars($_GET['keyid']);
+        $this->keysService->deactivateKey($keyid);
 
-        // JWT expiration times should be kept short (10-30 minutes)
-        // A refresh token system should be implemented if we want clients to stay logged in for longer periods
-
-        // note how these claims are 3 characters long to keep the JWT as small as possible
-        $payload = array(
-            "iss" => $issuer,
-            "aud" => $audience,
-            "iat" => $issuedAt,
-            "nbf" => $notbefore,
-            "exp" => $expire,
-            "data" => array(
-                "id" => 1,
-        ));
-
-        $jwt = JWT::encode($payload, $secret_key, 'HS256');
-
-        $this->keysService->addKey($jwt);
+        header('location: /api/keys');
     }
 }
