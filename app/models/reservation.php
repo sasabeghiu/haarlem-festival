@@ -1,93 +1,114 @@
 <?php
-class Reservation {
-    private int $id;
-    private string $name;
-    private int $restaurantID;
-    private string $restaurantName;
+class Reservation
+{
+	private int $id;
+	private string $name;
+	private int $restaurantID;
+	private string $restaurantName;
 	private int $sessionID;
-    private int $seats;
-    private string $date;
+	private int $seats;
+	private string $date;
 	private ?string $request;
 	private float $price;
-    private bool $status; 
+	private bool $status;
 
-	public function getId() : int {
+	public function getId(): int
+	{
 		return $this->id;
 	}
 
-	public function setId(int $value) {
+	public function setId(int $value)
+	{
 		$this->id = $value;
 	}
 
-	public function getName() : string {
+	public function getName(): string
+	{
 		return $this->name;
 	}
 
-	public function setName(string $value) {
+	public function setName(string $value)
+	{
 		$this->name = $value;
 	}
 
-	public function getRestaurantID() : int {
+	public function getRestaurantID(): int
+	{
 		return $this->restaurantID;
 	}
 
-	public function setRestaurantID(int $value) {
+	public function setRestaurantID(int $value)
+	{
 		$this->restaurantID = $value;
 	}
 
-	public function getRestaurantName() : string {
+	public function getRestaurantName(): string
+	{
 		return $this->restaurantName;
 	}
 
-	public function setRestaurantName(string $value) {
+	public function setRestaurantName(string $value)
+	{
 		$this->restaurantName = $value;
 	}
 
-	public function getSessionID() : int {
+	public function getSessionID(): int
+	{
 		return $this->sessionID;
 	}
 
-	public function setSessionID(int $value) {
+	public function setSessionID(int $value)
+	{
 		$this->sessionID = $value;
 	}
 
-	public function getSeats() : int {
+	public function getSeats(): int
+	{
 		return $this->seats;
 	}
 
-	public function setSeats(int $value) {
+	public function setSeats(int $value)
+	{
 		$this->seats = $value;
 	}
 
-	public function getDate() : string {
+	public function getDate(): string
+	{
 		return $this->date;
 	}
 
-	public function setDate(string $value) {
+	public function setDate(string $value)
+	{
 		$this->date = $value;
 	}
 
-	public function getRequest() : string {
+	public function getRequest(): string
+	{
 		return $this->request;
 	}
 
-	public function setRequest(string $value) {
+	public function setRequest(string $value)
+	{
 		$this->request = $value;
 	}
 
-	public function getPrice() : float {
+	public function getPrice(): float
+	{
 		return $this->price;
 	}
 
-	public function setPrice(float $value) {
+	public function setPrice(float $value)
+	{
 		$this->price = $value;
 	}
 
-	public function getStatus() : bool {
+	public function getStatus(): bool
+	{
 		return $this->status;
 	}
 
-	public function setStatus(bool $value) {
+	public function setStatus(bool $value)
+	{
 		$this->status = $value;
 	}
 }

@@ -75,5 +75,4 @@ class TourGuide implements JsonSerializable {
     {
         $this->image = $image;
     }
-
 }
