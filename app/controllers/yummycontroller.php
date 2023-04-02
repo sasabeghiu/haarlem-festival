@@ -122,7 +122,7 @@ class YummyController
         $this->yummyservice->deactivateReservation();
         require __DIR__ . '/../views/cms/food/deactivatereservation.php';
     }
-    public function reservationTEMP()
+    public function addReservation()
     {
         try {
             $restaurantid = htmlspecialchars($_GET['restaurantid']);
@@ -146,7 +146,7 @@ class YummyController
             $reservation->setRequest($_POST['request'] != "" ? $_POST['request'] : "None");
             $reservation->setPrice($seats * 10);    //Visitors pay €10 per person when making a reservation, the rest is payed at the restaurant
 
-            $this->yummyservice->reservationTEMP($reservation);
+            $this->yummyservice->addReservation($reservation);
 
             if (isset($_SESSION['userId'])) {
                 $user_id = $_SESSION['userId'];

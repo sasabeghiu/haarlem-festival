@@ -270,7 +270,7 @@ class YummyRepository extends Repository
             echo ($e);
         }
     }
-    public function reservationTEMP(Reservation $reservation) {
+    public function addReservation(Reservation $reservation) {
         $stmt = $this->connection->prepare("INSERT INTO `reservation` (`name`, `restaurantID`, `sessionID`, `seats`, `date`, 
                                             `request`, `price`, `status`) VALUES (:name, :restaurantID,:sessionID, :seats,
                                             :date, :request, :price, 1 )");
