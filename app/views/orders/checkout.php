@@ -100,7 +100,7 @@ include __DIR__ . '/../header.php';
                     <?php
                         $subtotal += $cartItem->getSubtotal();
                         $total = $subtotal + ($subtotal * (21 / 100));
-                        $_SESSION['totalprice'] = number_format($total, 2, '.');
+                        $_SESSION['totalprice'] = number_format($subtotal, 2, '.');
                     }
                 }
                     ?>
