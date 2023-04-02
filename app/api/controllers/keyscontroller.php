@@ -8,24 +8,11 @@ class KeysController
     function __construct()
     {
         $this->keysService = new KeysService();
-        //session_start();
+        session_start();
     }
 
     public function index()
-    {
-        // header("Access-Control-Allow-Origin: *");
-        // header("Access-Control-Allow-Headers: *");
-        // header("Access-Control-Allow-Methods: *");
-
-
-        // // Respond to a GET request to /api/article
-        // if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        //     //$this->__construct();
-        //     $articles = $this->loginService->getAll();
-        //     header('Content-Type: application/json');
-        //     echo json_encode($articles);
-        // }
-
+    { 
         $keys = $this->keysService->getAllKeys();
 
         require __DIR__ . '/../../views/api/manageapikeys.php';

@@ -14,12 +14,6 @@ class YummyController
         session_start();
     }
 
-    // public function index()
-    // {
-    //     $page = $this->yummyservice->getFoodPageContent();
-    //     $cards = $this->yummyservice->getFoodPageCards();
-    //     require __DIR__ . '/../views/food/food.php';
-    // }
     public function index()
     {
         $restaurants = $this->yummyservice->getRestaurants();
@@ -152,6 +146,7 @@ class YummyController
             $reservation->setRequest($_POST['request'] != "" ? $_POST['request'] : "None");
             $reservation->setPrice($seats * 10);    //Visitors pay €10 per person when making a reservation, the rest is payed at the restaurant
 
+            $this->yummyservice->reservationTEMP($reservation);
 
             if (isset($_SESSION['userId'])) {
                 $user_id = $_SESSION['userId'];
