@@ -77,7 +77,7 @@ include __DIR__ . '/../header.php';
                     </div>
                 </div>
                 <hr>
-                <a class="btn btn-success d-flex justify-content-center mb-3" href="/shoppingcart/checkout">Proceed to checkout</a>
+                <a class="btn btn-success d-flex justify-content-center mb-3" href="/orders/checkout">Proceed to checkout</a>
                 <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart" href="#">Share your shopping cart with a friend</a>
             </div>
         </div>

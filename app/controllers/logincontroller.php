@@ -37,6 +37,7 @@ class LoginController
                     if (password_verify($password, $user->getPassword())) {
                         session_start();
                         $_SESSION['userId'] = $user->getId();
+                        $_SESSION['userEmail'] = $user->getEmail();
                         $_SESSION['loggedin'] = true;
                         $shoppingCartCount = $this->shoppingcartService->countProducts($_SESSION['userId']);
                         $_SESSION['cartcount'] = $shoppingCartCount;
