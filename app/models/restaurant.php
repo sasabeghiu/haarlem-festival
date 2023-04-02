@@ -4,6 +4,7 @@ class Restaurant
 	private int $id;
 	private string $name;
 	private string $cuisine;
+	private int $seats;
 	private string $description;
 	private string $location;
 	private int $stars;
@@ -121,5 +122,14 @@ class Restaurant
 	public function setEmail(string $value)
 	{
 		$this->email = $value;
+	}
+	public function getSeats(): string
+	{
+		return $this->seats;
+	}
+
+	public function setSeats(string $value)
+	{
+		$this->seats = $value;
 	}
 }

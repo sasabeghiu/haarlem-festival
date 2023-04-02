@@ -15,6 +15,7 @@ include(__DIR__ . "/../../header.php");
                         <th scope="col">Location</th>
                         <th scope="col">Description</th>
                         <th scope="col">Cuisine</th>
+                        <th scope="col">Seats</th>
                         <th scope="col">Stars</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phonenumber</th>
@@ -27,6 +28,7 @@ include(__DIR__ . "/../../header.php");
                             <td><?php echo $restaurant->getLocation(); ?></td>
                             <td><?php echo $restaurant->getDescription(); ?></td>
                             <td><?php echo $restaurant->getCuisine(); ?></td>
+                            <td><?php echo $restaurant->getSeats(); ?></td>
                             <td><?php echo $restaurant->getStars(); ?></td>
                             <td><?php echo $restaurant->getEmail(); ?></td>
                             <td><?php echo $restaurant->getPhonenumber(); ?></td>

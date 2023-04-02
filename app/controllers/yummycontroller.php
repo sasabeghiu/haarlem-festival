@@ -93,6 +93,7 @@ class YummyController
             $newRestaurant->setLocation(isset($_POST['location']) ? $_POST['location'] : null);
             $newRestaurant->setDescription(isset($_POST['description']) ? $_POST['description'] : null);
             $newRestaurant->setCuisine(isset($_POST['cuisine']) ? $_POST['cuisine'] : null);
+            $newRestaurant->setSeats(isset($_POST['seats']) ? $_POST['seats'] : null);
             $newRestaurant->setStars(isset($_POST['stars']) ? $_POST['stars'] : null);
             $newRestaurant->setEmail(isset($_POST['email']) ? $_POST['email'] : null);
             $newRestaurant->setPhonenumber(isset($_POST['phonenumber']) ? $_POST['phonenumber'] : null);
