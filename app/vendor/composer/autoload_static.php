@@ -31,6 +31,14 @@ class ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573
         array(
             'BaconQrCode\\' => 12,
         ),
+        'M' =>
+        array(
+            'Mollie\\Api\\' => 11,
+        ),
+        'C' =>
+        array(
+            'Composer\\CaBundle\\' => 18,
+        ),
     );
 
     public static $prefixDirsPsr4 = array(
@@ -38,9 +46,13 @@ class ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573
         array(
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'Firebase\\JWT\\' =>
+        'Mollie\\Api\\' =>
         array(
-            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+            0 => __DIR__ . '/..' . '/mollie/mollie-api-php/src',
+        ),
+        'Composer\\CaBundle\\' =>
+        array(
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
         ),
     );
 

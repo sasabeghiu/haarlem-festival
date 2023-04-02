@@ -19,12 +19,11 @@ class PaymentController
     public function pay()
     {
         try {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $amount = $_POST['amount'];
-                $formatted_amount = number_format((float)$amount, 2, '.', '');
-                $orderId = time();
+            $amount = $_POST['amount'];
+            $formatted_amount = number_format((float)$amount, 2, '.', '');
+            $orderId = time();
 
-                /*
+            /*
              * Payment parameters:
              *   amount        Amount in EUROs. This example creates a € 10,- payment.
              *   description   Description of the payment.
@@ -54,7 +53,6 @@ class PaymentController
     }
     public function status()
     {
-        echo "payment complete" . "<br><a href='/payment'>Return</a>";
         //$status = $this->orderService->getStatus($_GET["order_id"]));
 
 
