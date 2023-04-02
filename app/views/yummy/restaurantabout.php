@@ -40,6 +40,7 @@ require __DIR__ . '/../header.php';
             <image src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($restaurant->getImage3()); ?>" class="image-fluid" alt="Loading image..." />
         </div>
         <div class="col-5">
+            <div class="alert alert-danger" role="alert" id="reservation-alert" style="display: none"></div>
             <h3>Make a reservation</h3>
             <form action="/yummy/reservationTEMP?restaurantid=<?= $restaurant->getId() ?>" method="POST">
                 <div class="form-field">

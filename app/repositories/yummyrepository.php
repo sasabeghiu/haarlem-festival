@@ -158,9 +158,6 @@ class YummyRepository extends Repository
         } catch (PDOException $e) {
             echo ($e);
         }
-        // if ($stmt) {
-        //     return true;
-        // }
     }
     public function deleteSession()
     {

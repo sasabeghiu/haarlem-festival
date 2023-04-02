@@ -7,8 +7,11 @@ require __DIR__ . '/../navbar.php';
 </head>
 
 <div class="container-fluid">
-    <h3 class="text-center" id="summernote"><?= $page->getTitle() ?></h3>
-    <p><?= $page->getDescription() ?></p>
+    <h3 class="text-center click2edit"><?= $page->getTitle() ?></h3>
+    <p class="click2edit"><?= $page->getDescription() ?></p>
+
+    <button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit EVERYTHING</button>
+    <button id="save" class="btn btn-primary" onclick="save()" type="button">Save ALL</button>
 </div>
 
 <!-- Page id 7, card id's 35 and up -->
@@ -16,32 +19,33 @@ require __DIR__ . '/../navbar.php';
 <div class="container-fluid">
     <div class="row" id="35">
         <div class="col">
-            <h4><?= $pageCards[0]->getTitle(); ?></h4>
-            <p> <?= $pageCards[0]->getDescription() ?></p>
+            <h4 class="click2edit"><?= $pageCards[0]->getTitle(); ?></h4>
+            <p class="click2edit"> <?= $pageCards[0]->getDescription() ?></p>
+
         </div>
         <div class="col">
-            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[0]->getImage()) ?>" alt="Loading image..." class="image-fluid">
+            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[0]->getImage()) ?>" alt="Loading image..." class="image-fluid click2edit">
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[1]->getImage()) ?>" alt="Loading image..." class="image-fluid">
+            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[1]->getImage()) ?>" alt="Loading image..." class="image-fluid click2edit">
         </div>
         <div class="col">
-            <h4><?= $pageCards[1]->getTitle() ?></h4>
-            <p><?= $pageCards[1]->getDescription() ?>
+            <h4 class="click2edit"><?= $pageCards[1]->getTitle() ?></h4>
+            <p class="click2edit"><?= $pageCards[1]->getDescription() ?>
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <h4><?= $pageCards[2]->getTitle() ?></h4>
-            <p><?= $pageCards[2]->getDescription() ?></p>
+            <h4 class="click2edit"><?= $pageCards[2]->getTitle() ?></h4>
+            <p class="click2edit"><?= $pageCards[2]->getDescription() ?></p>
 
-            <p><?= $pageCards[2]->getLink() ?></p>
+            <p class="click2edit"><?= $pageCards[2]->getLink() ?></p>
         </div>
         <div class="col" style="background-color: grey; padding-top: 20px;">
-            <h1 class="text-center">Place Holder for location<h1>
+            <h1 class="text-center click2edit">Place Holder for location<h1>
         </div>
     </div>
 </div>
@@ -53,50 +57,50 @@ require __DIR__ . '/../navbar.php';
 <div class="container-fluid ">
     <div class="row">
         <div class="col">
-            <p><?= $pageCards[3]->getDescription() ?> </p>
+            <p class="click2edit"><?= $pageCards[3]->getDescription() ?> </p>
         </div>
         <div class="col">
-            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[3]->getImage()) ?>" alt="Loading image..." class="image-fluid">
+            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[3]->getImage()) ?>" alt="Loading image..." class="image-fluid click2edit">
         </div>
     </div>
 </div>
 <div class="container-fluid">
-    <h4 class="text-center"><b>International food</b></h4>
+    <h4 class="text-center click2edit"><b>International food</b></h4>
     <div class="row ">
 
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[4]->getImage()) ?>" alt="Loading image..." class="card-img-top">
-                    <h5><b><?= $pageCards[4]->getTitle() ?></b></h5>
-                    <?= $pageCards[4]->getDescription() ?>
+                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[4]->getImage()) ?>" alt="Loading image..." class="card-img-top click2edit">
+                    <h5 class="click2edit"><b><?= $pageCards[4]->getTitle() ?></b></h5>
+                    <p class="click2edit"><?= $pageCards[4]->getDescription() ?></p>
                 </div>
                 <div class="card-footer">
-                    <p><?= $pageCards[4]->getLink() ?></p>
+                    <p class="click2edit"><?= $pageCards[4]->getLink() ?></p>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[5]->getImage()) ?>" alt="Loading image..." class="card-img-top">
-                    <h5><b><?= $pageCards[5]->getTitle() ?></b></h5>
-                    <?= $pageCards[5]->getDescription() ?>
+                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[5]->getImage()) ?>" alt="Loading image..." class="card-img-top click2edit">
+                    <h5 class="click2edit"><b><?= $pageCards[5]->getTitle() ?></b></h5>
+                    <p class="click2edit"><?= $pageCards[5]->getDescription() ?></p>
                 </div>
                 <div class="card-footer">
-                    <p><?= $pageCards[5]->getLink() ?></p>
+                    <p class="click2edit"><?= $pageCards[5]->getLink() ?></p>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[6]->getImage()) ?>" alt="Loading image..." class="card-img-top">
-                    <h5><b><?= $pageCards[6]->getTitle() ?></b></h5>
-                    <?= $pageCards[6]->getDescription() ?>
+                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[6]->getImage()) ?>" alt="Loading image..." class="card-img-top click2edit">
+                    <h5 class="click2edit"><b><?= $pageCards[6]->getTitle() ?></b></h5>
+                    <p class="click2edit"><?= $pageCards[6]->getDescription() ?></p>
                 </div>
                 <div class="card-footer">
-                    <p><?= $pageCards[6]->getLink() ?></p>
+                    <p class="click2edit"><?= $pageCards[6]->getLink() ?></p>
                 </div>
             </div>
         </div>
@@ -151,12 +155,21 @@ require __DIR__ . '/../navbar.php';
 </div>
 
 <script>
-    $('#summernote').summernote({
-        placeholder: 'Hello bootstrap',
-        tabsize: 2,
-        height: 100
-    })
-    </script>
+    var edit = function() {
+        $('.click2edit').each(function() {
+            $(this).summernote({
+                focus: true
+            });
+        })
+    };
+
+    var save = function() {
+        $('.click2edit').each(function() {
+            $(this).summernote('code');
+            $(this).summernote('destroy');
+        });
+    };
+</script>
 
 <?php
 require __DIR__ . '/../footer.php';
