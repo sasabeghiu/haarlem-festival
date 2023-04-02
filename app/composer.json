@@ -1,6 +1,7 @@
 {
   "require": {
     "phpmailer/phpmailer": "^6.8",
-    "mollie/mollie-api-php": "^2.0"
+    "mollie/mollie-api-php": "^2.0",
+    "tecnickcom/tcpdf": "^6.6"
   }
 }
