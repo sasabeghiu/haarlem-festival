@@ -2,7 +2,6 @@
 include(__DIR__ . "/../../header.php");
 
 ?>
-<br />
 <div class="card">
     <!-- <div class="card-header">
         <a name="" id="" class="btn btn-primary" href="/food/addreservation" role="button">Add reservation</a>

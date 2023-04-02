@@ -1,10 +1,9 @@
 <?php
-class Reservation
-{
-	private int $id;
-	private string $name;
-	private int $restaurantID;
-	private string $restaurantName;
+class Reservation implements JsonSerializable {
+    private int $id;
+    private string $name;
+    private int $restaurantID;
+    private string $restaurantName;
 	private int $sessionID;
 	private int $seats;
 	private string $date;
@@ -12,8 +11,12 @@ class Reservation
 	private float $price;
 	private bool $status;
 
-	public function getId(): int
-	{
+	public function jsonSerialize() : mixed
+    {
+        return get_object_vars($this);
+    }
+
+	public function getId() : int {
 		return $this->id;
 	}
 
