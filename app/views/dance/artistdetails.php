@@ -2,8 +2,8 @@
 include __DIR__ . '/../header.php';
 ?>
 
-<div style="position: relative; color: white; top:-25px; left: -15px; width: 1903px; ">
-    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getHeaderImg()); ?>" class="img-fluid" width="100%">
+<div style="position: relative; color: white; top:-25px; left: -15px;" class="img-fluid">
+    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getHeaderImg()); ?>" style="width: 101.6%; height: 100%; object-fit: cover;">
     <div style="position: absolute; bottom: 8px; left: 16px;">
         <h4 style="display:inline;"> Dance </h5>
             <h1 style="display:inline;"> <?= $model->getName() ?></h1>
