@@ -3,8 +3,6 @@ require __DIR__ . '/../services/artistservice.php';
 require __DIR__ . '/../services/albumservice.php';
 require __DIR__ . '/../services/eventservice.php';
 require __DIR__ . '/../services/shoppingcartservice.php';
-require __DIR__ . '/../utils/qr-generator.php';
-
 
 include_once __DIR__ . '/../views/getURL.php';
 
@@ -22,14 +20,6 @@ class ArtistController
         $this->eventService = new EventService();
         $this->cartService = new ShoppingCartService();
         session_start();
-    }
-
-    //remove this method from here and add it in ticket
-    public function test()
-    {
-        $qr = new QRGenerator();
-        $qr->generateQR("www.google.com");
-        require __DIR__ . '/../utils/qr-generator.php';
     }
 
     public function danceartists()
