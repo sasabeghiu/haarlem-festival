@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-require_once __DIR__ . '../vendor/tecnickcom/tcpdf/tcpdf.php';
-
+require __DIR__ . '/../services/ordersservice.php';
 
 class PaymentController
 {
     //private $orderService;
+    private $placeorderService;
     private $mollie;
 
     function __construct()
@@ -14,14 +14,17 @@ class PaymentController
         $this->mollie = new \Mollie\Api\MollieApiClient();
         $this->mollie->setApiKey("
         test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
+        $this->placeorderService = new OrdersService();
     }
 
     public function pay()
     {
         try {
-            $amount = $_POST['amount'];
+            $orderId = $_GET['orderId'];
+            $order = $this->placeorderService->getOnePlacedOrder($orderId);
+            $amount = $order->getTotalPrice();
             $formatted_amount = number_format((float)$amount, 2, '.', '');
-            $orderId = time();
+            //$orderId = time();
 
             /*
              * Payment parameters:
@@ -36,15 +39,16 @@ class PaymentController
                     "currency" => "EUR",
                     "value" => (string)$formatted_amount,
                 ],
-                "description" => "Order #{orderId}",
-                "redirectUrl" => "http://localhost\payment\status?orderId=1",
+                "description" => "Order #{$orderId}",
+                "redirectUrl" => "http://localhost\payment\status?orderId=$orderId",
                 "webhookUrl" => "http://localhost\payment\webhook",
                 "metadata" => [
-                    "order_id" => 1,
+                    "order_id" => $orderId,
                 ],
             ]);
 
-            //$this->orderService->saveStatus($orderId, $payment->status);
+            $this->placeorderService->addPayment($orderId, $payment->id);
+            //echo $payment->id;
 
             header("Location: " . $payment->getCheckoutUrl(), true, 303);
         } catch (\Mollie\Api\Exceptions\ApiException $e) {
@@ -53,6 +57,13 @@ class PaymentController
     }
     public function status()
     {
+        $orderId = $_GET['orderId'];
+        $order = $this->placeorderService->getById($orderId);
+        $payment = $this->mollie->payments->get($order->getPaymentId());
+
+        if ($payment->isPaid()) {
+            echo "Payment received.";
+        }
         //$status = $this->orderService->getStatus($_GET["order_id"]));
 
 
