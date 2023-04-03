@@ -105,17 +105,18 @@ class OrdersController
                                 $ids = $cartItems[$i]->getId();
                                 $qty = $cartItems[$i]->getQty();
                                 $price = $cartItems[$i]->getEvent_price();
-                                
+
                                 $orderItem = new OrdersItem();
 
                                 $orderItem->setOrder_id($placeorder->getId());
                                 $orderItem->setProduct_id($ids);
                                 $orderItem->setQty($qty);
                                 $orderItem->setPrice($price * $qty);
-                                
+
                                 $this->placeorderService->placeOneOrderItem($orderItem);
                             }
-                            echo "<script>alert('Order placed successfully! ')</script>";
+                            $orderId = $placeorder->getId();
+                            echo "<script>alert('going to payment'); window.location = '/payment/pay?orderId=$orderId';</script>";
                         } else {
                             echo "<script>alert('Failed to place order. ')</script>";
                         }

@@ -13,6 +13,7 @@ class Orders
     private string $phoneNumber;
     private int $user_id;
     private float $totalprice;
+    private string $paymentId;
 
     /**
      * @return int
@@ -46,7 +47,7 @@ class Orders
         $this->firstName = $firstName;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getLastName(): string
@@ -62,7 +63,7 @@ class Orders
         $this->lastName = $lastName;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getBirthDate(): string
@@ -78,7 +79,7 @@ class Orders
         $this->birthdate = $birthdate;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getEmailAddress(): string
@@ -94,7 +95,7 @@ class Orders
         $this->emailAddress = $emailAddress;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getStreetAddress(): string
@@ -110,7 +111,7 @@ class Orders
         $this->streetAddress = $streetAddress;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getCountry(): string
@@ -126,7 +127,7 @@ class Orders
         $this->country = $country;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getZipCode(): string
@@ -142,7 +143,7 @@ class Orders
         $this->zipCode = $zipCode;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getPhoneNumber(): string
@@ -158,7 +159,7 @@ class Orders
         $this->phoneNumber = $phoneNumber;
     }
 
-        /**
+    /**
      * @return int
      */
     public function getUserId(): int
@@ -176,7 +177,7 @@ class Orders
 
     /**
      * Get the value of totalprice
-     */ 
+     */
     public function getTotalPrice()
     {
         return $this->totalprice;
@@ -186,11 +187,27 @@ class Orders
      * Set the value of totalprice
      *
      * @return  float $totalprice
-     */ 
+     */
     public function setTotalPrice(float $totalprice)
     {
         $this->totalprice = $totalprice;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentId(): string
+    {
+        return $this->paymentId;
+    }
+
+    /**
+     * @param string $paymentId
+     */
+    public function setPaymentId(string $paymentId): void
+    {
+        $this->paymentId = $paymentId;
     }
 }
