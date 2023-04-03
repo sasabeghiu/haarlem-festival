@@ -2,8 +2,7 @@
 include __DIR__ . '/../header.php';
 ?>
 
-<!-- change image to $model->getHeaderImg() and display full size-->
-<div style="position: relative; text-align: center; color: white;">
+<div style="position: relative; color: white; top:-25px; left: -15px; width: 1903px; ">
     <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getHeaderImg()); ?>" width="100%" height="auto">
     <div style="position: absolute; bottom: 8px; left: 16px;">
         <h4 style="display:inline;"> Jazz </h5>
@@ -62,16 +61,21 @@ include __DIR__ . '/../header.php';
                         </div>
                         <div class="card-footer text-light bg-dark text-center">
                             <p class="text-center"><a href="/artist/jazzartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
-                            <?php
-                            if ($event->getTickets_available() > 0) {
-                            ?>
-                                <form action="/venue/jazzvenuedetails?id=<?= $model->getId() ?>" method="post">
+
+                            <form action="/venue/jazzvenuedetails?id=<?= $model->getId() ?>" method="post">
+                                <?php
+                                if ($event->getTickets_available() == 0) {
+                                ?>
+                                    <button class="btn btn-secondary" name="add-to-cart" disabled>Add to cart</button>
+                                <?php
+                                } else {
+                                ?>
                                     <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                                    <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
-                                </form>
-                            <?php
-                            }
-                            ?>
+                                <?php
+                                }
+                                ?>
+                                <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
+                            </form>
                         </div>
                     </div>
                 </div>

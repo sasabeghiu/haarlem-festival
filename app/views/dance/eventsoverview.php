@@ -64,16 +64,21 @@ include __DIR__ . '/../header.php';
                     </div>
                     <div class="card-footer text-light bg-dark text-center">
                         <p class="text-center"><a href="/artist/danceartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
-                        <?php
-                        if ($event->getTickets_available() > 0) {
-                        ?>
-                            <form action="/event/danceevents" method="post">
+
+                        <form action="/event/danceevents" method="post">
+                            <?php
+                            if ($event->getTickets_available() == 0) {
+                            ?>
+                                <button class="btn btn-secondary" name="add-to-cart" disabled>Add to cart</button>
+                            <?php
+                            } else {
+                            ?>
                                 <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
-                                <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
-                            </form>
-                        <?php
-                        }
-                        ?>
+                            <?php
+                            }
+                            ?>
+                            <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
+                        </form>
                     </div>
                 </div>
             <?php
