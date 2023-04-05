@@ -4,7 +4,6 @@ require __DIR__ . '/../services/albumservice.php';
 require __DIR__ . '/../services/eventservice.php';
 require __DIR__ . '/../services/shoppingcartservice.php';
 
-
 include_once __DIR__ . '/../views/getURL.php';
 
 class ArtistController

@@ -1,7 +1,7 @@
 <?php
 
-class tourGuide implements JsonSerializable
-{
+class TourGuide implements JsonSerializable {
+
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);

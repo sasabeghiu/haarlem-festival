@@ -30,9 +30,9 @@ include __DIR__ . '/../../header.php';
     <div id="form-add-container" style="display: none;">
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group row mb-1">
-                <label for="ticketsavailable" class="col-sm-2 col-form-label">Tickets Available:</label>
+                <label for="ticketsavailable" class="col-sm-2 col-form-label">Seats Available:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="ticketsavailable" name="ticketsavailable" placeholder="Insert History Event Tickets" required>
+                    <input type="text" class="form-control" id="ticketsavailable" name="ticketsavailable" placeholder="Insert History Event Seats" required>
                 </div>
             </div>
             <div class="form-group row mb-1">
@@ -74,7 +74,7 @@ include __DIR__ . '/../../header.php';
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Tickets Available</th>
+                <th scope="col">Seats Available</th>
                 <th scope="col">Price</th>
                 <th scope="col">Date Time</th>
                 <th scope="col">Location</th>
@@ -96,13 +96,13 @@ include __DIR__ . '/../../header.php';
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($historyevent->getImage()) . '"  height="100px"/>'; ?></td>
                     <td style="width: 2%;"><?= $historyevent->getTourguideID() ?></td>
                     <td style="width: 2%">
-                        <form action="/historyeventcms/cms?updateID=<?= $historyevent->getId() ?>" method="POST">
+                        <form action="/historyevent/cms?updateID=<?= $historyevent->getId() ?>" method="POST">
                             <input type="hidden" name="edit" value="<?= $historyevent->getId() ?>">
                             <input type="submit" name="submit" value="Edit" class="btn btn-warning">
                         </form>
                     </td>
                     <td style="width: 2%">
-                        <form action="/historyeventcms/cms?deleteID=<?= $historyevent->getId() ?>" method="POST">
+                        <form action="/historyevent/cms?deleteID=<?= $historyevent->getId() ?>" method="POST">
                             <input type="hidden" name="delete" onclick="" value="<?= $historyevent->getId() ?>">
                             <input type="submit" name="submit" value="Delete" class="btn btn-danger">
                         </form>
@@ -122,7 +122,7 @@ include __DIR__ . '/../../header.php';
         <div>
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group row mb-1">
-                    <label for="changedTickets_available" class="col-sm-2 col-form-label">Tickets Available:</label>
+                    <label for="changedTickets_available" class="col-sm-2 col-form-label">Seats Available:</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" name="changedTickets_available" id="changedTickets_available"><?= $updateHistoryEvent->getTicketsAvailable() ?></textarea>
                     </div>
@@ -143,12 +143,6 @@ include __DIR__ . '/../../header.php';
                     <label for="changedLocation" class="col-sm-2 col-form-label">Location:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="changedLocation" name="changedLocation" value="<?= $updateHistoryEvent->getLocation() ?>" required>
-                    </div>
-                </div>
-                <div class="form-group row mb-1">
-                    <label for="changedVenueID" class="col-sm-2 col-form-label">Venue ID:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="changedVenueID" name="changedVenueID" value="<?= $updateHistoryEvent->getVenueID() ?>" required>
                     </div>
                 </div>
                 <div class="form-group row mb-1">

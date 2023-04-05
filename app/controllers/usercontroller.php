@@ -113,7 +113,6 @@ class UserController
 
     public function profile()
     {
-        session_start();
         if (isset($_SESSION['userId'])) {
             $user = $this->userService->getById($_SESSION['userId']);
             require __DIR__ . '/../views/cms/user/profile.php';

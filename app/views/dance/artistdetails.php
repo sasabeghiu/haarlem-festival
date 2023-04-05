@@ -1,9 +1,9 @@
 <?php
 include __DIR__ . '/../header.php';
 ?>
-<!-- change image to $model->getHeaderImg() and display full size-->
-<div style="position: relative; text-align: center; color: white;">
-    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getHeaderImg()); ?>" width="100%" class="img-fluid">
+
+<div style="position: relative; color: white; top:-25px; left: -15px;" class="img-fluid">
+    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getHeaderImg()); ?>" style="width: 101.6%; height: 100%; object-fit: cover;">
     <div style="position: absolute; bottom: 8px; left: 16px;">
         <h4 style="display:inline;"> Dance </h5>
             <h1 style="display:inline;"> <?= $model->getName() ?></h1>
@@ -25,7 +25,6 @@ include __DIR__ . '/../header.php';
         </div>
 
         <div class="row mt-3">
-            <!-- change to $model->getThumbnailImg() and display full size-->
             <p><img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getImage()); ?>" width="1500px" class="img-fluid"></p>
         </div>
 
@@ -70,11 +69,36 @@ include __DIR__ . '/../header.php';
                                 <p class="card-text">Time: <?php echo $formated; ?></p>
                                 <p class="card-text">Location: <?= $event->getVenue() ?></p>
                                 <p class="card-text">Price: <?= $event->getTicket_price() ?> &euro;</p>
-                                <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
+                                <?php
+                                if ($event->getTickets_available() <= 0) {
+                                ?>
+                                    <p class="card-text text-danger">Tickets available: Sold out 😢</p>
+                                <?php
+                                } elseif ($event->getTickets_available() <= 3) {
+                                ?>
+                                    <p class="card-text text-danger">Tickets available: Only <?= $event->getTickets_available() ?> left</p>
+                                <?php
+                                } elseif ($event->getTickets_available() > 3) {
+                                ?>
+                                    <p class="card-text">Tickets available: <?= $event->getTickets_available() ?></p>
+                                <?php
+                                }
+                                ?>
                             </div>
                             <div class="card-footer text-light bg-dark text-center">
+
                                 <form action="/artist/danceartistdetails?id=<?= $model->getId() ?>" method="post">
-                                    <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                                    <?php
+                                    if ($event->getTickets_available() == 0) {
+                                    ?>
+                                        <button class="btn btn-secondary" name="add-to-cart" disabled>Add to cart</button>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                                    <?php
+                                    }
+                                    ?>
                                     <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
                                 </form>
                             </div>
@@ -84,15 +108,13 @@ include __DIR__ . '/../header.php';
                 }
                 ?>
             </div>
-            <div class="col-sm-2">
 
-            </div>
+            <div class="col-sm-2"></div>
+
             <div class="col-sm-4 mr-0">
                 <h2 class="my-3">Try their tracks</h2>
-                <!-- The container for the music player -->
                 <iframe style="border-radius:12px" src="<?= $model->getSpotify() ?>" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <p><img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($model->getThumbnailImg()); ?>" height="350px" class="mt-3"></p>
-
             </div>
         </div>
 
