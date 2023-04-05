@@ -116,7 +116,7 @@ class OrdersController
                                 $this->placeorderService->placeOneOrderItem($orderItem);
                             }
                             $orderId = $placeorder->getId();
-                            echo "<script>alert('going to payment'); window.location = '/payment/pay?orderId=$orderId';</script>";
+                            echo "<script>alert('going to payment'); window.location = '/payment?orderId=$orderId';</script>";
                         } else {
                             echo "<script>alert('Failed to place order. ')</script>";
                         }
@@ -129,6 +129,15 @@ class OrdersController
                 //if order was placed and all order items were placed - delete everything from cart where userid = this.userid(session(usserid))
 
             }
+        }
+    }
+
+    public function cancel()
+    {
+        $userId = $_SESSION['userId'];
+        //delete order and orderitems from shopping cart and db
+        if ($this->shoppingcartService->clearCart($userId) && $this->placeorderService->cancelOrder($userId)) {
+            echo "<script>alert('Order Was cancelled successfully'); window.location = '/';</script>";
         }
     }
 }

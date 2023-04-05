@@ -39,4 +39,9 @@ class ShoppingCartService
     {
         return $this->shoppingcartRepository->countProducts($user_id);
     }
+
+    public function clearCart($user_id) //removes items based on userId
+    {
+        return $this->shoppingcartRepository->removeProducts($user_id);
+    }
 }

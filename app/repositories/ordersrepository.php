@@ -91,12 +91,30 @@ class OrdersRepository
             $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber
                                                 FROM orders");
 
+            $stmt->bindParam(':id', $id);
             $stmt->execute();
-
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
             $placedorder = $stmt->fetchAll();
 
             return $placedorder;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getOrderItemsByOrderId($orderId)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT product_id, qty, price FROM orders_item
+            WHERE order_id = :orderId");
+
+            $stmt->bindParam(':orderId', $orderId);
+
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
+            $orderItems = $stmt->fetchAll();
+
+            return $orderItems;
         } catch (PDOException $e) {
             echo $e;
         }
@@ -166,6 +184,27 @@ class OrdersRepository
             $orderItem->setId($this->connection->lastInsertId());
 
             return $this->getOneOrderItem($orderItem->getId());
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function cancelOrder($userId) //deletes last order by userId
+    {
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM orders
+            WHERE user_id = :userId
+            AND order_timestamp = (
+              SELECT MAX(order_timestamp)
+              FROM orders
+              WHERE user_id = :userId");
+
+            $stmt->bindParam(':userId', $userId);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
         } catch (PDOException $e) {
             echo $e;
         }
