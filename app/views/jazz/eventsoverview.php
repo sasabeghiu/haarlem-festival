@@ -49,12 +49,36 @@ include __DIR__ . '/../header.php';
                         <p class="card-text">Time: <?php echo $formated; ?></p>
                         <p class="card-text">Location: <?= $event->getVenue() ?></p>
                         <p class="card-text">Price: <?= $event->getTicket_price() ?> &euro;</p>
-                        <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
+                        <?php
+                        if ($event->getTickets_available() <= 0) {
+                        ?>
+                            <p class="card-text text-danger">Tickets available: Sold out 😢</p>
+                        <?php
+                        } elseif ($event->getTickets_available() <= 3) {
+                        ?>
+                            <p class="card-text text-danger">Tickets available: Only <?= $event->getTickets_available() ?> left</p>
+                        <?php
+                        } elseif ($event->getTickets_available() > 3) {
+                        ?>
+                            <p class="card-text">Tickets available: <?= $event->getTickets_available() ?></p>
+                        <?php
+                        }
+                        ?>
                     </div>
                     <div class="card-footer text-light bg-dark text-center">
                         <p class="text-center"><a href="/artist/jazzartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
                         <form action="/event/jazzevents" method="post">
-                            <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                            <?php
+                            if ($event->getTickets_available() == 0) {
+                            ?>
+                                <button class="btn btn-secondary" name="add-to-cart" disabled>Add to cart</button>
+                            <?php
+                            } else {
+                            ?>
+                                <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                            <?php
+                            }
+                            ?>
                             <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
                         </form>
                     </div>
