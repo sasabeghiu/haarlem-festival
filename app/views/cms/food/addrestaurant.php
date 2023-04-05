@@ -25,6 +25,10 @@ include(__DIR__ . "/../../header.php");
                 <input type="text" class="form-control" name="cuisine" id="cuisine">
             </div>
             <div class="mb-3">
+                <label for="seats" class="form-label">Seats:</label>
+                <input type="text" class="form-control" name="seats" id="seats" >
+            </div>
+            <div class="mb-3">
                 <label for="stars" class="form-label">Stars:</label>
                 <select name="stars" class="form-control ">
                     <option value="NULL" selected disabled hidden>Select amount of stars</option>

@@ -65,9 +65,9 @@ class YummyService
     {
         $this->yummyrepository->deactivateReservation();
     }
-    public function reservationTEMP(Reservation $reservation)
+    public function addReservation(Reservation $reservation)
     {
-        $this->yummyrepository->reservationTEMP($reservation);
+        $this->yummyrepository->addReservation($reservation);
     }
     public function getReservationIdByName($name)
     {

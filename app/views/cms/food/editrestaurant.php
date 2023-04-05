@@ -29,6 +29,10 @@ include(__DIR__ . "/../../header.php");
                 <input type="text" class="form-control" name="cuisine" id="cuisine" value="<?php echo $restaurant->getCuisine(); ?>">
             </div>
             <div class="mb-3">
+                <label for="seats" class="form-label">Seats:</label>
+                <input type="text" class="form-control" name="seats" id="seats" value="<?php echo $restaurant->getSeats(); ?>">
+            </div>
+            <div class="mb-3">
                 <label for="stars" class="form-label">Stars:</label>
                 <select name="stars" class="form-control ">
                     <option value="<?= $restaurant->getStars() ?>" selected hidden><?= $restaurant->getStars() ?></option>

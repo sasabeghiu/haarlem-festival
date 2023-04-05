@@ -35,7 +35,7 @@ class YummyRepository extends Repository
     {
         try {
             $stmt = $this->connection->prepare("SELECT restaurant.id, restaurant.name, restaurant.location, restaurant.description, 
-            restaurant.cuisine, restaurant.stars, restaurant.email, restaurant.phonenumber, img1.image AS image1, img2.image 
+            restaurant.cuisine, restaurant.seats, restaurant.stars, restaurant.email, restaurant.phonenumber, img1.image AS image1, img2.image 
             AS image2, img3.image AS image3 
             FROM restaurant 
             JOIN images img1 ON img1.id = restaurant.image1 
@@ -58,7 +58,7 @@ class YummyRepository extends Repository
         try {
             //images.image is joined multiple times under different aliases to select the multiple images needed for each restaurant
             $stmt = $this->connection->prepare("SELECT restaurant.id, restaurant.name, restaurant.location, restaurant.description, 
-            restaurant.cuisine, restaurant.stars, restaurant.email, restaurant.phonenumber, img1.image AS image1, img2.image 
+            restaurant.cuisine, restaurant.seats, restaurant.stars, restaurant.email, restaurant.phonenumber, img1.image AS image1, img2.image 
             AS image2, img3.image AS image3 
             FROM restaurant 
             JOIN images img1 ON img1.id = restaurant.image1 
@@ -178,14 +178,14 @@ class YummyRepository extends Repository
             if ($restaurant->getId() != 0) {
                 // Update existing restaurant
                 $stmt = $this->connection->prepare("UPDATE `restaurant` SET name = :name, location = :location, description = :description, cuisine = :cuisine, 
-                                                    stars = :stars, email = :email, phonenumber = :phonenumber, image1 = :image1, 
+                                                    seats = :seats, stars = :stars, email = :email, phonenumber = :phonenumber, image1 = :image1, 
                                                     image2 = :image2, image3 = :image3
                                                     WHERE id = :id");
                 $stmt->bindValue(':id', $restaurant->getId());
             } else {
                 // Insert new restaurant
-                $stmt = $this->connection->prepare("INSERT INTO `restaurant` (name, location, description, cuisine, 
-                                                    stars, email, phonenumber, image1, image2, image3) VALUES (:name, :location, :description, :cuisine, 
+                $stmt = $this->connection->prepare("INSERT INTO `restaurant` (name, location, description, cuisine, seats, 
+                                                    stars, email, phonenumber, image1, image2, image3) VALUES (:name, :location, :description, :cuisine, :seats, 
                                                     :stars, :email, :phonenumber, :image1, :image2, :image3)");
             }
 
@@ -193,6 +193,7 @@ class YummyRepository extends Repository
             $stmt->bindValue(':location', $restaurant->getLocation());
             $stmt->bindValue(':description', $restaurant->getDescription());
             $stmt->bindValue(':cuisine', $restaurant->getCuisine());
+            $stmt->bindValue(':seats', $restaurant->getSeats());
             $stmt->bindValue(':stars', $restaurant->getStars());
             $stmt->bindValue(':email', $restaurant->getEmail());
             $stmt->bindValue(':phonenumber', $restaurant->getPhonenumber());
@@ -270,7 +271,7 @@ class YummyRepository extends Repository
             echo ($e);
         }
     }
-    public function reservationTEMP(Reservation $reservation) {
+    public function addReservation(Reservation $reservation) {
         $stmt = $this->connection->prepare("INSERT INTO `reservation` (`name`, `restaurantID`, `sessionID`, `seats`, `date`, 
                                             `request`, `price`, `status`) VALUES (:name, :restaurantID,:sessionID, :seats,
                                             :date, :request, :price, 1 )");
