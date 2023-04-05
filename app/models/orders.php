@@ -177,7 +177,7 @@ class Orders
     /**
      * Get the value of totalprice
      */ 
-    public function getTotalPrice()
+    public function getTotalPrice() : float
     {
         return $this->totalprice;
     }
@@ -189,7 +189,7 @@ class Orders
      */ 
     public function setTotalPrice(float $totalprice)
     {
-        $this->totalprice = $totalprice;
+        $this->totalprice = number_format($totalprice, 2, '.');
 
         return $this;
     }

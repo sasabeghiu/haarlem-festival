@@ -61,24 +61,55 @@ include __DIR__ . '/../header.php';
                         <?php
                         if ($count > 0) {
                             echo "<h6>Price ($count items)</h6>";
-                        } else {
-                            echo "<h6>Price (0 items)</h6>";
-                        }
                         ?>
-                        <h6>Delivery Charges</h6>
-                        <hr>
-                        <h6>Total Price</h6>
+                             <h6>Delivery Charges</h6>
+                            <hr>
+                            <h6>Total Price</h6>
+                            <hr>
                     </div>
                     <div class="col-md-6">
                         <h6>&euro; <?php echo $total; ?></h6>
                         <h6 class="text-success"> FREE </h6>
                         <hr>
                         <h6>&euro; <?php echo $total; ?></h6>
+                        <hr>
                     </div>
+                    <div class="col-md-12">
+                        <form method="post">
+                            <button class="btn btn-success d-flex justify-content-center mb-3 w-100" name="proceed" type="submit">Proceed to checkout</button>
+                            <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart w-100" href="#">Share your shopping cart with a friend</a>
+                        </form>
+                    </div>
+                        <?php
+                        }
+                        ?>
+
+                        <?php
+                        if ($count <= 0) {
+                            echo "<h6>Price (0 items)</h6>";
+                        ?>
+                            <h6>Delivery Charges</h6>
+                            <hr>
+                            <h6>Total Price</h6>
+                            <hr>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>&euro; <?php echo $total; ?></h6>
+                        <h6 class="text-success"> FREE </h6>
+                        <hr>
+                        <h6>&euro; <?php echo $total; ?></h6>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <form method="post">
+                            <button class="btn btn-success d-flex justify-content-center mb-3 w-100" name="proceed" type="submit">Proceed to checkout</button>
+                            <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart w-100" href="#">Share your shopping cart with a friend</a>
+                        </form>
+                    </div>
+                <?php
+                        }
+                ?>
                 </div>
-                <hr>
-                <a class="btn btn-success d-flex justify-content-center mb-3" href="/orders/checkout">Proceed to checkout</a>
-                <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart" href="#">Share your shopping cart with a friend</a>
             </div>
         </div>
     </div>

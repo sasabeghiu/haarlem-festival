@@ -39,4 +39,9 @@ class ShoppingCartService
     {
         return $this->shoppingcartRepository->countProducts($user_id);
     }
+
+    public function emptyCartByUserId($user_id)
+    {
+        return $this->shoppingcartRepository->emptyCartByUserId($user_id);
+    }
 }

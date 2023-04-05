@@ -105,6 +105,24 @@ class ShoppingCartRepository
         }
     }
 
+    function emptyCartByUserId($user_id)
+    {
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM shopping_cart_items WHERE user_id=:user_id");
+
+            $user_id = htmlspecialchars(strip_tags($user_id));
+            $stmt->bindParam(":user_id", $user_id);
+
+            if ($stmt->execute()){
+                return true;
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function getShoppingCartByUserId($user_id)
     {
         try {
