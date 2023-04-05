@@ -13,7 +13,7 @@ class PaymentController
     {
         $this->mollie = new \Mollie\Api\MollieApiClient();
         $this->mollie->setApiKey("
-        test_Ds3fz4U9vNKxzCfVvVHJT2sgW5ECD8");
+        test_5jaAakyFRh8n9cNuC8p8aQR8gF3jp3");
         $this->orderService = new OrdersService();
     }
 
@@ -46,6 +46,7 @@ class PaymentController
                 "metadata" => [
                     "order_id" => $orderId,
                 ],
+
             ]);
 
             $this->orderService->addPayment($orderId, $payment->id);
