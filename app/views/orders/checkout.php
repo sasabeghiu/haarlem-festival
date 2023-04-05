@@ -106,7 +106,7 @@ include __DIR__ . '/../header.php';
                     ?>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Subtotal (EUR)</span>
-                        <strong>&euro;<?php echo $subtotal; ?> </strong>
+                        <strong>&euro;<?php echo number_format($subtotal, 2, '.'); ?> </strong>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total(incl. VAT 21%) (EUR)</span>
@@ -114,10 +114,8 @@ include __DIR__ . '/../header.php';
                     </li>
                         </ul>
             </div>
-
-            <div class="col-md-7 col-lg-8">
-                <h4 class="mb-3">Billing address</h4>
-                <form class="needs-validation" novalidate>
+                <div class="col-md-7 col-lg-8">
+                    <h4 class="mb-3">Billing address</h4>
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label">First name</label>
@@ -178,9 +176,10 @@ include __DIR__ . '/../header.php';
 
                     </div>
                     <hr class="my-4">
-                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="placeorder">Place order</button>
-                </form>
-            </div>
+                    <form method="post" class="needs-validation">
+                        <button class="w-100 btn btn-primary btn-lg" type="submit" name="placeorder">Place order</button>
+                    </form>
+                </div>
         </div>
     </form>
 

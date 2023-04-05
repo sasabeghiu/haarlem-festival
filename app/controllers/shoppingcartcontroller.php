@@ -39,12 +39,24 @@ class ShoppingcartController
                     }
                 }
             }
+            if (isset($_POST['proceed'])) {
+                if ($cartItems > 0) {
+                    if (!empty($count)) {
+                        echo "<script>window.location = '/orders/checkout'</script>";
+                    } else {
+                        echo "<script>alert('No product in the shopping cart! Please add products to the cart first!')</script>";
+                        echo "<script>window.location = '/historyevent'</script>";
+                    }
+                }
+            }
         } else {
             echo "<script>
                 alert('You have to be logged in to see your cart.');
                 window.location.href = '/login/index'
                 </script>";
         }
+
+
 
 
         // if (isset($_GET['cartc'])) {
