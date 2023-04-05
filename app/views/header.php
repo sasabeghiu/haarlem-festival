@@ -75,6 +75,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/user/profile">Edit Profile</a>
+              <a class="dropdown-item" href="/orders/myorders">My Orders</a>
               <a class="dropdown-item" href="/login/logout">Logout</a>
               <a class="dropdown-item" href="/api/keys">API</a>
             </div>
