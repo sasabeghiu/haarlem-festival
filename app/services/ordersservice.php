@@ -45,4 +45,14 @@ class OrdersService
     {
         return $this->orderRepository->addPayment($orderId, $paymentId);
     }
+
+    public function getOrderItemsByOrderId($orderId)
+    {
+        return $this->orderRepository->getOrderItemsByOrderId($orderId);
+    }
+
+    public function cancelOrder($userId)
+    {
+        return $this->orderRepository->cancelOrder($userId);
+    }
 }

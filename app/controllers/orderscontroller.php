@@ -154,4 +154,13 @@ class OrdersController
                 </script>";
         }
     }
+
+    public function cancel()
+    {
+        $userId = $_SESSION['userId'];
+        //delete order and orderitems from shopping cart and db
+        if ($this->shoppingcartService->clearCart($userId) && $this->placeorderService->cancelOrder($userId)) {
+            echo "<script>alert('Order Was cancelled successfully'); window.location = '/';</script>";
+        }
+    }
 }
