@@ -2,7 +2,7 @@
 This is the repository for Haarlem Festival Project of Group 6
 
 ## URL
-URL to live website: [Haarlem Festival](localhost)
+URL to live website: [Haarlem Festival](http://localhost/page/festival)
 
 ## Login Credentials
 ```
@@ -20,7 +20,7 @@ User with role Admin:
 
 
 You can either use the provided test accounts or create your own account.
-You can not create an account with the role admin or employee, only user.
+You can not create an account with the role admin or employee, only customer.
 
 NOTE: You should provide an existing email.
 ```
