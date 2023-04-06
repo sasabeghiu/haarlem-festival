@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Haarlem Festival - Reset password</title>
+    <title>Haarlem Festival - Verify Email</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,32 +28,6 @@
                 <a href="/login" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-4">
-
-            </div>
-            <div class="col-md-4">
-                <br />
-                <div class="card">
-                    <div class="card-header">
-                        Email verification
-                    </div>
-                    <div class="card-body">
-                    </div>
-                    <form action="/login/passwordReset" method="post">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Enter your username and you will receive a verification code in the email associated with the account.</label>
-                            <input type="text" class="form-control" name="username" id="username" aria-describedby="username" placeholder="enter your username" required>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col"><button type="submit" class="btn btn-primary">Send verification code</button></div>
-                            <div class="col"><a name="" id="" class="btn btn-secondary" href="/login/index" role="button">Cancel</a></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> -->
-
     </main>
     <footer>
         <!-- place footer here -->

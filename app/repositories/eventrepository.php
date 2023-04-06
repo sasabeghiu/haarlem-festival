@@ -195,6 +195,7 @@ class EventRepository
             $stmt = $this->connection->prepare("INSERT INTO music_event (type, artist, venue, ticket_price, tickets_available, datetime, image, name) VALUES (?,?,?,?,?,?,?,?)");
             $stmt->execute([$event->getType(), $event->getArtist(), $event->getVenue(), $event->getTicket_Price(), $event->getTickets_Available(), $event->getDatetime(), $event->getImage(), $event->getName()]);
             $event->setId($this->connection->lastInsertId());
+            $event->setProduct_id($this->connection->lastInsertId());
 
             return $this->getOne($event->getId());
         } catch (PDOException $e) {

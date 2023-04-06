@@ -12,13 +12,14 @@ class PageController
     private $eventService;
     private $historyEventService;
 
-    
+
     function __construct()
     {
         $this->pageService = new PageService();
         $this->pageCardService = new PageCardService();
         $this->eventService = new EventService();
         $this->historyEventService = new HistoryEventService();
+        session_start();
     }
 
     public function index()
@@ -58,24 +59,51 @@ class PageController
 
     public function theater()
     {
-        $page = $this->pageService->getOnePage(5);
-        $pagecards = $this->pageCardService->getAllCardsByPageId(5);
+        $id = 5;
+        if (isset($_POST['save'])) {
+            // Get the edited content from the form
+            $newTitle = htmlspecialchars($_POST['title']);
+            $newDescription = htmlspecialchars($_POST['description']);
+            //$newHeaderImage
+            $page = new Page();
+
+            $page->setHeaderImg(339);
+            $page->setTitle($newTitle);
+            $page->setDescription($newDescription);
+
+            $this->pageService->updatePage($page, $id);
+        }
+
+        $page = $this->pageService->getOnePage($id);
+        $pagecards = $this->pageCardService->getAllCardsByPageId($id);
 
         require __DIR__ . '/../views/visithaarlem/theater.php';
     }
 
     public function music()
     {
-        $page = $this->pageService->getOnePage(6);
-        $pagecards = $this->pageCardService->getAllCardsByPageId(6);
+        $id = 6;
+        if (isset($_POST['save'])) {
+            // Get the edited content from the form
+            $newTitle = htmlspecialchars($_POST['title']);
+            $newDescription = htmlspecialchars($_POST['description']);
+            //$newHeaderImage
+            $page = new Page();
 
-        if (isset($_POST["update"])) {
-            $this->updateMusicPage();
+            $page->setHeaderImg(338);
+            $page->setTitle($newTitle);
+            $page->setDescription($newDescription);
+
+            $this->pageService->updatePage($page, $id);
         }
+
+        $page = $this->pageService->getOnePage($id);
+        $pagecards = $this->pageCardService->getAllCardsByPageId($id);
 
         require __DIR__ . '/../views/visithaarlem/music.php';
     }
-    public function food() {
+    public function food()
+    {
         $page = $this->pageService->getOnePage(7);
         $pageCards = $this->pageCardService->getAllCardsByPageId(7);
 
@@ -93,5 +121,11 @@ class PageController
         $page->setDescription($description);
 
         $this->pageService->updatePage($page, 6);
+    }
+
+    public function savePage()
+    {
+        $contents = $_POST["contents"];
+        echo $contents;
     }
 }

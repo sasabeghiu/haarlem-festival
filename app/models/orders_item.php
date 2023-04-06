@@ -1,0 +1,109 @@
+<?php
+class OrdersItem
+{
+    private int $id;
+    private int $order_id;
+    private int $product_id;
+    private int $qty;
+    private float $price;
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of order_id
+     */
+    public function getOrder_id()
+    {
+        return $this->order_id;
+    }
+
+    /**
+     * Set the value of order_id
+     *
+     * @return  self
+     */
+    public function setOrder_id($order_id)
+    {
+        $this->order_id = $order_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of product_id
+     */
+    public function getProduct_id()
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * Set the value of product_id
+     *
+     * @return  self
+     */
+    public function setProduct_id($product_id)
+    {
+        $this->product_id = $product_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of qty
+     */
+    public function getQty()
+    {
+        return $this->qty;
+    }
+
+    /**
+     * Set the value of qty
+     *
+     * @return  self
+     */
+    public function setQty($qty)
+    {
+        $this->qty = $qty;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of price
+     */ 
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set the value of price
+     *
+     * @return  self
+     */ 
+    public function setPrice(float $price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+}

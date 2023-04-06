@@ -1,20 +1,12 @@
 <?php
-
-class HistoryEvent implements JsonSerializable
+class HistoryEvent
 {
-
-    public function jsonSerialize(): mixed
-    {
-        return get_object_vars($this);
-    }
-
     private int $id;
     private string $nameOfTours;
     private int $tickets_available;
     private string $price;
     private string $datetime;
     private string $location;
-    private ?int $venueID;
     private string $image;
     private ?int $tourguideID;
     private string $tourguideName;
@@ -117,22 +109,6 @@ class HistoryEvent implements JsonSerializable
     }
 
     /**
-     * @return ?int
-     */
-    public function getVenueID(): ?int
-    {
-        return $this->venueID;
-    }
-
-    /**
-     * @param ?int $venueID
-     */
-    public function setVenueID(?int $venueID): void
-    {
-        $this->venueID = $venueID;
-    }
-
-    /**
      * @return string
      */
     public function getImage(): string
@@ -141,11 +117,15 @@ class HistoryEvent implements JsonSerializable
     }
 
     /**
-     * @param string $image
+     * Set the value of image
+     * 
+     * @return self
      */
-    public function setImage(string $image): void
+    public function setImage($image)
     {
         $this->image = $image;
+
+        return $this;
     }
 
     /**

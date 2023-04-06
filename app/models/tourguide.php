@@ -1,6 +1,6 @@
 <?php
 
-class tourGuide implements JsonSerializable {
+class TourGuide implements JsonSerializable {
 
     public function jsonSerialize(): mixed
     {
@@ -75,5 +75,4 @@ class tourGuide implements JsonSerializable {
     {
         $this->image = $image;
     }
-
 }

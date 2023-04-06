@@ -7,7 +7,7 @@ include(__DIR__ . "/../../header.php");
         Editing restaurant
     </div>
     <div class="card-body">
-        <form action="/food/saveRestaurant" method="post" enctype="multipart/form-data" id="edit-form">
+        <form action="/yummy/saveRestaurant" method="post" enctype="multipart/form-data" id="edit-form">
             <div class="mb-3">
                 <label for="id" class="form-label">Id: <?php echo $restaurant->getId(); ?></label>
                 <input type="hidden" name="id" value="<?php echo $restaurant->getId(); ?>">
@@ -27,6 +27,10 @@ include(__DIR__ . "/../../header.php");
             <div class="mb-3">
                 <label for="cuisine" class="form-label">Cuisine:</label>
                 <input type="text" class="form-control" name="cuisine" id="cuisine" value="<?php echo $restaurant->getCuisine(); ?>">
+            </div>
+            <div class="mb-3">
+                <label for="seats" class="form-label">Seats:</label>
+                <input type="text" class="form-control" name="seats" id="seats" value="<?php echo $restaurant->getSeats(); ?>">
             </div>
             <div class="mb-3">
                 <label for="stars" class="form-label">Stars:</label>
@@ -60,7 +64,7 @@ include(__DIR__ . "/../../header.php");
                 <input type="file" class="" name="image3" id="image3">
             </div>
             <button type="submit" class="btn btn-success">Save</button>
-            <a name="" id="" class="btn btn-primary" href="/food/managerestaurants" role="button">Cancel</a>
+            <a name="" id="" class="btn btn-primary" href="/yummy/managerestaurants" role="button">Cancel</a>
         </form>
     </div>
 

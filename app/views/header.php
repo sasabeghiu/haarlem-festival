@@ -1,6 +1,3 @@
-<?php
-//session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +12,15 @@
   <!-- include jquery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="/css/shoppingcartstyle.css">
+  <script>
+    $(document).ready(function() {
+      $('.navbar-toggler').click(function() {
+        $('.navbar-collapse').toggle();
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -64,14 +70,15 @@
             </div>
           </div>
           <div class="dropdown show">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Profile
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/user/profile">Edit Profile</a>
+              <a class="dropdown-item" href="/orders/myorders">My Orders</a>
               <a class="dropdown-item" href="/login/logout">Logout</a>
+              <a class="dropdown-item" href="/api/keys">API</a>
             </div>
-
           </div>
           <div class="dropdown show">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,15 +92,63 @@
               <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
               <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
               <a class="dropdown-item" href="/tourguidecms/cms">Tour Guide CMS</a>
-              <a class="dropdown-item" href="/food/manageSessions">Yummy</a>
-              <a class="dropdown-item" href="/food/manageRestaurants">Restaurants</a>
-              <a class="dropdown-item" href="/food/manageReservations">Reservations</a>
+              <a class="dropdown-item" href="/historyeventcms/cms">History Events CMS</a>
+              <a class="dropdown-item" href="/yummy/manageSessions">Sessions</a>
+              <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
+              <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
             </div>
           </div>
 
           <li class="nav-item">
-            <a class="nav-link" href="/page/">Visit Haarlem</a>
+            <a class="nav-link text-white" href="/page/">Visit Haarlem</a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/shoppingcart">
+              <i class="fas fa-shopping-cart"></i>
+              Shopping Cart
+              <?php
+              if (isset($_SESSION['cartcount'])) {
+                echo "<span id='card_count' class='text-dark bg-light fw-bold'>{$_SESSION['cartcount']}</span>";
+              } else {
+                echo "<span id='card_count' class='text-dark bg-light fw-bold'>0</span>";
+              }
+              ?>
+            </a>
+          </li>
+
+          <!-- this should be available only for ADMIN -->
+          <div class="dropdown show">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              CMS
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/user">Users</a>
+              <a class="dropdown-item" href="/artist/artistcms">Artists (jazz and dance) CMS</a>
+              <a class="dropdown-item" href="/venue/venuecms">Venues (jazz and dance) CMS</a>
+              <a class="dropdown-item" href="/event/eventcms">Events (jazz and dance) CMS</a>
+              <a class="dropdown-item" href="/tourguide/cms">Tour Guide CMS</a>
+              <a class="dropdown-item" href="/historyevent/cms">History Events CMS</a>
+              <a class="dropdown-item" href="/orders/cms">Orders CMS</a>
+              <a class="dropdown-item" href="/yummy/manageSessions">Sessions</a>
+              <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
+              <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
+            </div>
+          </div>
+          <!-- end admin -->
+
+          <!-- this should be available only for EMPLOYEE -->
+          <div class="dropdown show">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              QR
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/qr/generateqr">Generate QR</a>
+              <a class="dropdown-item" href="/qr/scanqr">Scan QR</a>
+            </div>
+          </div>
+          <!-- end employee -->
+
         </ul>
       </div>
     </div>

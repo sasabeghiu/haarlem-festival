@@ -3,6 +3,10 @@
 include __DIR__ . '/../navbar.php';
 ?>
 
+<head>
+    <link rel="stylesheet" href="/css/festivalpage.css">
+</head>
+
 <div style="position: relative; text-align: center; color: white;">
     <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($page->getHeaderImg()); ?>" width="100%" height="auto">
     <div style="position: absolute; bottom: 8px; left: 16px;">
@@ -16,58 +20,42 @@ include __DIR__ . '/../navbar.php';
     <div class="row mb-3">
         <p class="text-center fs-1"> <?= $page->getDescription() ?></p>
     </div>
+
     <div class="row mb-3" style="display:flex; justify-content:center;">
         <?php
         foreach ($pagecards as $card) {
         ?>
-            <div class="card" style="width: 60%; height: auto">
-                <div class="row">
-                    <div class="col-md-9">
-                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img rounded-left">
-                    </div>
-                    <div class="col-md-3 bg-light rounded-right">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><?= $card->getTitle() ?></h5>
-                            <p class="card-text"><?= $card->getDescription() ?></p>
+            <div class="col">
+                <a href="<?= $card->getLink() ?>">
+                    <div class="card">
+                        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($card->getImage()); ?>" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="text-center fw-bold click2edit"><?= $card->getTitle() ?></h5>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         <?php
         }
         ?>
     </div>
 </div>
-
-<!-- TimeTable -->
-<div class="container">
-    <div>
-        <button class="btn btn-secondary" id="show-dance-events">Dance</button>
-        <button class="btn btn-secondary" id="show-jazz-events">Jazz</button>
-        <button class="btn btn-secondary" disabled id="show-history-events">History</button>
+<div class="container mb-3">
+    <div class="card" style="width: 75%;">
+        <div class="row">
+            <div class="col-md-9">
+                <img src="https://www.haarlemjazzandmore.nl/wp-content/uploads/2019/08/20190818_jazz_vuurwerk_07-1024x683.jpg" class="card-img rounded-left" alt="...">
+            </div>
+            <div class="col-md-3 bg-light rounded-right">
+                <div class="card-body text-center">
+                    <h5 class="card-title">The Haarlem Festival</h5>
+                    <p class="card-text">Amazing artists, great DJs and much more... </br> All in the beautiful beach of Haarlem</p>
+                    <a href="/page/festival" class="btn btn-primary">CHECK IT OUT</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Day</th>
-                <th scope="col">Time</th>
-                <th scope="col">Name</th>
-            </tr>
-        </thead>
-        <tbody id="jazz&dance">
-            <?php foreach ($events as $event) :
-                $day = date('l', strtotime($event->getDatetime())); ?>
-                <tr class="<?php echo $event->getType(); ?>">
-                    <td><?php echo $day ?></td>
-                    <td><?php echo date('g:i A', strtotime($event->getDatetime())); ?></td>
-                    <td><?php echo $event->getName(); ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
 </div>
-
-
 <!-- Location -->
 <div class="container">
     <div class="col-md-6">
@@ -86,30 +74,6 @@ include __DIR__ . '/../navbar.php';
     </div>
 </div>
 
-<script>
-    const jazzButton = document.getElementById('show-jazz-events');
-    const danceButton = document.getElementById('show-dance-events');
-    const jazzRows = document.querySelectorAll('.jazz');
-    const danceRows = document.querySelectorAll('.dance');
-
-    jazzButton.addEventListener('click', function() {
-        jazzRows.forEach(function(row) {
-            row.style.display = 'table-row';
-        });
-        danceRows.forEach(function(row) {
-            row.style.display = 'none';
-        });
-    });
-
-    danceButton.addEventListener('click', function() {
-        danceRows.forEach(function(row) {
-            row.style.display = 'table-row';
-        });
-        jazzRows.forEach(function(row) {
-            row.style.display = 'none';
-        });
-    });
-</script>
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

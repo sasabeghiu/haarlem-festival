@@ -3,16 +3,11 @@ require __DIR__ . '/repository.php';
 require __DIR__ . '/../models/user.php';
 class LoginRepository extends Repository
 {
-    public function login($username, $password)
-    {
-        //
-    }
-
     public function register($username, $password, $email)
     {
         try {
             // Insert new user
-            $query = 'INSERT INTO user (username, password, roleId, email) VALUES (:username, :password, :roleId, :email)';
+            $query = 'INSERT INTO user (username, password, roleId, email, created_at) VALUES (:username, :password, :roleId, :email, NOW())';
             $stmt = $this->connection->prepare($query);
             $stmt->bindValue(':username', $username);
             $stmt->bindValue(':password', $password);
@@ -44,6 +39,7 @@ class LoginRepository extends Repository
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
         $user->setRole($row['roleId']);
+        $user->setCreationDate($row['created_at']);
 
         return $user;
     }
@@ -64,6 +60,7 @@ class LoginRepository extends Repository
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
         $user->setRole($row['roleId']);
+        $user->setCreationDate($row['created_at']);
 
         return $user;
     }
@@ -85,17 +82,18 @@ class LoginRepository extends Repository
         $user->setPassword($row['password']);
         $user->setEmail($row['email']);
         $user->setRole($row['roleId']);
+        $user->setCreationDate($row['created_at']);
 
         return $user;
     }
 
-    public function createVerificationCode($id, $code)
+    public function createVerificationCode($code, $userId)
     {
         try {
-            $query = 'INSERT INTO verification_codes (userId, code) VALUES (:id, :code)';
+            $query = 'INSERT INTO verification_code (code, userId) VALUES (:code, :userId)';
             $stmt = $this->connection->prepare($query);
-            $stmt->bindValue(':id', $id);
             $stmt->bindValue(':code', $code);
+            $stmt->bindValue(':userId', $userId);
             if ($stmt->execute()) {
                 return true;
             }
@@ -105,18 +103,40 @@ class LoginRepository extends Repository
         return false;
     }
 
-    public function getVerificationCode($id) //gets latest code from userID
+    public function isValid($code)
     {
         try {
-            $query = 'SELECT code FROM verification_codes 
-            WHERE userId = :id
-            ORDER BY timestamp DESC
-            LIMIT 1';
+            $query = 'SELECT userId
+            FROM verification_code
+            WHERE code = :code
+              AND timestamp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE);            
+            ';
             $stmt = $this->connection->prepare($query);
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':code', $code);
+            $stmt->execute();
             $row = $stmt->fetch();
+
+            if (!$row) {
+                return null;
+            }
+            $userId = $row['userId'];
+            return $this->getById($userId);
+        } catch (PDOException $e) {
+            print_r($e);
+        }
+    }
+
+    public function updatePassword($userId, $password)
+    {
+        try {
+            $query = 'UPDATE user
+            SET password = :password
+            WHERE id = :userId';
+            $stmt = $this->connection->prepare($query);
+            $stmt->bindValue(':userId', $userId);
+            $stmt->bindValue(':password', $password);
             if ($stmt->execute()) {
-                return $row['code'];
+                return true;
             }
         } catch (PDOException $e) {
             print_r($e);

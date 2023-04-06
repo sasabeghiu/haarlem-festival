@@ -28,7 +28,7 @@ include __DIR__ . '/../../header.php';
 
     <!-- Creating the Insert Functionality -->
     <div id="form-add-container" style="display: none;">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <div class="form-group row mb-1">
                 <label for="name" class="col-sm-2 col-form-label">Name:</label>
                 <div class="col-sm-10">
@@ -72,13 +72,13 @@ include __DIR__ . '/../../header.php';
                     <td style="width: 50%;"><?= $tourguide->getDescription() ?></td>
                     <td><?php echo '<img src="data:image/jpeg;base64,' . base64_encode($tourguide->getImage()) . '"  height="100px"/>'; ?></td>
                     <td style="width: 2%">
-                        <form action="/tourguidecms/cms?updateID=<?= $tourguide->getId() ?>" method="POST">
+                        <form action="/tourguide/cms?updateID=<?= $tourguide->getId() ?>" method="POST">
                             <input type="hidden" name="edit" value="<?= $tourguide->getId() ?>">
                             <input type="submit" name="submit" value="Edit" class="btn btn-warning">
                         </form>
                     </td>
                     <td style="width: 2%">
-                        <form action="/tourguidecms/cms?deleteID=<?= $tourguide->getId() ?>" method="POST">
+                        <form action="/tourguide/cms?deleteID=<?= $tourguide->getId() ?>" method="POST">
                             <input type="hidden" name="delete" onclick="" value="<?= $tourguide->getId() ?>">
                             <input type="submit" name="submit" value="Delete" class="btn btn-danger">
                         </form>
@@ -96,7 +96,7 @@ include __DIR__ . '/../../header.php';
     ?>
         <h3>Edit Tour Guide with ID: <?= $updateTourguide->getId() ?></h3>
         <div>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="form-group row mb-1">
                     <label for="changedName" class="col-sm-2 col-form-label">Name:</label>
                     <div class="col-sm-10">
@@ -110,10 +110,10 @@ include __DIR__ . '/../../header.php';
                     </div>
                 </div>
                 <div class="form-group row mb-1">
-                    <label for="changedImage" class="col-sm-2 col-form-label">Image:</label>
+                    <label for="changeImage" class="col-sm-2 col-form-label">Image:</label>
                     <div class="col-sm-10">
                         <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($updateTourguide->getImage()) . '" height="100px"/>'; ?>
-                        <input type="file" class="form-control" id="changedImage" name="changedImage" required>
+                        <input type="file" class="form-control" id="changeImage" name="changeImage" required>
                     </div>
                 </div>
                 <input type="submit" name="update" value="Update Tour Guide" class="form-control btn btn-success mb-1">

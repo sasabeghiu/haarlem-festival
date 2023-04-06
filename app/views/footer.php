@@ -18,20 +18,22 @@
             <a href="link" target="_blank"><i class="fa-brands fa-facebook vector"></i></a>
         </div>
         <div class="col overview">
-            <h6 class="text-center">overview</h6>
-            <a class="text-center" href="/theater">Theater</a>
-            <a class="text-center" href="/theater">Museum</a>
-            <a class="text-center" href="/history">History</a>
-            <a class="text-center" href="/food">Food</a>
+            <h6 class="text-center">Visit Haarlem</h6>
+            <a class="text-center" href="/page">Home</a>
+            <a class="text-center" href="/page/history">History</a>
+            <a class="text-center" href="/page/museum">Museum</a>
+            <a class="text-center" href="/page/theater">Theater</a>
+            <a class="text-center" href="/page/music">Music</a>
+            <a class="text-center" href="/page/food">Food</a>
             <!-- <a>Children</a> -->
         </div>
         <div class="col overview">
             <h6 class="text-center">Festival</h6>
-            <a class="text-center" href="/festival">home</a>
+            <a class="text-center" href="/page/festival">Home</a>
+            <a class="text-center" href="/yummy">Food</a>
             <a class="text-center" href="/historyevent">History</a>
-            <a class="text-center" href="/food/yummy">Food</a>
-            <a class="text-center" href="/event">Dance</a>
-            <a class="text-center" href="/??">Jazz</a>
+            <a class="text-center" href="/event/danceevents">Dance</a>
+            <a class="text-center" href="/event/jazzevents">Jazz</a>
         </div>
         <div class="col">
             <h6 class="text-center">contact</h6>

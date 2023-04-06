@@ -49,11 +49,38 @@ include __DIR__ . '/../header.php';
                         <p class="card-text">Time: <?php echo $formated; ?></p>
                         <p class="card-text">Location: <?= $event->getVenue() ?></p>
                         <p class="card-text">Price: <?= $event->getTicket_price() ?> &euro;</p>
-                        <p class="card-text">Stock: <?= $event->getTickets_available() ?></p>
+                        <?php
+                        if ($event->getTickets_available() <= 0) {
+                        ?>
+                            <p class="card-text text-danger">Tickets available: Sold out 😢</p>
+                        <?php
+                        } elseif ($event->getTickets_available() <= 3) {
+                        ?>
+                            <p class="card-text text-danger">Tickets available: Only <?= $event->getTickets_available() ?> left</p>
+                        <?php
+                        } elseif ($event->getTickets_available() > 3) {
+                        ?>
+                            <p class="card-text">Tickets available: <?= $event->getTickets_available() ?></p>
+                        <?php
+                        }
+                        ?>
                     </div>
                     <div class="card-footer text-light bg-dark text-center">
                         <p class="text-center"><a href="/artist/jazzartistdetails?id=<?= $event->getArtist() ?>">Discover more</a></p>
-                        <button class="btn btn-secondary">Add to cart</button>
+                        <form action="/event/jazzevents" method="post">
+                            <?php
+                            if ($event->getTickets_available() == 0) {
+                            ?>
+                                <button class="btn btn-secondary" name="add-to-cart" disabled>Add to cart</button>
+                            <?php
+                            } else {
+                            ?>
+                                <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                            <?php
+                            }
+                            ?>
+                            <input type="hidden" name="product_id" value="<?= $event->getId() ?>">
+                        </form>
                     </div>
                 </div>
             <?php
@@ -62,58 +89,26 @@ include __DIR__ . '/../header.php';
         </div>
 
         <div class="row my-3">
-            <div class="col-md-3 card">
-                <div class="card-header">
-                    <p class="card-text text-center">Day Pass Wednesday</p>
+            <?php
+            foreach ($passes as $pass) {
+            ?>
+                <div class="col-md-3 card">
+                    <div class="card-header">
+                        <p class="card-text text-center"><?= $pass->getName() ?></p>
+                    </div>
+                    <div class="card-body">
+                        <p><?= $pass->getName() ?></p>
+                        <p>Time: <?= $pass->getDatetime() ?></p>
+                        <p>Price: &euro; <?= $pass->getPrice() ?></p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <form action="/event/jazzevents" method="post">
+                            <button class="btn btn-secondary" name="add-to-cart">Add to cart</button>
+                            <input type="hidden" name="product_id" value="<?= $pass->getId() ?>">
+                        </form>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p>All-Access Pass for Wednesday</p>
-                    <p>Time: 18:00 - 22:00</p>
-                    <p>Price: &euro; 35</p>
-                </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-secondary">Add to cart</button>
-                </div>
-            </div>
-            <div class="col-md-3 card">
-                <div class="card-header">
-                    <p class="card-text text-center">Day Pass Thursday</p>
-                </div>
-                <div class="card-body">
-                    <p>All-Access Pass for Thursday</p>
-                    <p>Time: 18:00 - 22:00</p>
-                    <p>Price: &euro; 35</p>
-                </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-secondary">Add to cart</button>
-                </div>
-            </div>
-            <div class="col-md-3 card">
-                <div class="card-header">
-                    <p class="card-text text-center">Day Pass Friday</p>
-                </div>
-                <div class="card-body">
-                    <p>All-Access Pass for Friday</p>
-                    <p>Time: 18:00 - 22:00</p>
-                    <p>Price: &euro; 35</p>
-                </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-secondary">Add to cart</button>
-                </div>
-            </div>
-            <div class="col-md-3 card">
-                <div class="card-header">
-                    <p class="card-text text-center">All Access Pass</p>
-                </div>
-                <div class="card-body">
-                    <p>All-Access Pass for Wednesday, Thursday, Friday and Saturday</p>
-                    <p>Time: 18:00 - 22:00</p>
-                    <p>Price: &euro; 80</p>
-                </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-secondary">Add to cart</button>
-                </div>
-            </div>
+            <?php } ?>
         </div>
 
         <p class="text-center my-3">Location:
