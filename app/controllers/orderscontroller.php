@@ -105,7 +105,7 @@ class OrdersController
                         if ($this->placeorderService->placeOrder($placeorder)) {
                             // $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
 
-                            for ($i = 0; $i <script count($cartItems); $i++) {
+                            for ($i = 0; $i < count($cartItems); $i++) {
                                 $ids = $cartItems[$i]->getId();
                                 $qty = $cartItems[$i]->getQty();
                                 $price = $cartItems[$i]->getEvent_price();
