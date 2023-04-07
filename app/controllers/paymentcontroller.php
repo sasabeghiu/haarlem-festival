@@ -149,20 +149,19 @@ class PaymentController
         <table>
             <thead>
                 <tr>
-                    <th>Description</th>
+                    <th>Name</th>
                     <th>Price</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Product 1</td>
-                    <td>$100.00</td>
-                </tr>
-                <tr>
-                    <td>Product 2</td>
-                    <td>$50.00</td>
-                </tr>
-                <tr>
+            <tbody>";
+        foreach ($orderItems as $item) {
+            //
+            $html .= "<tr>
+                    <td>{$item->getName()}</td>
+                    <td>{$item->getPrice()}</td>
+                </tr>";
+        }
+        $html .= "<tr>
                     <td><strong>Subtotal</strong></td>
                     <td>$150.00</td>
                 </tr>
@@ -177,6 +176,7 @@ class PaymentController
             </tbody>
         </table>";
         $pdf->writeHTML($html, true, false, true, false, '');
+
 
         // output the PDF as a file (you can also send it to a browser or save to a server)
         $pdf->Output('invoice.pdf', 'D');

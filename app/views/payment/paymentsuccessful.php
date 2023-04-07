@@ -10,7 +10,7 @@ include __DIR__ . '/../header.php';
         <a href="/" class="btn btn-primary">Return to Home</a>
 
         <!-- Button to view orders -->
-        <a href="#" class="btn btn-secondary ml-2">View My Orders</a>
+        <a href="/orders/myorders" class="btn btn-secondary ml-2">View My Orders</a>
     </div>
 </div>
 <?php

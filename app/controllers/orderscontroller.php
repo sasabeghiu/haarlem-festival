@@ -123,7 +123,8 @@ class OrdersController
 
                             $this->shoppingcartService->emptyCartByUserId($_SESSION['userId']);
                             $_SESSION['cartcount'] = 0;
-                            echo "<script>window.location = '/orders/checkout'</script>";
+                            $orderId = $placeorder->getId();
+                            echo "<script>window.location = '/payment?orderId=$orderId'</script>";
                         } else {
                             echo "<script>alert('Failed to place order. ')</script>";
                         }
@@ -159,7 +160,7 @@ class OrdersController
     {
         $userId = $_SESSION['userId'];
         //delete order and orderitems from shopping cart and db
-        if ($this->shoppingcartService->clearCart($userId) && $this->placeorderService->cancelOrder($userId)) {
+        if ($this->placeorderService->cancelOrder($userId)) {
             echo "<script>alert('Order Was cancelled successfully'); window.location = '/';</script>";
         }
     }
