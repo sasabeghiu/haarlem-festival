@@ -148,7 +148,7 @@ class ShoppingCartRepository
             LEFT JOIN restaurant as restaurant on restaurant.id = reservation.restaurantID
             ) AS subq ON subq.event_id = ci.product_id
             WHERE ci.user_id=:user_id");
-            
+
             $user_id = htmlspecialchars(strip_tags($user_id));
 
             $stmt->bindParam(":user_id", $user_id);
@@ -178,6 +178,26 @@ class ShoppingCartRepository
             $rows = $stmt->fetch(PDO::FETCH_NUM);
 
             return $rows[0];
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function removeProducts($user_id)
+    {
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM shopping_cart_items
+            WHERE user_id = :userId;");
+
+            $user_id = htmlspecialchars(strip_tags($user_id));
+
+            $stmt->bindParam(":userId", $user_id);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+
+            return false;
         } catch (PDOException $e) {
             echo $e;
         }
