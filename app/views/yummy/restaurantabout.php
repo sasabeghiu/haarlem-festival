@@ -42,11 +42,11 @@ require __DIR__ . '/../header.php';
         <div class="col-5">
             <div class="alert alert-danger" role="alert" id="reservation-alert" style="display: none"></div>
             <h3>Make a reservation</h3>
-            <form action="/yummy/reservationTEMP?restaurantid=<?= $restaurant->getId() ?>" method="POST">
+            <form action="/yummy/addReservation?restaurantid=<?= $restaurant->getId() ?>" method="POST">
                 <div class="form-field">
                     <div class="mb-3">
                         <label for="name" class="form-label"><b>Name:</b></label>
-                        <input type="text" class="form-control" name="name" id="name">
+                        <input type="text" class="form-control" required name="name" id="name">
                     </div>
                     <p><b>Guests</b></p>
                     <div class="row" id="guests-select">
