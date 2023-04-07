@@ -194,17 +194,14 @@ class OrdersRepository
         try {
             $stmt = $this->connection->prepare("DELETE FROM orders
             WHERE user_id = :userId
-            AND order_timestamp = (
-              SELECT MAX(order_timestamp)
+            AND created_at = (
+              SELECT MAX(created_at)
               FROM orders
-              WHERE user_id = :userId");
+              WHERE user_id = :userId
+            )");
 
             $stmt->bindParam(':userId', $userId);
-
-            if ($stmt->execute()) {
-                return true;
-            }
-            return false;
+            return $stmt->execute();
         } catch (PDOException $e) {
             echo $e;
         }
