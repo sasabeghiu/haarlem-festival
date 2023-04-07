@@ -37,7 +37,7 @@ class HistoryEventRepository
             echo $e;
         }
     }
-    
+
     function getAll()
     {
         try {
@@ -51,7 +51,7 @@ class HistoryEventRepository
             $historyeventcms = $stmt->fetchAll();
 
             return $historyeventcms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -71,7 +71,7 @@ class HistoryEventRepository
             $historyeventcms = $stmt->fetch();
 
             return $historyeventcms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -93,7 +93,7 @@ class HistoryEventRepository
             $historyevent->setId($this->connection->lastInsertId());
 
             return $this->getOne($historyevent->getId());
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -104,8 +104,7 @@ class HistoryEventRepository
             $stmt = $this->connection->prepare("UPDATE history_event SET tickets_available = ?, price = ?, datetime = ?, location = ?, image = ?, tourguideID = ? WHERE id = ?");
 
             $stmt->execute([$historyevent->getTicketsAvailable(), $historyevent->getPrice(), $historyevent->getDateTime(), $historyevent->getLocation(), $historyevent->getImage(), $historyevent->getTourguideID(), $id]);
-            
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -144,7 +143,7 @@ class HistoryEventRepository
     {
         try {
             $stmt = $this->connection->prepare('UPDATE images SET image = :image WHERE id = :id');
-            
+
             $stmt->bindValue(':image', $imgInfo);
 
             $stmt->bindValue(':id', $id);
@@ -168,7 +167,7 @@ class HistoryEventRepository
             $historyeventcms = $stmt->fetch();
 
             return $historyeventcms;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
