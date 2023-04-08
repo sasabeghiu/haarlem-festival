@@ -35,4 +35,9 @@ class OrdersService
     {
         return $this->orderRepository->placeOneOrderItem($orderItem);
     }
+
+    public function updateTicketsAvailable($product_id, $qty)
+    {
+        return $this->orderRepository->updateTicketsAvailable($product_id, $qty);
+    }
 }

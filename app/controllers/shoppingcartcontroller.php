@@ -45,7 +45,7 @@ class ShoppingcartController
                         echo "<script>window.location = '/orders/checkout'</script>";
                     } else {
                         echo "<script>alert('No product in the shopping cart! Please add products to the cart first!')</script>";
-                        echo "<script>window.location = '/historyevent'</script>";
+                        echo "<script>window.location = '/page/festival'</script>";
                     }
                 }
             }

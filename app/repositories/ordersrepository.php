@@ -6,28 +6,28 @@ require __DIR__ . '/../models/orders_item.php';
 class OrdersRepository
 {
 
-private $connection;
+    private $connection;
 
-function __construct()
-{
-    require __DIR__ . '/../config/dbconfig.php';
+    function __construct()
+    {
+        require __DIR__ . '/../config/dbconfig.php';
 
-    try {
-        $this->connection = new PDO("$type:host=$servername;dbname=$database", $username, $password);
-        // set the PDO error mode to exception
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        try {
+            $this->connection = new PDO("$type:host=$servername;dbname=$database", $username, $password);
+            // set the PDO error mode to exception
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
     }
-}
 
-function getOnePlacedOrder($id)
+    function getOnePlacedOrder($id)
     {
         try {
             $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber, orders.user_id, orders.totalprice
                                                 FROM orders
                                                 WHERE orders.id = :id");
-            
+
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
@@ -35,7 +35,7 @@ function getOnePlacedOrder($id)
             $order_item = $stmt->fetch();
 
             return $order_item;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -45,7 +45,7 @@ function getOnePlacedOrder($id)
         try {
             $stmt = $this->connection->prepare("SELECT * FROM orders_item
                                                 WHERE id = :id");
-            
+
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
@@ -53,7 +53,7 @@ function getOnePlacedOrder($id)
             $placeorder = $stmt->fetch();
 
             return $placeorder;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -66,7 +66,7 @@ function getOnePlacedOrder($id)
 
             $stmt->bindValue(':firstName', $placeorder->getFirstName());
             $stmt->bindValue(':lastName', $placeorder->getLastName());
-            $stmt->bindValue(':birthdate', $placeorder->getBirthDate());    
+            $stmt->bindValue(':birthdate', $placeorder->getBirthDate());
             $stmt->bindValue(':emailAddress', $placeorder->getEmailAddress());
             $stmt->bindValue(':streetAddress', $placeorder->getStreetAddress());
             $stmt->bindValue(':country', $placeorder->getCountry());
@@ -80,7 +80,7 @@ function getOnePlacedOrder($id)
             $placeorder->setId($this->connection->lastInsertId());
 
             return $this->getOnePlacedOrder($placeorder->getId());
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -97,7 +97,7 @@ function getOnePlacedOrder($id)
             $placedorder = $stmt->fetchAll();
 
             return $placedorder;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -105,13 +105,12 @@ function getOnePlacedOrder($id)
 
     function updatePlacedOrder($placedorder, $id)
     {
-        try{
+        try {
             $stmt = $this->connection->prepare("UPDATE orders SET firstName = ?, lastName = ?, birthdate = ?, emailAddress = ?, streetAddress = ?, country = ?, zipCode = ?, phoneNumber = ?, user_id = ?, totalprice = ?
                                                 WHERE id = ?");
 
             $stmt->execute([$placedorder->getFirstName(), $placedorder->getLastName(), $placedorder->getBirthDate(), $placedorder->getEmailAddress(), $placedorder->getStreetAddress(), $placedorder->getCountry(), $placedorder->getZipCode(), $placedorder->getPhoneNumber(), $placedorder->getUserId(), $placedorder->getTotalPrice(), $id]);
-
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -121,12 +120,45 @@ function getOnePlacedOrder($id)
         try {
             $stmt = $this->connection->prepare("INSERT INTO orders_item (order_id, product_id, qty, price) 
                                                 VALUES (?,?,?,?)");
-            
+
             $stmt->execute([$orderItem->getOrder_id(), $orderItem->getProduct_id(), $orderItem->getQty(), $orderItem->getPrice()]);
 
-            $orderItem->setId($this->connection->lastInsertId());   
+            $orderItem->setId($this->connection->lastInsertId());
 
             return $this->getOneOrderItem($orderItem->getId());
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function updateTicketsAvailable($product_id, $qty)
+    {
+        try {
+            $stmt = $this->connection->prepare("UPDATE music_event
+                                            SET tickets_available = tickets_available - :qty
+                                            WHERE id = :product_id AND tickets_available >= :qty");
+
+            $stmt->bindParam(":product_id", $product_id);
+            $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $this->connection->prepare("UPDATE history_event
+                                            SET tickets_available = tickets_available - :qty
+                                            WHERE id = :product_id AND tickets_available >= :qty");
+
+            $stmt->bindParam(":product_id", $product_id);
+            $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $this->connection->prepare("UPDATE reservation
+                                            SET seats = seats - :qty
+                                            WHERE id = :product_id AND seats >= :qty");
+
+            $stmt->bindParam(":product_id", $product_id);
+            $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return true;
         } catch (PDOException $e) {
             echo $e;
         }

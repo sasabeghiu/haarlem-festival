@@ -91,9 +91,10 @@
               <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
               <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
               <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
-              <a class="dropdown-item" href="/tourguidecms/cms">Tour Guide CMS</a>
-              <a class="dropdown-item" href="/historyeventcms/cms">History Events CMS</a>
+              <a class="dropdown-item" href="/tourguide/cms">Tour Guide CMS</a>
+              <a class="dropdown-item" href="/historyevent/cms">History Events CMS</a>
               <a class="dropdown-item" href="/yummy/manageSessions">Sessions</a>
+              <a class="dropdown-item" href="/orders/cms">Orders CMS</a>
               <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
               <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
             </div>

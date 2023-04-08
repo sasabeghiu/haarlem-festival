@@ -35,7 +35,7 @@ include __DIR__ . '/../../header.php';
                 <th scope="col">Phone Number</th>
                 <th scope="col">User Id</th>
                 <th scope="col">Total Price</th>
-                <th scope="col" colspan="2" class="text-center">Actions</th>
+                <th scope="col" colspan="3" class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -65,6 +65,12 @@ include __DIR__ . '/../../header.php';
                         <form method="POST">
                             <input type="hidden" name="invoicedownload">
                             <input type="submit" name="submit" value="Invoice Download" class="btn btn-info">
+                        </form>
+                    </td>
+                    <td style="width: 10%">
+                        <form method="POST">
+                            <input type="hidden" name="exporttocsv">
+                            <input type="submit" name="submit" value="Export to .csv" class="btn btn-info">
                         </form>
                     </td>
                 </tr>

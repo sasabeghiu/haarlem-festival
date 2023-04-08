@@ -74,69 +74,75 @@ class OrdersController
             window.location.href = '/login/index'
             </script>";
         }
-            if (isset($_SESSION['userEmail'])) {
-                if (isset($_POST["placeorder"])) {
-                    $firstName = htmlspecialchars($_POST["firstName"]);
-                    $lastName = htmlspecialchars($_POST["lastName"]);
-                    $birthdate = htmlspecialchars($_POST["birthdate"]);
-                    $emailAddress = $_SESSION['userEmail'];
-                    $streetAddress = htmlspecialchars($_POST["streetAddress"]);
-                    $country = htmlspecialchars($_POST["country"]);
-                    $zipCode = htmlspecialchars($_POST["zipCode"]);
-                    $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
-                    $totalprice = $_SESSION['totalprice'];
+        if (isset($_SESSION['userEmail'])) {
+            if (isset($_POST["placeorder"])) {
+                $firstName = htmlspecialchars($_POST["firstName"]);
+                $lastName = htmlspecialchars($_POST["lastName"]);
+                $birthdate = htmlspecialchars($_POST["birthdate"]);
+                $emailAddress = $_SESSION['userEmail'];
+                $streetAddress = htmlspecialchars($_POST["streetAddress"]);
+                $country = htmlspecialchars($_POST["country"]);
+                $zipCode = htmlspecialchars($_POST["zipCode"]);
+                $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
+                $totalprice = $_SESSION['totalprice'];
 
-                    $placeorder = new Orders();
+                $placeorder = new Orders();
 
-                    $placeorder->setFirstName($firstName);
-                    $placeorder->setLastName($lastName);
-                    $placeorder->setBirthDate($birthdate);
-                    $placeorder->setEmailAddress($emailAddress);
-                    $placeorder->setStreetAddress($streetAddress);
-                    $placeorder->setCountry($country);
-                    $placeorder->setZipCode($zipCode);
-                    $placeorder->setPhoneNumber($phoneNumber);
-                    $placeorder->setUserId($_SESSION['userId']);
-                    $placeorder->setTotalPrice((float)$totalprice);
+                $placeorder->setFirstName($firstName);
+                $placeorder->setLastName($lastName);
+                $placeorder->setBirthDate($birthdate);
+                $placeorder->setEmailAddress($emailAddress);
+                $placeorder->setStreetAddress($streetAddress);
+                $placeorder->setCountry($country);
+                $placeorder->setZipCode($zipCode);
+                $placeorder->setPhoneNumber($phoneNumber);
+                $placeorder->setUserId($_SESSION['userId']);
+                $placeorder->setTotalPrice((float)$totalprice);
 
-                    if ($cartItems > 0) {
-                        if (!empty($count)) {
-                            if ($this->placeorderService->placeOrder($placeorder)) {
-                                // $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
+                if ($cartItems > 0) {
+                    if (!empty($count)) {
+                        if ($this->placeorderService->placeOrder($placeorder)) {
+                            // $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
 
-                                for ($i = 0; $i < count($cartItems); $i++) {
-                                    $ids = $cartItems[$i]->getId();
-                                    $qty = $cartItems[$i]->getQty();
-                                    $price = $cartItems[$i]->getEvent_price();
+                            $orderItems = array();
+                            $productIds = array();
+                            $qtys = array();
 
-                                    $orderItem = new OrdersItem();
+                            for ($i = 0; $i < count($cartItems); $i++) {
+                                $ids = $cartItems[$i]->getId();
+                                $qty = $cartItems[$i]->getQty();
+                                $price = $cartItems[$i]->getEvent_price();
 
-                                    $orderItem->setOrder_id($placeorder->getId());
-                                    $orderItem->setProduct_id($ids);
-                                    $orderItem->setQty($qty);
-                                    $orderItem->setPrice($price * $qty);
+                                $orderItem = new OrdersItem();
 
-                                    $this->placeorderService->placeOneOrderItem($orderItem);
-                                }
-                                echo "<script>alert('Order placed successfully! ')</script>";
+                                $orderItem->setOrder_id($placeorder->getId());
+                                $orderItem->setProduct_id($ids);
+                                $orderItem->setQty($qty);
+                                $orderItem->setPrice($price * $qty);
 
-                                $this->shoppingcartService->emptyCartByUserId($_SESSION['userId']);
-                                $_SESSION['cartcount'] = 0;
-                                echo "<script>window.location = '/orders/checkout'</script>";
+                                $this->placeorderService->placeOneOrderItem($orderItem);
 
-                            } else {
-                                echo "<script>alert('Failed to place order. ')</script>";
+                                $this->placeorderService->updateTicketsAvailable($ids, $qty);
                             }
+
+                            echo "<script>alert('Order placed successfully! ')</script>";
+
+                            $this->shoppingcartService->emptyCartByUserId($_SESSION['userId']);
+                            $_SESSION['cartcount'] = 0;
+                            echo "<script>window.location = '/orders/myorders'</script>";
                         } else {
-                            echo "<script>alert('No products in the shopping cart! Please add products to the cart first!')</script>";
-                            echo "<script>window.location = '/event/jazzevents'</script>";
+                            echo "<script>alert('Failed to place order. ')</script>";
                         }
+                    } else {
+                        echo "<script>alert('No products in the shopping cart! Please add products to the cart first!')</script>";
+                        echo "<script>window.location = '/page/festival'</script>";
                     }
-
-                    //if order was placed and all order items were placed - delete everything from cart where userid = this.userid(session(usserid))
-
                 }
+
+                //if order was placed and all order items were placed - delete everything from cart where userid = this.userid(session(usserid))
+
             }
+        }
     }
 
     public function myorders()
