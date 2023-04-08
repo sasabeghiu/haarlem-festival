@@ -37,7 +37,7 @@ include(__DIR__ . "/../../header.php");
                     ?>
                 </select>
             </div>
-            <button type="submit" class="btn btn-success">Edit</button>
+            <button type="submit" class="btn btn-success">Save</button>
             <a name="" id="" class="btn btn-primary" href="/user" role="button">Cancel</a>
 
         </form>

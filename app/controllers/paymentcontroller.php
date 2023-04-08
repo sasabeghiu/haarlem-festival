@@ -69,6 +69,7 @@ class PaymentController
 
 
         if (!$payment->isPaid()) {
+            //if payment is older than 24hr cancel it straight away.
             require __DIR__ . '/../views/payment/paylater.php';
         } else {
 
@@ -79,19 +80,28 @@ class PaymentController
 
     public function paylater()
     {
+        try {
+            $orderId = $_GET['orderId'];
+            $order = $this->orderService->getById($orderId);
+            $payment = $this->mollie->payments->get($order->getPaymentId());
+            $payment->description = "Order #" . $orderId;
+            $payment->redirectUrl = "http://localhost\payment\status?orderId=$orderId";
+            $payment->webhookUrl = "http://localhost\payment\status?orderId=$orderId";
+            $payment->metadata = ["order_id" => $orderId];
 
-        //get order id
-        //check status of payment use createdAt payment property
-        //open payment and edit values redirect checkouturl
-        //if payment successful redirect to status
-        //otherwise cancel payment
+            $payment = $payment->update();
+            header("Location: " . $payment->getCheckoutUrl(), true, 303);
+        } catch (\Mollie\Api\Exceptions\ApiException $e) {
+            echo "API call failed: " . htmlspecialchars($e->getMessage());
+        }
     }
 
 
 
 
-    public function createInvoice(Orders $order)
+    public function createInvoice()
     {
+        $order = $this->orderService->getOnePlacedOrder(88);
         // create new PDF document
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -130,9 +140,9 @@ class PaymentController
         $phone = $order->getPhoneNumber();
         $orderItems = $this->orderService->getOrderItemsByOrderId($order->getId());
         //foreach item retrieve info and put it in html
-
-
-
+        foreach ($orderItems as $item) {
+            echo $item->getId();
+        }
         // add a page
         $pdf->AddPage();
 
@@ -156,11 +166,12 @@ class PaymentController
             <tbody>";
         foreach ($orderItems as $item) {
             //
-            $html .= "<tr>
+
+        }
+        $html .= "<tr>
                     <td>{$item->getName()}</td>
                     <td>{$item->getPrice()}</td>
                 </tr>";
-        }
         $html .= "<tr>
                     <td><strong>Subtotal</strong></td>
                     <td>$150.00</td>
@@ -180,5 +191,6 @@ class PaymentController
 
         // output the PDF as a file (you can also send it to a browser or save to a server)
         $pdf->Output('invoice.pdf', 'D');
+        //send pdf
     }
 }

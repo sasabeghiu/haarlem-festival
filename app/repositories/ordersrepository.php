@@ -105,13 +105,13 @@ class OrdersRepository
     function getOrderItemsByOrderId($orderId)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT product_id, qty, price FROM orders_item
+            $stmt = $this->connection->prepare("SELECT * FROM orders_item
             WHERE order_id = :orderId");
 
             $stmt->bindParam(':orderId', $orderId);
 
             $stmt->execute();
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'OrdersItem');
             $orderItems = $stmt->fetchAll();
 
             return $orderItems;
@@ -201,6 +201,33 @@ class OrdersRepository
             )");
 
             $stmt->bindParam(':userId', $userId);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getTicketInfo($productId) //
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT 
+            COALESCE(reservation.restaurantId, ticketpass.name, history_event.location, 
+                music_event.type) AS event_column_1, 
+            COALESCE(reservation.seats, ticketpass.type, history_event.tourguideID, 
+                CONCAT(music_event.artist, ' @ ', music_event.venue)) AS event_column_2
+        FROM (
+            SELECT id FROM reservation WHERE id = :productId
+            UNION SELECT id FROM ticketpass WHERE id = :productId
+            UNION SELECT id FROM history_event WHERE id = :productId
+            UNION SELECT id FROM music_event WHERE id = :productId
+        ) AS events
+        LEFT JOIN reservation ON reservation.id = events.id 
+        LEFT JOIN ticketpass ON ticketpass.id = events.id 
+        LEFT JOIN history_event ON history_event.id = events.id 
+        LEFT JOIN music_event ON music_event.id = events.id;
+        ");
+
+            $stmt->bindParam(':productId', $productId);
             return $stmt->execute();
         } catch (PDOException $e) {
             echo $e;
