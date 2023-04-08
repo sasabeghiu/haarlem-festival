@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../repositories/ordersrepository.php';
 
-class OrdersService 
+class OrdersService
 {
     private $orderRepository;
 
@@ -39,5 +39,25 @@ class OrdersService
     public function updateTicketsAvailable($product_id, $qty)
     {
         return $this->orderRepository->updateTicketsAvailable($product_id, $qty);
+    }
+
+    public function getById($orderId)
+    {
+        return $this->orderRepository->getById($orderId);
+    }
+
+    public function addPayment($orderId, $paymentId)
+    {
+        return $this->orderRepository->addPayment($orderId, $paymentId);
+    }
+
+    public function getOrderItemsByOrderId($orderId)
+    {
+        return $this->orderRepository->getOrderItemsByOrderId($orderId);
+    }
+
+    public function cancelOrder($userId)
+    {
+        return $this->orderRepository->cancelOrder($userId);
     }
 }

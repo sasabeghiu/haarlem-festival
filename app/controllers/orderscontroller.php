@@ -74,6 +74,7 @@ class OrdersController
             window.location.href = '/login/index'
             </script>";
         }
+
         if (isset($_SESSION['userEmail'])) {
             if (isset($_POST["placeorder"])) {
                 $firstName = htmlspecialchars($_POST["firstName"]);
@@ -104,10 +105,6 @@ class OrdersController
                         if ($this->placeorderService->placeOrder($placeorder)) {
                             // $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
 
-                            $orderItems = array();
-                            $productIds = array();
-                            $qtys = array();
-
                             for ($i = 0; $i < count($cartItems); $i++) {
                                 $ids = $cartItems[$i]->getId();
                                 $qty = $cartItems[$i]->getQty();
@@ -129,13 +126,14 @@ class OrdersController
 
                             $this->shoppingcartService->emptyCartByUserId($_SESSION['userId']);
                             $_SESSION['cartcount'] = 0;
-                            echo "<script>window.location = '/orders/myorders'</script>";
+                            $orderId = $placeorder->getId();
+                            echo "<script>window.location = '/payment?orderId=$orderId'</script>";
                         } else {
                             echo "<script>alert('Failed to place order. ')</script>";
                         }
                     } else {
                         echo "<script>alert('No products in the shopping cart! Please add products to the cart first!')</script>";
-                        echo "<script>window.location = '/page/festival'</script>";
+                        echo "<script>window.location = '/event/jazzevents'</script>";
                     }
                 }
 
@@ -158,6 +156,15 @@ class OrdersController
                 alert('You have to be logged in to see checkout.');
                 window.location.href = '/login/index'
                 </script>";
+        }
+    }
+
+    public function cancel()
+    {
+        $userId = $_SESSION['userId'];
+        //delete order and orderitems from shopping cart and db
+        if ($this->placeorderService->cancelOrder($userId)) {
+            echo "<script>alert('Order Was cancelled successfully'); window.location = '/';</script>";
         }
     }
 }

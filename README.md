@@ -1,19 +1,35 @@
-# Basic PHP MVC demo
-This repository demonstrates how the MVC design pattern can be implemented using PHP.
+# Haarlem Festival 
+This is the repository for Haarlem Festival Project of Group 6
 
-It contains a docker configuration with:
-* NGINX webserver
-* PHP FastCGI Process Manager with PDO MySQL support
-* MariaDB (GPL MySQL fork)
-* PHPMyAdmin
+## URL
+URL to live website: [Haarlem Festival](http://localhost/page/festival)
 
-## Installation
+## Login Credentials
+```
+User with role Customer:
+- Username = customer
+- Password = customer
 
+User with role Employee:
+- Username = employee
+- Password = employee
+
+User with role Admin:
+- Username = admin
+- Password = admin
+
+
+You can either use the provided test accounts or create your own account.
+You can not create an account with the role admin or employee, only customer.
+
+NOTE: You should provide an existing email.
+```
+
+### Installation
 1. Install Docker Desktop on Windows or Mac, or Docker Engine on Linux.
 1. Clone the project
 
-## Usage
-
+### Usage
 In a terminal, run:
 ```bash
 docker-compose up
