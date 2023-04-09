@@ -79,8 +79,8 @@ class UserController
                 $existingUser = $this->userService->getById($newUser->getId());
                 $receiver = $existingUser->getEmail();
                 $receiver_name = $newUser->getUsername();
-                $subject = "Password change - Haarlem Festival Support";
-                $body_string = 'Your password has been changed by an administrator ';
+                $subject = "Password changed - Haarlem Festival Support";
+                $body_string = 'Your password has been changed.';
 
                 if (strlen($newUser->getPassword() < 6) && strlen($newUser->getPassword() > 0)) {
                     echo "<script>alert('Password must be at least 6 characters long!'); window.location = '/user';</script>";
@@ -91,7 +91,6 @@ class UserController
                 } else if (!$this->userService->update($newUser)) {
                     echo "<script>alert('Failed to update User. '); window.location = '/user';</script>";
                 } else {
-                    //header('Location: /user');
                     echo "<script>alert('Updated successfully!'); window.location = '/user';</script>";
                 }
             } catch (Exception $e) {

@@ -102,6 +102,16 @@
           <li class="nav-item">
             <a class="nav-link text-white" href="/page/">Visit Haarlem</a>
           </li>
+          <?php
+          if (!isset($_SESSION['loggedin'])) {
+          ?>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/login/">Sign In</a>
+            </li>
+
+          <?php
+          }
+          ?>
 
           <li class="nav-item">
             <a class="nav-link text-white" href="/shoppingcart">
