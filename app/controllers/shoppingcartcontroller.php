@@ -15,7 +15,6 @@ class ShoppingcartController
     {
         if (isset($_SESSION['userId'])) {
 
-            // change 1 to $this->userid
             $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
             $count = $this->shoppingcartService->countProducts($_SESSION['userId']);
 
@@ -39,6 +38,7 @@ class ShoppingcartController
                     }
                 }
             }
+
             if (isset($_POST['proceed'])) {
                 if ($cartItems > 0) {
                     if (!empty($count)) {
@@ -55,22 +55,6 @@ class ShoppingcartController
                 window.location.href = '/login/index'
                 </script>";
         }
-
-
-
-
-        // if (isset($_GET['cartc'])) {
-        //     $cartItems = json_decode(base64_decode(urldecode($_GET['cartc'])), true);
-        //     // $cartItems = urldecode($_GET['cart']);
-        //     foreach ($cartItems as $cartItem) {
-        //         $test = new ShoppingCartItem();
-        //         $test->setUser_id($_SESSION['userId']);
-        //         $test->setProduct_id($cartItem->getProduct_id());
-        //         $test->setQty($cartItem);
-
-        //         $this->shoppingcartService->addProductToCart($test);
-        //     }
-        // }
 
         require __DIR__ . '/../views/orders/shopping-cart.php';
     }
@@ -103,12 +87,24 @@ class ShoppingcartController
                     $cartItem->setProduct_id(intval($ids[$i]));
                     $cartItem->setQty(intval($qtys[$i]));
 
+                    //if item already exists in shopping cart, skip it
+                    if ($this->shoppingcartService->checkIfProductExistsInCart($_SESSION['userId'], intval($ids[$i]))) {
+                        continue;
+                    }
+
                     $this->shoppingcartService->addProductToCart($cartItem);
                 }
             }
+
+            $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
+            $_SESSION['cartcount'] = $this->shoppingcartService->countProducts($_SESSION['userId']);
+
+            require __DIR__ . '/../views/orders/shopping-cart.php';
+        } else {
+            echo "<script>
+                alert('Log in before importing a shopping cart.');
+                window.location.href = '/login/index'
+                </script>";
         }
-        $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
-        $count = $this->shoppingcartService->countProducts($_SESSION['userId']);
-        require __DIR__ . '/../views/orders/shopping-cart.php';
     }
 }

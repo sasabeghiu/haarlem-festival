@@ -11,7 +11,7 @@ include __DIR__ . '/../header.php';
             <div class="shopping-cart">
                 <?php
                 $total = 0;
-                if ($count > 0) {
+                if ($_SESSION['cartcount'] > 0) {
                     foreach ($cartItems as $cartItem) {
                 ?>
                         <div class="">
@@ -59,34 +59,9 @@ include __DIR__ . '/../header.php';
                 <div class="row price-details">
                     <div class="col-md-6">
                         <?php
-                        if ($count > 0) {
-                            echo "<h6>Price ($count items)</h6>";
-                        ?>
-                             <h6>Delivery Charges</h6>
-                            <hr>
-                            <h6>Total Price</h6>
-                            <hr>
-                    </div>
-                    <div class="col-md-6">
-                        <h6>&euro; <?php echo $total; ?></h6>
-                        <h6 class="text-success"> FREE </h6>
-                        <hr>
-                        <h6>&euro; <?php echo $total; ?></h6>
-                        <hr>
-                    </div>
-                    <div class="col-md-12">
-                        <form method="post">
-                            <button class="btn btn-success d-flex justify-content-center mb-3 w-100" name="proceed" type="submit">Proceed to checkout</button>
-                            <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart w-100" href="#">Share your shopping cart with a friend</a>
-                        </form>
-                    </div>
-                        <?php
-                        }
-                        ?>
-
-                        <?php
-                        if ($count <= 0) {
-                            echo "<h6>Price (0 items)</h6>";
+                        if ($_SESSION['cartcount'] > 0) {
+                            $test = $_SESSION['cartcount'];
+                            echo "<h6>Price ($test items)</h6>";
                         ?>
                             <h6>Delivery Charges</h6>
                             <hr>
@@ -109,10 +84,36 @@ include __DIR__ . '/../header.php';
                 <?php
                         }
                 ?>
+
+                <?php
+                if ($_SESSION['cartcount'] <= 0) {
+                    echo "<h6>Price (0 items)</h6>";
+                ?>
+                    <h6>Delivery Charges</h6>
+                    <hr>
+                    <h6>Total Price</h6>
+                    <hr>
                 </div>
+                <div class="col-md-6">
+                    <h6>&euro; <?php echo $total; ?></h6>
+                    <h6 class="text-success"> FREE </h6>
+                    <hr>
+                    <h6>&euro; <?php echo $total; ?></h6>
+                    <hr>
+                </div>
+                <div class="col-md-12">
+                    <form method="post">
+                        <button class="btn btn-success d-flex justify-content-center mb-3 w-100" name="proceed" type="submit">Proceed to checkout</button>
+                        <a class="btn btn-primary d-flex justify-content-center mb-3 btn-share-cart w-100" href="#">Share your shopping cart with a friend</a>
+                    </form>
+                </div>
+            <?php
+                }
+            ?>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script>
