@@ -37,11 +37,12 @@ class LoginController
                     if (password_verify($password, $user->getPassword())) {
                         session_start();
                         $_SESSION['userId'] = $user->getId();
+                        $_SESSION['role'] = $user->getRole();
                         $_SESSION['userEmail'] = $user->getEmail();
                         $_SESSION['loggedin'] = true;
                         $shoppingCartCount = $this->shoppingcartService->countProducts($_SESSION['userId']);
                         $_SESSION['cartcount'] = $shoppingCartCount;
-                        header('Location: /page/index');
+                        header('Location: /page');
                     }
                 }
                 echo "Login error: Username or password incorrect.";
@@ -65,20 +66,16 @@ class LoginController
 
             // Validate updated information
             if (empty($email) || !$this->loginService->getByEmail($email) == null) {
-
                 echo "<script>alert('email already exists!')</script>";
                 echo $this->display();
             } else if (empty($username) || !$this->loginService->getByUsername($username) == null) {
-
                 echo "<script>alert('username already exists!')</script>";
                 $this->display();
             } else if (strlen($password) < 6) {
                 echo "<script>alert('Password must be at least 6 characters long.')</script>";
                 $this->display();
             } else {
-
                 if ($this->loginService->register($username, $hashedPass, $email)) {
-
                     echo "<script>alert('Register successful! ')</script>";
                     $this->index();
                 }
@@ -113,8 +110,9 @@ class LoginController
                 $subject = "Verification Code - Haarlem Festival Support";
                 $link = "http://localhost/login/verifyCode?code=" . $verificationCode; //replace localhost with domain name
                 $body_string = 'Click on the link to reset your password: ' . $link;
+                $attachment = "";
 
-                if (!$this->loginService->createVerificationCode($verificationCode, $user->getId()) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
+                if (!$this->loginService->createVerificationCode($verificationCode, $user->getId()) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment)) {
                     echo "<script>alert('Error while sending email'); window.location = '/login/createCode';</script>";
                 } else {
                     echo "<script>alert('Email sent successfully! You can now close this window'); window.location = '/login/';</script>";
@@ -130,7 +128,6 @@ class LoginController
     {
         try {
             $code = isset($_GET['code']) ? $_GET['code'] : "";
-            echo $code;
             $user = $this->loginService->isValid($code);
 
             if (!$user) {
@@ -153,12 +150,13 @@ class LoginController
             if ($password1 == $password2) {
                 $password = password_hash($password1, PASSWORD_DEFAULT);
                 $this->loginService->updatePassword($userId, $password);
-                echo $userId;
                 $newUser = $this->loginService->getById($userId);
+
                 if (!$newUser) {
                     echo "<script>alert('Error updating password'); window.location = '/login/updatePassword';</script>";
                 }
                 if (password_verify($password1, $newUser->getPassword())) {
+                    //send confirmation email
                     echo "<script>alert('Password updated successfully!'); window.location = '/login';</script>";
                 }
                 //$this->loginService->deleteCode($userId);
