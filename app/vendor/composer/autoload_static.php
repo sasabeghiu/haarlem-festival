@@ -42,9 +42,25 @@ class ComposerStaticInit5be3b990ee4a7f84cef6ed827e40f573
     );
 
     public static $prefixDirsPsr4 = array(
+        'Zxing\\' =>
+        array(
+            0 => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib',
+        ),
         'PHPMailer\\PHPMailer\\' =>
         array(
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Endroid\\QrCode\\' =>
+        array(
+            0 => __DIR__ . '/..' . '/endroid/qr-code/src',
+        ),
+        'DASPRiD\\Enum\\' =>
+        array(
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'BaconQrCode\\' =>
+        array(
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
         ),
         'Mollie\\Api\\' =>
         array(
