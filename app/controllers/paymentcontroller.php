@@ -144,12 +144,18 @@ class PaymentController
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
         //prep values
+        $id = $order->getId();
         $name = $order->getFirstName() . " " . $order->getLastName();
         $address = $order->getStreetAddress();
-        $country = $order->getCountry();
-        $zipcode = $order->getZipCode();
+        $mail = $order->getEmailAddress();
         $phone = $order->getPhoneNumber();
         $total = $order->getTotalPrice();
+        $payment = $this->mollie->payments->get($order->getPaymentId());
+        $paymentDate = $payment->createdAt;
+        $dateTime = new DateTime($paymentDate);
+        $formattedPaymentDate = $dateTime->format('d/m/Y H:i');
+        $currentDate = date('d/m/Y');
+
         $tax = $total * 0.21;
         $subtotal = $tax + $total;
         $orderItems = $this->orderService->getOrderItemsByOrderId($order->getId());
@@ -159,41 +165,55 @@ class PaymentController
 
         // write the HTML content into the PDF
         $html = '<h1>Haarlem Festival</h1>';
-        $html .= "<h1>Invoice</h1>
+        $html .= "<h1>Invoice #$id</h1>
+        <h3>$currentDate</h3>
+        
         <div class='invoice-info'>
-            <p><strong>Name:</strong>$name</p>
-            <p><strong>Address:</strong>$address</p>
-            <p><strong>Country:</strong>$country</p>
-            <p><strong>Zipcode:</strong>$zipcode</p>
-            <p><strong>Phone Number:</strong>$phone</p>
+            <p><strong>Name: </strong>$name</p>
+            <p><strong>Phone Number: </strong>$phone</p>
+            <p><strong>Address: </strong>$address</p>
+            <p><strong>Email Address: </strong>$mail</p>
         </div>
         <table>
             <thead>
                 <tr>
+                    <th>Quantity</th>
                     <th>Event</th>
                     <th>Price</th>
                 </tr>
             </thead>
             <tbody>";
         foreach ($orderItems as $item) {
-            //get productId run query
+            $ticket = $this->orderService->getTicketInfo($item->getProduct_id());
+            $name = $ticket[0]['event_name'];
+            $price = $ticket[0]['event_price'];
+            $qty = $ticket[0]['qty'];
+
+            //echo $ticket;
             $html .= "<tr>
-                    <td>{event name}</td>
-                    <td>{event price}</td>
-                </tr>";
+                    <td>$qty</td>
+                    <td>$name</td>
+                    <td>$price €</td>
+                </tr><br/>";
         }
 
         $html .= "<tr>
                     <td><strong>Subtotal</strong></td>
-                    <td>$total</td>
+                    <td>$total €</td>
                 </tr>
                 <tr>
                     <td><strong>VAT (21%)</strong></td>
-                    <td>$tax</td>
+                    <td>$tax €</td>
                 </tr>
                 <tr>
                     <td><strong>Total</strong></td>
-                    <td>$subtotal</td>
+                    <td>$subtotal €</td>
+
+                </tr>
+                <tr>
+                    <td><strong>Payment Date</strong></td>
+                    <td>$formattedPaymentDate</td>
+                    
                 </tr>
             </tbody>
         </table>";

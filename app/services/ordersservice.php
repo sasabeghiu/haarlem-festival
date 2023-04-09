@@ -70,4 +70,9 @@ class OrdersService
     {
         return $this->orderRepository->cancelOrder($userId);
     }
+
+    public function getTicketInfo($productId)
+    {
+        return $this->orderRepository->getTicketInfo($productId);
+    }
 }
