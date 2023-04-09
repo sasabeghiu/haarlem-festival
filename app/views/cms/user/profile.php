@@ -17,6 +17,10 @@ include(__DIR__ . "/../../header.php");
                 <input type="text" class="form-control" name="username" id="username" required value="<?php echo $user->getUsername(); ?>">
             </div>
             <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="●●●●●●">
+            </div>
+            <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" class="form-control" name="email" id="email" required value="<?php echo $user->getEmail(); ?>">
             </div>

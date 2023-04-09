@@ -17,7 +17,7 @@ class Mailer
     }
 
     // this function (for sending email) needs editing the sender's email details
-    function sendEmail($receiver, $receiver_name,  $subject, $body_string)
+    function sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment)
     {
 
         // SERVER SETTINGS
@@ -36,6 +36,10 @@ class Mailer
         $mail->addAddress($receiver, $receiver_name);     //Add a recipient
         $mail->addReplyTo('haarlemfestivalrecovery@gmail.com', 'Haarlem Festival Support');
 
+        //Attachment
+        if (!empty($attachment)) {
+            $mail->addStringAttachment($attachment, 'invoice.pdf');
+        }
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = $subject;

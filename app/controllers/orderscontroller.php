@@ -1,14 +1,20 @@
 <?php
 require __DIR__ . '/../services/shoppingcartservice.php';
 require __DIR__ . '/../services/ordersservice.php';
+require_once __DIR__ . "/../vendor/autoload.php";
 
 class OrdersController
 {
     private $placeorderService;
     private $shoppingcartService;
+    private $mollie;
 
     function __construct()
     {
+        $this->mollie = new \Mollie\Api\MollieApiClient();
+        $this->mollie->setApiKey("
+        test_5jaAakyFRh8n9cNuC8p8aQR8gF3jp3");
+
         $this->placeorderService = new OrdersService();
         $this->shoppingcartService = new ShoppingCartService();
         session_start();
@@ -16,6 +22,7 @@ class OrdersController
 
     public function cms()
     {
+        
         //Functionality editing
         if (isset($_POST["edit"])) {
             $id = htmlspecialchars($_GET["updateID"]);
@@ -33,6 +40,7 @@ class OrdersController
             $phoneNumber = htmlspecialchars($_POST["changedphoneNumber"]);
             $userId = htmlspecialchars($_POST["changeduserId"]);
             $totalprice = htmlspecialchars(($_POST["changedtotalPrice"]));
+            $paymentstatus = htmlspecialchars(($_POST["changedpayment"]));
 
             $placedorder = new Orders();
 
@@ -46,6 +54,7 @@ class OrdersController
             $placedorder->setPhoneNumber($phoneNumber);
             $placedorder->setUserId($userId);
             $placedorder->setTotalPrice($totalprice);
+            $placedorder->setPaymentId($paymentstatus);
 
             $this->placeorderService->updatePlacedOrder($placedorder, $_GET["updateID"]);
 
@@ -59,6 +68,36 @@ class OrdersController
         $model = $this->placeorderService->getAllOrders();
 
         require __DIR__ . '/../views/cms/order/index.php';
+    }
+
+    public function createinvoicecsv(Orders $order)
+    {
+        $filename = "invoice.csv";
+        header("Content-Type: text/csv");
+        header("Content-Disposition: attachment; filename=$filename");
+
+        // prep values
+        $name = $order->getFirstName() . " " . $order->getLastName();
+        $address = $order->getStreetAddress();
+        $country = $order->getCountry();
+        $zipcode = $order->getZipCode();
+        $phone = $order->getPhoneNumber();
+        $orderItems = $this->placeorderService->getOrderItemsByOrderId($order->getId());
+
+        // create CSV content
+        $csv = "";
+        $csv .= "Name,Address,Country,Zipcode,Phone Number\n";
+        $csv .= "$name,$address,$country,$zipcode,$phone\n\n";
+        $csv .= "Item Name,Price\n";
+        foreach ($orderItems as $item) {
+            $csv .= "{$item->getName()},{$item->getPrice()}\n";
+        }
+        $csv .= "\nSubtotal,150.00\n";
+        $csv .= "VAT (10%),15.00\n";
+        $csv .= "Total,165.00\n";
+
+        // output the CSV file
+        echo $csv;
     }
 
     public function checkout()
@@ -118,11 +157,17 @@ class OrdersController
                                 $orderItem->setPrice($price * $qty);
 
                                 $this->placeorderService->placeOneOrderItem($orderItem);
+
+                                $this->placeorderService->updateTicketsAvailable($ids, $qty);
+
+                                //$countOrders = $this->placeorderService->countMyOrders($ids);
                             }
+
                             echo "<script>alert('Order placed successfully! ')</script>";
 
                             $this->shoppingcartService->emptyCartByUserId($_SESSION['userId']);
                             $_SESSION['cartcount'] = 0;
+
                             $orderId = $placeorder->getId();
                             echo "<script>window.location = '/payment?orderId=$orderId'</script>";
                         } else {
@@ -146,6 +191,8 @@ class OrdersController
 
             $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
             $count = $this->shoppingcartService->countProducts($_SESSION['userId']);
+
+            //$myOrders = $this->placeorderService->getMyOrdersByProductId($ids);
 
             require __DIR__ . '/../views/orders/myorders.php';
         } else {
