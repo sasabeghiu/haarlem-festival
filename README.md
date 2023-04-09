@@ -8,18 +8,19 @@ URL to live website: [Haarlem Festival](http://localhost/page/festival)
 ```
 User with role Customer:
 - Username = customer
-- Password = customer
+- Password = customer123
 
 User with role Employee:
 - Username = employee
-- Password = employee
+- Password = employee123
 
 User with role Admin:
 - Username = admin
-- Password = admin
+- Password = admin123
 
 
-You can either use the provided test accounts or create your own account.
+You can either use the provided test accounts or create your own account. 
+!!!Important: You need access to the email of these accounts in order to confirm change password/get invoice and tickets.
 You can not create an account with the role admin or employee, only customer.
 
 NOTE: You should provide an existing email.
