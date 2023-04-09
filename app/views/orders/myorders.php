@@ -63,6 +63,22 @@ include __DIR__ . '/../header.php';
     <div class="text-center mb-5">
         <h2 class="text-center">My Orders</h2>
     </div>
+    <?php
+        foreach ($myOrders as $myOrder) {
+    ?>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="col-md-6">
+                        <small class="pt-2">
+                            <p>Event name: <?= $myOrder->getEvent_name() ?></p>
+                            <p> Qty: <?= $myOrder->getQty() ?></p>
+                        </small>
+                    </div>
+                    <span class="muted">&euro;<?= $myOrder->getEvent_price() ?></span>
+                </li>
+        <?php
+        }
+        ?>
 </div>
 
 <?php
