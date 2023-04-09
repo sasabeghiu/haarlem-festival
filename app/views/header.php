@@ -80,24 +80,6 @@
               <a class="dropdown-item" href="/api/keys">API</a>
             </div>
           </div>
-          <!--           <div class="dropdown show">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              CMS
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/user">Users</a>
-
-              <!-- dance and jazz --> <!--
-              <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
-              <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
-              <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
-              <a class="dropdown-item" href="/tourguidecms/cms">Tour Guide CMS</a>
-              <a class="dropdown-item" href="/historyeventcms/cms">History Events CMS</a>
-              <a class="dropdown-item" href="/yummy/manageSessions">Sessions</a>
-              <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
-              <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
-            </div>
-          </div> -->
 
           <li class="nav-item">
             <a class="nav-link text-white" href="/page/">Visit Haarlem</a>
@@ -130,7 +112,6 @@
           <!-- this should be available only for ADMIN -->
           <?php
           if (isset($_SESSION['role'])) {
-            echo $_SESSION['role'];
 
             if ($_SESSION['role'] == 1) {
           ?>
