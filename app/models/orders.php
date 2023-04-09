@@ -13,7 +13,7 @@ class Orders
     private string $phoneNumber;
     private int $user_id;
     private float $totalprice;
-    private string $paymentId;
+    private ?string $paymentId;
 
     /**
      * @return int
@@ -206,7 +206,7 @@ class Orders
     /**
      * @param string $paymentId
      */
-    public function setPaymentId(string $paymentId): void
+    public function setPaymentId(?string $paymentId): void
     {
         $this->paymentId = $paymentId;
     }

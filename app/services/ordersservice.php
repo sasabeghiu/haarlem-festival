@@ -41,6 +41,16 @@ class OrdersService
         return $this->orderRepository->updateTicketsAvailable($product_id, $qty);
     }
 
+    public function getMyOrdersByProductId($product_id)
+    {
+        return $this->orderRepository->getMyOrdersByProductId($product_id);
+    }
+
+    public function countMyOrders($product_id)
+    {
+        return $this->orderRepository->countMyOrders($product_id);
+    }
+
     public function getById($orderId)
     {
         return $this->orderRepository->getById($orderId);

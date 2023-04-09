@@ -35,12 +35,16 @@ include __DIR__ . '/../../header.php';
                 <th scope="col">Phone Number</th>
                 <th scope="col">User Id</th>
                 <th scope="col">Total Price</th>
+                <th scope="col">Payment Status</th>
                 <th scope="col" colspan="3" class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php
             foreach ($model as $placeorder) {
+
+                $payment = $this->mollie->payments->get($placeorder->getPaymentId());
+                $status = $payment->status;
             ?>
 
                 <tr>
@@ -55,6 +59,7 @@ include __DIR__ . '/../../header.php';
                     <td style="width: 10%;"><?= $placeorder->getPhoneNumber() ?></td>
                     <td style="width: 10%;"><?= $placeorder->getUserId() ?></td>
                     <td style="width: 10%;"><?= $placeorder->getTotalPrice() ?> €</td>
+                    <td style="width: 10%;"><?= $status ?></td>
                     <td style="width: 10%">
                         <form action="/orders/cms?updateID=<?= $placeorder->getId() ?>" method="POST">
                             <input type="hidden" name="edit" value="<?= $placeorder->getId() ?>">
@@ -68,8 +73,8 @@ include __DIR__ . '/../../header.php';
                         </form>
                     </td>
                     <td style="width: 10%">
-                        <form method="POST">
-                            <input type="hidden" name="exporttocsv">
+                        <form action="/orders/createinvoicecsv" method="POST">
+                            <input type="hidden" name="exporttocsv" value="<?= $placeorder->getId() ?>">
                             <input type="submit" name="submit" value="Export to .csv" class="btn btn-info">
                         </form>
                     </td>
@@ -148,9 +153,24 @@ include __DIR__ . '/../../header.php';
                         <input type="text" class="form-control" id="changedtotalPrice" name="changedtotalPrice" value="<?= $updateOrder->getTotalPrice() ?>" required>
                     </div>
                 </div>
+                <div class="form-group row mb-1">
+                    <label for="changedpayment" class="col-sm-2 col-form-label">Payment status:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changedpayment" name="changedpayment" value="<?= $this->mollie->payments->get($updateOrder->getPaymentId()) ?>" required>
+                    </div>
+                </div>
                 <input type="submit" name="update" value="Update Order" class="form-control btn btn-success mb-1">
             </form>
         </div>
+    <?php
+    }
+    ?>
+    <?php
+    if (isset($_POST["exporttocsv"])) {
+    ?>
+
+
+
     <?php
     }
     ?>

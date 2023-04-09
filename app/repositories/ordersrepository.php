@@ -24,7 +24,7 @@ class OrdersRepository
     function getOnePlacedOrder($id)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber, orders.totalprice
+            $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber, orders.user_id, orders.totalprice, orders.paymentId
                                                 FROM orders
                                                 WHERE orders.id = :id");
 
@@ -88,10 +88,9 @@ class OrdersRepository
     function getAllOrders()
     {
         try {
-            $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber, orders.user_id, orders.totalprice
+            $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber, orders.user_id, orders.totalprice, orders.paymentId
                                                 FROM orders");
 
-            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
             $placedorder = $stmt->fetchAll();
@@ -164,12 +163,11 @@ class OrdersRepository
     function updatePlacedOrder($placedorder, $id)
     {
         try {
-            $stmt = $this->connection->prepare("UPDATE orders SET firstName = ?, lastName = ?, birthdate = ?, emailAddress = ?, streetAddress = ?, country = ?, zipCode = ?, phoneNumber = ?, user_id = ?, totalprice = ?
+            $stmt = $this->connection->prepare("UPDATE orders SET firstName = ?, lastName = ?, birthdate = ?, emailAddress = ?, streetAddress = ?, country = ?, zipCode = ?, phoneNumber = ?, user_id = ?, totalprice = ?, paymentId = ?
                                                 WHERE id = ?");
 
-            $stmt->execute([$placedorder->getFirstName(), $placedorder->getLastName(), $placedorder->getBirthDate(), $placedorder->getEmailAddress(), $placedorder->getStreetAddress(), $placedorder->getCountry(), $placedorder->getZipCode(), $placedorder->getPhoneNumber(), $placedorder->getUserId(), $placedorder->getTotalPrice(), $id]);
-
-        } catch (PDOException $e){
+            $stmt->execute([$placedorder->getFirstName(), $placedorder->getLastName(), $placedorder->getBirthDate(), $placedorder->getEmailAddress(), $placedorder->getStreetAddress(), $placedorder->getCountry(), $placedorder->getZipCode(), $placedorder->getPhoneNumber(), $placedorder->getUserId(), $placedorder->getTotalPrice(), $placedorder->getPaymentId(), $id]);
+        } catch (PDOException $e) {
             echo $e;
         }
     }
@@ -218,6 +216,65 @@ class OrdersRepository
             $stmt->execute();
 
             return true;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getMyOrdersByProductId($product_id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT subq.event_id as id,
+                COALESCE(NULLIF(subq.event_name,''), 'History Event') AS event_name,
+                COALESCE(NULLIF(subq.event_price,''), 0) AS event_price,
+                ci.qty
+                FROM orders_item ci
+                LEFT JOIN (
+                    SELECT music_event.id as event_id, artist.name as event_name, music_event.ticket_price as event_price, music_event.datetime as event_datetime, venue.name as event_location, music_event.tickets_available as stock, music_event.type as event_type
+                    FROM music_event 
+                    LEFT JOIN venue as venue ON venue.id = music_event.venue
+                    LEFT JOIN artist as artist ON artist.id = music_event.artist
+                    UNION
+                    SELECT id as event_id, ticketpass.name as event_name, ticketpass.price as event_price, ticketpass.datetime as event_datetime, 'Haarlem' as event_location, 'no limit' as stock, ticketpass.type as event_type
+                    FROM ticketpass 
+                    UNION
+                    SELECT id as event_id, 'History Event' as event_name, history_event.price as event_price, history_event.datetime as event_datetime, history_event.location as event_location, history_event.tickets_available as stock, 'history' as event_type
+                    FROM history_event 
+                    UNION
+                    SELECT reservation.id as event_id, CONCAT('Reservation at ', restaurant.name) as event_name, reservation.price as event_price, reservation.date as event_datetime, restaurant.name as event_location, reservation.seats as stock, 'food' as event_type
+                    FROM reservation 
+                    LEFT JOIN restaurant as restaurant on restaurant.id = reservation.restaurantID
+                ) AS subq ON subq.event_id = ci.product_id
+                WHERE ci.product_id = :product_id
+            ");
+
+            $stmt->bindParam(":product_id", $product_id);
+
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'OrdersItem');
+            $items = $stmt->fetchAll();
+            
+            return $items;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function countMyOrders($product_id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT count(*) FROM orders_item WHERE product_id=:product_id");
+
+            $product_id = htmlspecialchars(strip_tags($product_id));
+
+            $stmt->bindParam(":product_id", $product_id);
+
+            $stmt->execute();
+
+            $rows = $stmt->fetch(PDO::FETCH_NUM);
+
+            return $rows[0];
         } catch (PDOException $e) {
             echo $e;
         }
