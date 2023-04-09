@@ -80,29 +80,20 @@
               <a class="dropdown-item" href="/api/keys">API</a>
             </div>
           </div>
-          <div class="dropdown show">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              CMS
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/user">Users</a>
-
-              <!-- dance and jazz -->
-              <a class="dropdown-item" href="/artist/artistcms">Artists CMS</a>
-              <a class="dropdown-item" href="/venue/venuecms">Venues CMS</a>
-              <a class="dropdown-item" href="/event/eventcms">Events CMS</a>
-              <a class="dropdown-item" href="/tourguide/cms">Tour Guide CMS</a>
-              <a class="dropdown-item" href="/historyevent/cms">History Events CMS</a>
-              <a class="dropdown-item" href="/yummy/manageSessions">Sessions</a>
-              <a class="dropdown-item" href="/orders/cms">Orders CMS</a>
-              <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
-              <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
-            </div>
-          </div>
 
           <li class="nav-item">
             <a class="nav-link text-white" href="/page/">Visit Haarlem</a>
           </li>
+          <?php
+          if (!isset($_SESSION['loggedin'])) {
+          ?>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/login/">Sign In</a>
+            </li>
+
+          <?php
+          }
+          ?>
 
           <li class="nav-item">
             <a class="nav-link text-white" href="/shoppingcart">
@@ -119,35 +110,47 @@
           </li>
 
           <!-- this should be available only for ADMIN -->
-          <div class="dropdown show">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              CMS
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/user">Users</a>
-              <a class="dropdown-item" href="/artist/artistcms">Artists (jazz and dance) CMS</a>
-              <a class="dropdown-item" href="/venue/venuecms">Venues (jazz and dance) CMS</a>
-              <a class="dropdown-item" href="/event/eventcms">Events (jazz and dance) CMS</a>
-              <a class="dropdown-item" href="/tourguide/cms">Tour Guide CMS</a>
-              <a class="dropdown-item" href="/historyevent/cms">History Events CMS</a>
-              <a class="dropdown-item" href="/orders/cms">Orders CMS</a>
-              <a class="dropdown-item" href="/yummy/manageSessions">Sessions</a>
-              <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
-              <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
-            </div>
-          </div>
-          <!-- end admin -->
+          <?php
+          if (isset($_SESSION['role'])) {
 
-          <!-- this should be available only for EMPLOYEE -->
-          <div class="dropdown show">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              QR
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="/qr/generateqr">Generate QR</a>
-              <a class="dropdown-item" href="/qr/scanqr">Scan QR</a>
-            </div>
-          </div>
+            if ($_SESSION['role'] == 1) {
+          ?>
+              <div class="dropdown show">
+                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  CMS
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="/user">Users</a>
+                  <a class="dropdown-item" href="/artist/artistcms">Artists (jazz and dance) CMS</a>
+                  <a class="dropdown-item" href="/venue/venuecms">Venues (jazz and dance) CMS</a>
+                  <a class="dropdown-item" href="/event/eventcms">Events (jazz and dance) CMS</a>
+                  <a class="dropdown-item" href="/tourguide/cms">Tour Guide CMS</a>
+                  <a class="dropdown-item" href="/historyevent/cms">History Events CMS</a>
+                  <a class="dropdown-item" href="/orders/cms">Orders CMS</a>
+                  <a class="dropdown-item" href="/yummy/manageSessions">Sessions</a>
+                  <a class="dropdown-item" href="/yummy/manageRestaurants">Restaurants</a>
+                  <a class="dropdown-item" href="/yummy/manageReservations">Reservations</a>
+                </div>
+              </div>
+              <!-- end admin -->
+
+              <!-- this should be available only for EMPLOYEE -->
+            <?php
+            } else if ($_SESSION['role'] == 3) {
+            ?>
+              <div class="dropdown show">
+                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  QR
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="/qr/generateqr">Generate QR</a>
+                  <a class="dropdown-item" href="/qr/scanqr">Scan QR</a>
+                </div>
+              </div>
+          <?php
+            }
+          }
+          ?>
           <!-- end employee -->
 
         </ul>

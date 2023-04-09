@@ -79,19 +79,19 @@ class UserController
                 $existingUser = $this->userService->getById($newUser->getId());
                 $receiver = $existingUser->getEmail();
                 $receiver_name = $newUser->getUsername();
-                $subject = "Password change - Haarlem Festival Support";
-                $body_string = 'Your password has been changed by an administrator ';
+                $subject = "Password changed - Haarlem Festival Support";
+                $body_string = 'Your password has been changed.';
+                $attachment = ""; //no attachment
 
                 if (strlen($newUser->getPassword() < 6) && strlen($newUser->getPassword() > 0)) {
                     echo "<script>alert('Password must be at least 6 characters long!'); window.location = '/user';</script>";
                 } else if ($this->userService->validateUser($newUser, $_POST['id'])) { //returns true if user.username and user.email do not exist in db excluding id
                     echo "<script>alert('Username or Email already in use!'); window.location = '/user';</script>";
-                } else if (!$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string)) {
+                } else if (!$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment)) {
                     echo "<script>alert('Error while sending confirmation email'); window.location = '/user';</script>";
                 } else if (!$this->userService->update($newUser)) {
                     echo "<script>alert('Failed to update User. '); window.location = '/user';</script>";
                 } else {
-                    //header('Location: /user');
                     echo "<script>alert('Updated successfully!'); window.location = '/user';</script>";
                 }
             } catch (Exception $e) {
