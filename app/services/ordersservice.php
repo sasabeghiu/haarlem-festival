@@ -71,8 +71,8 @@ class OrdersService
         return $this->orderRepository->cancelOrder($userId);
     }
 
-    public function getTicketInfo($productId)
+    public function getProductInfo($productId)
     {
-        return $this->orderRepository->getTicketInfo($productId);
+        return $this->orderRepository->getProductInfo($productId);
     }
 }

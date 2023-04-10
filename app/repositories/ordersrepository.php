@@ -298,12 +298,13 @@ class OrdersRepository
         }
     }
 
-    function getTicketInfo($productId) //returns name, price and quantity of event matching product id
+    function getProductInfo($productId) //returns name, price and quantity of event matching product id
     {
         try {
             $stmt = $this->connection->prepare("SELECT subq.event_id AS id,
             COALESCE(NULLIF(subq.event_name,''), 'History Event') AS event_name,
             COALESCE(NULLIF(subq.event_price,''), 0) AS event_price,
+            subq.event_datetime AS event_datetime,
             ci.qty
      FROM orders_item ci
      LEFT JOIN (
@@ -346,7 +347,8 @@ class OrdersRepository
          FROM reservation
          LEFT JOIN restaurant AS restaurant ON restaurant.id = reservation.restaurantID
      ) AS subq ON subq.event_id = ci.product_id
-     WHERE ci.product_id = :productId     
+     WHERE ci.product_id = :productId
+         
         ");
 
             $stmt->bindParam(':productId', $productId);

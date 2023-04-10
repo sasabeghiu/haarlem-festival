@@ -1,23 +1,27 @@
 <?php
 
 use PHPMailer\Mailer;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
 require __DIR__ . '/../utils/mailer.php';
 require_once __DIR__ . "/../vendor/autoload.php";
 require __DIR__ . '/../services/ordersservice.php';
+require __DIR__ . '/../services/ticketservice.php';
 
 class PaymentController
 {
     private $orderService;
+    private $ticketService;
     private $mollie;
     private $mailer;
-
     function __construct()
     {
         $this->mollie = new \Mollie\Api\MollieApiClient();
         $this->mollie->setApiKey("
         test_5jaAakyFRh8n9cNuC8p8aQR8gF3jp3");
         $this->orderService = new OrdersService();
+        $this->ticketService = new TicketService();
         $this->mailer = new Mailer();
     }
 
@@ -63,6 +67,7 @@ class PaymentController
 
     public function status()
     {
+        //add check to avoid mail re-sending when page refresh.
         $orderId = $_GET['orderId'];
         //If userid matches from session userid proceed
         $order = $this->orderService->getById($orderId);
@@ -77,16 +82,23 @@ class PaymentController
             //if payment is older than 24hr cancel it straight away.
             require __DIR__ . '/../views/payment/paylater.php';
         } else {
-            //prepare email
+            phpinfo();
+
+            //prepare invoice
             $receiver = $email;
             $receiver_name = $order->getFirstName() . " " . $order->getLastName();
             $subject = "Invoice - Haarlem Festival Support";
             $body_string = 'Thank you for your order, you will find the invoice attached to this email.';
             $invoice = $this->createInvoice($order);
-            $this->mailer->sendEmail($receiver, $receiver_name, $subject, $body_string, $invoice);
-            //$tickets = $this->createTickets($order);
 
-            require __DIR__ . '/../views/payment/paymentsuccessful.php';
+            //prepare tickets
+            $subject2 = "Tickets - Haarlem Festival Support";
+            $body_string2 = 'Thank you for your order, you will find the tickets attached to this email.';
+            $tickets = $this->createTickets($order);
+
+            if ($this->mailer->sendEmail($receiver, $receiver_name, $subject, $body_string, $invoice) && $this->mailer->sendEmail($receiver, $receiver_name, $subject2, $body_string2, $tickets)) {
+                require __DIR__ . '/../views/payment/paymentsuccessful.php';
+            }
         }
     }
 
@@ -107,9 +119,6 @@ class PaymentController
             echo "API call failed: " . htmlspecialchars($e->getMessage());
         }
     }
-
-
-
 
     public function createInvoice(Orders $order)
     {
@@ -184,7 +193,7 @@ class PaymentController
             </thead>
             <tbody>";
         foreach ($orderItems as $item) {
-            $ticket = $this->orderService->getTicketInfo($item->getProduct_id());
+            $ticket = $this->orderService->getProductInfo($item->getProduct_id());
             $name = $ticket[0]['event_name'];
             $price = $ticket[0]['event_price'];
             $qty = $ticket[0]['qty'];
@@ -225,7 +234,7 @@ class PaymentController
         return $invoice;
     }
 
-    public function createTicket(Orders $order)
+    public function createTickets(Orders $order)
     {
         // create new PDF document
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -233,11 +242,11 @@ class PaymentController
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('Haarlem Festival');
-        $pdf->SetTitle('Ticket');
-        $pdf->SetSubject('Ticket');
+        $pdf->SetTitle('Tickets');
+        $pdf->SetSubject('Tickets');
 
         // set default header data
-        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'Ticket', 'Haarlem Festival', array(0, 64, 255), array(0, 64, 128));
+        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'Tickets', 'Haarlem Festival', array(0, 64, 255), array(0, 64, 128));
 
         // set header and footer fonts
         $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -258,63 +267,73 @@ class PaymentController
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
         //prep values
-        $name = $order->getFirstName() . " " . $order->getLastName();
-        $address = $order->getStreetAddress();
-        $country = $order->getCountry();
-        $zipcode = $order->getZipCode();
-        $phone = $order->getPhoneNumber();
-        $total = $order->getTotalPrice();
-        $tax = $total * 0.21;
-        $subtotal = $tax + $total;
+        $userName = $order->getFirstName() . " " . $order->getLastName();
         $orderItems = $this->orderService->getOrderItemsByOrderId($order->getId());
 
         // add a page
         $pdf->AddPage();
 
         // write the HTML content into the PDF
-        $html = '<h1>Haarlem Festival</h1>';
-        $html .= "<h1>Invoice</h1>
-        <div class='invoice-info'>
-            <p><strong>Name:</strong>$name</p>
-            <p><strong>Address:</strong>$address</p>
-            <p><strong>Country:</strong>$country</p>
-            <p><strong>Zipcode:</strong>$zipcode</p>
-            <p><strong>Phone Number:</strong>$phone</p>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Event</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>";
-        foreach ($orderItems as $item) {
-            $html .= "<tr>
-                    <td>{event name}</td>
-                    <td>{event price}</td>
-                </tr>";
-        }
+        $html = "<h1>Haarlem Festival Tickets</h1>";
 
-        $html .= "<tr>
-                    <td><strong>Subtotal</strong></td>
-                    <td>$total</td>
+        foreach ($orderItems as $item) {
+            //get product info
+            $ticket = $this->orderService->getProductInfo($item->getProduct_id());
+            $name = $ticket[0]['event_name'];
+            $dateTime = $ticket[0]['event_datetime'];
+
+            $registry = $this->ticketService->createTicket();
+            $uuid = $registry->getUuid();
+            $result = $this->generateQR($uuid);
+
+            //generate QR
+            $qr = $result->getDataUri();
+
+            $html .= "<h1>Ticket #</h1>
+            <table>
+                <tr>
+                    <th>Client name:</th>
+                    <td>$userName</td>
                 </tr>
                 <tr>
-                    <td><strong>VAT (21%)</strong></td>
-                    <td>$tax</td>
+                    <th>Event name:</th>
+                    <td>$name</td>
                 </tr>
                 <tr>
-                    <td><strong>Total</strong></td>
-                    <td>$subtotal</td>
+                    <th>Date &amp; time:</th>
+                    <td>$dateTime</td>
                 </tr>
-            </tbody>
-        </table>";
+                <tr>
+                    <th>QR code:</th>
+                    <td>
+                        <div class='qr-code'>
+                        <img src='$qr'>
+                        </div>
+                    </td>
+                </tr>
+            </table>";
+        }
         $pdf->writeHTML($html, true, false, true, false, '');
 
-
         // output the PDF as a file (you can also send it to a browser or save to a server)
-        $invoice = $pdf->Output('invoice.pdf', 'S');
-        return $invoice;
+        $tickets = $pdf->Output('invoice.pdf', 'S');
+        return $tickets;
+    }
+
+    function generateQR($uid)
+    {
+        $qr = QrCode::create($uid);
+        $writer = new PngWriter();
+        $result = $writer->write($qr);
+
+        // (C1) SAVE TO FILE
+        //$result->saveToFile(__DIR__ . "/qr.png");
+
+        // (C2) DIRECT OUTPUT
+        //header("Content-Type: " . $result->getMimeType());
+        return $result;
+
+        // (C3) GENERATE DATA URI
+
     }
 }
