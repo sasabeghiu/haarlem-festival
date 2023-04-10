@@ -15,7 +15,10 @@ class OrdersService
     {
         return $this->orderRepository->getAllOrders();
     }
-
+    public function getPaidOrders()
+    {
+        return $this->orderRepository->getPaidOrders();
+    }
     public function getOnePlacedOrder($id)
     {
         return $this->orderRepository->getOnePlacedOrder($id);

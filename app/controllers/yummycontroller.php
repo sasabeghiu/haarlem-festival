@@ -24,6 +24,13 @@ class YummyController
         $id = htmlspecialchars($_GET["restaurantid"]);
 
         $restaurant = $this->yummyservice->getRestaurantById($id);
+        if(is_null($restaurant))
+        {
+            echo "<script>alert('A restaurant with this ID was not found in the database')</script>";
+            $this->index();
+            return;
+        }
+
         $sessions = $this->yummyservice->getSessionsForRestaurant();
         require __DIR__ . '/../views/yummy/restaurantabout.php';
     }

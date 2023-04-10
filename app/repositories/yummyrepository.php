@@ -69,9 +69,12 @@ class YummyRepository extends Repository
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'restaurant');
-            $restaurants = $stmt->fetchAll();
+            $restaurant = $stmt->fetch();
 
-            return $restaurants[0];
+            if(!$restaurant)
+                return null;
+                
+            return $restaurant;
         } catch (PDOException $e) {
             echo $e;
         }
@@ -87,7 +90,7 @@ class YummyRepository extends Repository
 
             $restaurants = $stmt->fetchAll();
 
-            if (is_null($restaurants) || empty($restaurants))
+            if (!$restaurants || empty($restaurants))
                 return null;
 
             return $restaurants[0];

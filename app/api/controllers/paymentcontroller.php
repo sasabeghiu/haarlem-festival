@@ -1,13 +1,20 @@
 <?php
 require __DIR__ . '/../../services/paymentservice.php';
+require __DIR__ . '/../../services/ordersservice.php';
+require_once __DIR__ . "/../../vendor/autoload.php";
 
 class PaymentController
 {
+    private $orderservice;
     private $paymentservice;
 
     function __construct()
     {
         $this->paymentservice = new PaymentService();
+        $this->orderservice = new OrdersService();
+        $this->mollie = new \Mollie\Api\MollieApiClient();
+        $this->mollie->setApiKey("
+        test_5jaAakyFRh8n9cNuC8p8aQR8gF3jp3");
     }
 
     public function index()
@@ -20,9 +27,21 @@ class PaymentController
                 return;
             }
 
-            $articles = $this->paymentservice->getPaymentDataJSON();
+            $paidOrders = $this->orderservice->getPaidOrders();
+
+            if (is_null($paidOrders)) {
+                echo "No payment data found";
+                return;
+            }
+
+            $paymentdata = array();
+            $i = 0;
+            foreach ($paidOrders as $order) {
+                $paymentdata[$i] = $this->mollie->payments->get($order->getPaymentId());
+                $i++;
+            }
             header('Content-Type: application/json');
-            echo json_encode($articles);
+            echo json_encode($paymentdata);
         }
     }
 
