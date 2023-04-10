@@ -8,7 +8,8 @@ require __DIR__ . '/../models/pagecard.php';
 
 class YummyRepository extends Repository
 {
-    function getFoodPageContent() {
+    function getFoodPageContent()
+    {
         $stmt = $this->connection->prepare("SELECT page.id, images.image, page.title, page.description FROM `page` 
                                             JOIN images ON page.headerImg = images.id
                                             WHERE page.id = 7");
@@ -19,7 +20,8 @@ class YummyRepository extends Repository
 
         return $page[0];
     }
-    function getFoodPageCards() {
+    function getFoodPageCards()
+    {
         $stmt = $this->connection->prepare("SELECT pagecard.id, pagecard.title, pagecard.description, pagecard.link, images.image
                                             FROM pagecard
                                             JOIN images ON pagecard.image = images.id
@@ -51,10 +53,8 @@ class YummyRepository extends Repository
             echo $e;
         }
     }
-    function getRestaurantById()
+    function getRestaurantById($id)
     {
-        $id = htmlspecialchars($_GET["restaurantid"]);
-
         try {
             //images.image is joined multiple times under different aliases to select the multiple images needed for each restaurant
             $stmt = $this->connection->prepare("SELECT restaurant.id, restaurant.name, restaurant.location, restaurant.description, 
@@ -69,7 +69,29 @@ class YummyRepository extends Repository
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'restaurant');
+            $restaurant = $stmt->fetch();
+
+            if(!$restaurant)
+                return null;
+                
+            return $restaurant;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+    public function getRestaurantByIdAlt($id)   //Gets restaurants with the ID's of the images instead of the images themselves, necessary to check if a restaurant is being updated or added in yummycontroller
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM restaurant WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'restaurant');
+
             $restaurants = $stmt->fetchAll();
+
+            if (!$restaurants || empty($restaurants))
+                return null;
 
             return $restaurants[0];
         } catch (PDOException $e) {
@@ -92,16 +114,15 @@ class YummyRepository extends Repository
             echo $e;
         }
     }
-    public function getSessionById()
+    public function getSessionById($sessionid)
     {
-        $id = htmlspecialchars($_GET["sessionid"]);
 
         try {
             $stmt = $this->connection->prepare("SELECT fs.id, fs.restaurantid, restaurant.name AS restaurantname, fs.price, fs.reducedprice, fs.starttime,
                                                 fs.session_length, fs.available_seats FROM `food_session` AS fs 
                                                 JOIN restaurant ON fs.restaurantid = restaurant.id
                                                 WHERE fs.id = :id");
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id', $sessionid);
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'session');
@@ -112,7 +133,8 @@ class YummyRepository extends Repository
             echo $e;
         }
     }
-    public function getSessionsForRestaurant() {
+    public function getSessionsForRestaurant()
+    {
         $id = htmlspecialchars($_GET["restaurantid"]);
 
         try {
@@ -178,8 +200,7 @@ class YummyRepository extends Repository
             if ($restaurant->getId() != 0) {
                 // Update existing restaurant
                 $stmt = $this->connection->prepare("UPDATE `restaurant` SET name = :name, location = :location, description = :description, cuisine = :cuisine, 
-                                                    seats = :seats, stars = :stars, email = :email, phonenumber = :phonenumber, image1 = :image1, 
-                                                    image2 = :image2, image3 = :image3
+                                                    seats = :seats, stars = :stars, email = :email, phonenumber = :phonenumber
                                                     WHERE id = :id");
                 $stmt->bindValue(':id', $restaurant->getId());
             } else {
@@ -187,6 +208,10 @@ class YummyRepository extends Repository
                 $stmt = $this->connection->prepare("INSERT INTO `restaurant` (name, location, description, cuisine, seats, 
                                                     stars, email, phonenumber, image1, image2, image3) VALUES (:name, :location, :description, :cuisine, :seats, 
                                                     :stars, :email, :phonenumber, :image1, :image2, :image3)");
+                                                    
+            $stmt->bindValue(':image1', $restaurant->getImage1());
+            $stmt->bindValue(':image2', $restaurant->getImage2());
+            $stmt->bindValue(':image3', $restaurant->getImage3());
             }
 
             $stmt->bindValue(':name', $restaurant->getName());
@@ -197,9 +222,6 @@ class YummyRepository extends Repository
             $stmt->bindValue(':stars', $restaurant->getStars());
             $stmt->bindValue(':email', $restaurant->getEmail());
             $stmt->bindValue(':phonenumber', $restaurant->getPhonenumber());
-            $stmt->bindValue(':image1', $restaurant->getImage1());
-            $stmt->bindValue(':image2', $restaurant->getImage2());
-            $stmt->bindValue(':image3', $restaurant->getImage3());
 
             $stmt->execute();
         } catch (PDOException $e) {
@@ -220,15 +242,20 @@ class YummyRepository extends Repository
             echo $e;
         }
     }
-    // public function updateImage(Restaurant $restaurant, int $id)
-    // {
-    //     if ($restaurant->getId() != 0) {
-    //         // Update existing restaurant
-    //         $stmt = $this->connection->prepare("UPDATE `images` SET image = :image  
-    //                                             WHERE id = :id");
-    //         $stmt->bindValue(':id', $id);
-    //     }
-    // }
+    public function updateImage(string $imgData, int $id)
+    {
+        try {
+            $stmt = $this->connection->prepare("UPDATE `images` SET image = :image  
+                                                WHERE id = :id");
+            $stmt->bindValue(':image', $imgData);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            return $this->connection->lastInsertId();
+        } catch(PDOException $e) {
+            echo $e;
+        }
+    }
     public function deleteRestaurant()
     {
         $restaurantid = htmlspecialchars($_GET['restaurantid']);
@@ -242,7 +269,8 @@ class YummyRepository extends Repository
             echo ($e);
         }
     }
-    public function getReservations() {
+    public function getReservations()
+    {
         try {
             $stmt = $this->connection->prepare("SELECT reservation.id, reservation.name, reservation.restaurantID, 
                                                 restaurant.name AS restaurantName, reservation.sessionID, reservation.seats, reservation.date, reservation.request, 
@@ -259,7 +287,8 @@ class YummyRepository extends Repository
             echo $e;
         }
     }
-    public function deactivateReservation() {
+    public function deactivateReservation()
+    {
         $reservationid = htmlspecialchars($_GET['reservationid']);
 
         try {
@@ -271,7 +300,8 @@ class YummyRepository extends Repository
             echo ($e);
         }
     }
-    public function addReservation(Reservation $reservation) {
+    public function addReservation(Reservation $reservation)
+    {
         $stmt = $this->connection->prepare("INSERT INTO `reservation` (`name`, `restaurantID`, `sessionID`, `seats`, `date`, 
                                             `request`, `price`, `status`) VALUES (:name, :restaurantID,:sessionID, :seats,
                                             :date, :request, :price, 1 )");
@@ -288,7 +318,7 @@ class YummyRepository extends Repository
 
     public function getReservationIdByName($name)
     {
-        $stmt=$this->connection->prepare("SELECT id from reservation WHERE name=:name");
+        $stmt = $this->connection->prepare("SELECT id from reservation WHERE name=:name");
         $stmt->bindValue(':name', $name);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Reservation');

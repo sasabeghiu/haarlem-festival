@@ -100,6 +100,25 @@ class OrdersRepository
             echo $e;
         }
     }
+    public function getPaidOrders()
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT orders.id, orders.firstName, orders.lastName, orders.birthdate, orders.emailAddress, orders.streetAddress, orders.country, orders.zipCode, orders.phoneNumber, orders.user_id, orders.totalprice, orders.paymentId
+                                                FROM orders
+                                                WHERE orders.paymentId IS NOT NULL");
+
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
+            $paidorders = $stmt->fetchAll();
+
+            if(!$paidorders || empty($paidorders))
+                return null;
+
+            return $paidorders;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
 
     function getOrderItemsByOrderId($orderId)
     {

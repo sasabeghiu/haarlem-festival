@@ -22,23 +22,23 @@ include(__DIR__ . "/../../header.php");
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price (€):</label>
-                <input type="text" class="form-control" name="price" id="price">
+                <input type="text" class="form-control" required name="price" id="price">
             </div>
             <div class="mb-3">
                 <label for="reducedprice" class="form-label">Reduced price:</label>
-                <input type="text" class="form-control" name="reducedprice" id="reducedprice">
+                <input type="text" class="form-control" required name="reducedprice" id="reducedprice">
             </div>
             <div class="mb-3">
                 <label for="starttime" class="form-label">Start time:</label>
-                <input type="time" class="form-control" name="starttime" id="firstsession">
+                <input type="time" class="form-control" required name="starttime" id="firstsession">
             </div>
             <div class="mb-3">
                 <label for="length" class="form-label">Session length (in hours):</label>
-                <input type="text" class="form-control" name="length" id="length">
+                <input type="text" class="form-control" required name="length" id="length">
             </div>
             <div class="mb-3">
                 <label for="seats" class="form-label">Seats:</label>
-                <input type="text" class="form-control" name="seats" id="seats">
+                <input type="text" class="form-control" required name="seats" id="seats">
             </div>
             <button type="submit" class="btn btn-success">Add</button>
             <a name="" id="" class="btn btn-primary" href="/yummy/manageSessions" role="button">Cancel</a>

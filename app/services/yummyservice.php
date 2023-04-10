@@ -21,9 +21,12 @@ class YummyService
     {
         return $this->yummyrepository->getRestaurants();
     }
-    public function getRestaurantById()
+    public function getRestaurantById($id)
     {
-        return $this->yummyrepository->getRestaurantById();
+        return $this->yummyrepository->getRestaurantById($id);
+    }
+    public function getRestaurantByIdAlt($id) {
+        return $this->yummyrepository->getRestaurantByIdAlt($id);
     }
     public function getSessionsForRestaurant()
     {
@@ -33,9 +36,9 @@ class YummyService
     {
         return $this->yummyrepository->getSessions();
     }
-    public function getSessionById()
+    public function getSessionById($id)
     {
-        return $this->yummyrepository->getSessionById();
+        return $this->yummyrepository->getSessionById($id);
     }
     public function saveSession(Session $session)
     {
@@ -49,9 +52,12 @@ class YummyService
     {
         $this->yummyrepository->saveRestaurant($restaurant);
     }
-    public function saveImage(string $imgData, Restaurant $restaurant)
+    public function saveImage(string $imgData)
     {
-        return $this->yummyrepository->saveImage($imgData, $restaurant);
+        return $this->yummyrepository->saveImage($imgData);
+    }
+    public function updateImage(string $imgData, int $id) {
+        return $this->yummyrepository->updateImage($imgData, $id);
     }
     public function deleteRestaurant()
     {
