@@ -175,10 +175,10 @@ class OrdersRepository
     function placeOneOrderItem($orderItem)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO orders_item (order_id, product_id, qty, price) 
-                                                VALUES (?,?,?,?)");
+            $stmt = $this->connection->prepare("INSERT INTO orders_item (order_id, product_id, qty, price, user_id) 
+                                                VALUES (?,?,?,?,?)");
 
-            $stmt->execute([$orderItem->getOrder_id(), $orderItem->getProduct_id(), $orderItem->getQty(), $orderItem->getPrice()]);
+            $stmt->execute([$orderItem->getOrder_id(), $orderItem->getProduct_id(), $orderItem->getQty(), $orderItem->getPrice(), $orderItem->getUser_id()]);
 
             $orderItem->setId($this->connection->lastInsertId());
 
@@ -221,7 +221,7 @@ class OrdersRepository
         }
     }
 
-    function getMyOrdersByProductId($product_id)
+    function getMyOrdersByUserId($user_id)
     {
         try {
             $stmt = $this->connection->prepare("SELECT subq.event_id as id,
@@ -245,10 +245,11 @@ class OrdersRepository
                     FROM reservation 
                     LEFT JOIN restaurant as restaurant on restaurant.id = reservation.restaurantID
                 ) AS subq ON subq.event_id = ci.product_id
-                WHERE ci.product_id = :product_id
-            ");
+                WHERE ci.user_id = :user_id");
 
-            $stmt->bindParam(":product_id", $product_id);
+            $user_id = htmlspecialchars(strip_tags($user_id));
+
+            $stmt->bindParam(":user_id", $user_id);
 
             $stmt->execute();
 

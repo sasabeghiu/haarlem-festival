@@ -6,6 +6,7 @@ class OrdersItem
     private int $product_id;
     private int $qty;
     private float $price;
+    private int $user_id;
     private string $event_name;
     private float $event_price;
 
@@ -105,6 +106,26 @@ class OrdersItem
     public function setPrice(float $price)
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+     /**
+     * Get the value of user_id
+     */
+    public function getUser_id()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return  self
+     */
+    public function setUser_id($user_id)
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

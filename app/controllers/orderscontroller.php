@@ -155,6 +155,7 @@ class OrdersController
                                 $orderItem->setProduct_id($ids);
                                 $orderItem->setQty($qty);
                                 $orderItem->setPrice($price * $qty);
+                                $orderItem->setUser_id($_SESSION['userId']);
 
                                 $this->placeorderService->placeOneOrderItem($orderItem);
 
@@ -192,7 +193,9 @@ class OrdersController
             $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
             $count = $this->shoppingcartService->countProducts($_SESSION['userId']);
 
-            //$myOrders = $this->placeorderService->getMyOrdersByProductId($ids);
+            $myOrders = $this->placeorderService->getMyOrdersByUserId($_SESSION['userId']);
+
+            $orderStatus = $this->placeorderService->getAllOrders();
 
             require __DIR__ . '/../views/orders/myorders.php';
         } else {
