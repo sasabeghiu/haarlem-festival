@@ -22,7 +22,7 @@ class OrdersController
 
     public function cms()
     {
-        
+
         //Functionality editing
         if (isset($_POST["edit"])) {
             $id = htmlspecialchars($_GET["updateID"]);
@@ -157,11 +157,18 @@ class OrdersController
                                 $orderItem->setPrice($price * $qty);
                                 $orderItem->setUser_id($_SESSION['userId']);
 
-                                $this->placeorderService->placeOneOrderItem($orderItem);
 
-                                $this->placeorderService->updateTicketsAvailable($ids, $qty);
-
-                                //$countOrders = $this->placeorderService->countMyOrders($ids);
+                                $success = $this->placeorderService->updateTicketsAvailable($ids, $qty);
+                                if (!$success) {
+                                    // Display an error message
+                                    echo "<script>alert('Quantity is greater than the tickets availability, please add no more than avaiable tickets/seats!')</script>";
+                                    $this->placeorderService->deleteLastInsertedOrder();
+                                    echo "<script>window.location = '/shoppingcart'</script>";
+                                    //Stop processing the rest of the items if one fails
+                                    break;
+                                } else {
+                                    $this->placeorderService->placeOneOrderItem($orderItem);
+                                }
                             }
 
                             echo "<script>alert('Order placed successfully! ')</script>";
@@ -179,9 +186,6 @@ class OrdersController
                         echo "<script>window.location = '/event/jazzevents'</script>";
                     }
                 }
-
-                //if order was placed and all order items were placed - delete everything from cart where userid = this.userid(session(usserid))
-
             }
         }
     }

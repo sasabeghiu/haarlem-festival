@@ -40,6 +40,22 @@ class OrdersRepository
         }
     }
 
+    function deleteLastInsertedOrder()
+    {
+        try {
+            // Get the last inserted ID
+            $stmt = $this->connection->query("SELECT id FROM orders ORDER BY id DESC LIMIT 1");
+            $lastInsertedId = $stmt->fetchColumn();
+
+            // Delete the order with the last inserted ID
+            $stmt = $this->connection->prepare("DELETE FROM orders WHERE id = :id");
+            $stmt->bindParam(':id', $lastInsertedId);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function getOneOrderItem($id)
     {
         try {
@@ -111,7 +127,7 @@ class OrdersRepository
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
             $paidorders = $stmt->fetchAll();
 
-            if(!$paidorders || empty($paidorders))
+            if (!$paidorders || empty($paidorders))
                 return null;
 
             return $paidorders;
@@ -209,6 +225,7 @@ class OrdersRepository
 
     function updateTicketsAvailable($product_id, $qty)
     {
+        $updated = false;
         try {
             $stmt = $this->connection->prepare("UPDATE music_event
                                             SET tickets_available = tickets_available - :qty
@@ -218,6 +235,10 @@ class OrdersRepository
             $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
             $stmt->execute();
 
+            if ($stmt->rowCount() > 0) {
+                $updated = true;
+            }
+
             $stmt = $this->connection->prepare("UPDATE history_event
                                             SET tickets_available = tickets_available - :qty
                                             WHERE id = :product_id AND tickets_available >= :qty");
@@ -225,6 +246,10 @@ class OrdersRepository
             $stmt->bindParam(":product_id", $product_id);
             $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
             $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $updated = true;
+            }
 
             $stmt = $this->connection->prepare("UPDATE reservation
                                             SET seats = seats - :qty
@@ -234,7 +259,11 @@ class OrdersRepository
             $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
             $stmt->execute();
 
-            return true;
+            if ($stmt->rowCount() > 0) {
+                $updated = true;
+            }
+
+            return $updated;
         } catch (PDOException $e) {
             echo $e;
         }
@@ -274,7 +303,7 @@ class OrdersRepository
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'OrdersItem');
             $items = $stmt->fetchAll();
-            
+
             return $items;
         } catch (PDOException $e) {
             echo $e;

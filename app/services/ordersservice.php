@@ -73,4 +73,9 @@ class OrdersService
     {
         return $this->orderRepository->cancelOrder($userId);
     }
+
+    public function deleteLastInsertedOrder()
+    {
+        return $this->orderRepository->deleteLastInsertedOrder();
+    }
 }
