@@ -77,7 +77,9 @@
               <a class="dropdown-item" href="/user/profile">Edit Profile</a>
               <a class="dropdown-item" href="/orders/myorders">My Orders</a>
               <a class="dropdown-item" href="/login/logout">Logout</a>
+              <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 1) { ?>
               <a class="dropdown-item" href="/api/keys">API</a>
+              <?php } ?>
             </div>
           </div>
 

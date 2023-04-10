@@ -5,24 +5,6 @@ require __DIR__ . '/../models/api_key.php';
 
 class PaymentRepository extends Repository
 {
-    public function getPaymentDataJSON()
-    {
-        try {
-            $stmt = $this->connection->prepare("SELECT reservation.id, reservation.name, reservation.restaurantID, 
-                                                restaurant.name AS restaurantName, reservation.sessionID, reservation.seats, reservation.date, reservation.request, 
-                                                reservation.price, reservation.status 
-                                                FROM reservation
-                                                JOIN restaurant ON reservation.restaurantID = restaurant.id");
-            $stmt->execute();
-
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'reservation');
-            $reservations = $stmt->fetchAll();
-
-            return $reservations;
-        } catch (PDOException $e) {
-            echo $e;
-        }
-    }
     public function getKey(string $key)
     {
         try {

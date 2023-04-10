@@ -21,7 +21,16 @@ class YummyController
     }
     public function about()
     {
-        $restaurant = $this->yummyservice->getRestaurantById();
+        $id = htmlspecialchars($_GET["restaurantid"]);
+
+        $restaurant = $this->yummyservice->getRestaurantById($id);
+        if(is_null($restaurant))
+        {
+            echo "<script>alert('A restaurant with this ID was not found in the database')</script>";
+            $this->index();
+            return;
+        }
+
         $sessions = $this->yummyservice->getSessionsForRestaurant();
         require __DIR__ . '/../views/yummy/restaurantabout.php';
     }
@@ -35,7 +44,9 @@ class YummyController
     }
     public function editSession()
     {
-        $session = $this->yummyservice->getSessionById();
+        $id = htmlspecialchars($_GET["sessionid"]);
+
+        $session = $this->yummyservice->getSessionById($id);
         require __DIR__ . '/../views/cms/food/editsession.php';
     }
     public function addSession()
@@ -72,7 +83,9 @@ class YummyController
     }
     public function editRestaurant()
     {
-        $restaurant = $this->yummyservice->getRestaurantById();
+        $id = htmlspecialchars($_GET["restaurantid"]);
+
+        $restaurant = $this->yummyservice->getRestaurantById($id);
         require __DIR__ . '/../views/cms/food/editrestaurant.php';
     }
     public function addRestaurant()
@@ -98,12 +111,26 @@ class YummyController
             $newRestaurant->setEmail(isset($_POST['email']) ? $_POST['email'] : null);
             $newRestaurant->setPhonenumber(isset($_POST['phonenumber']) ? $_POST['phonenumber'] : null);
 
+            $restaurant = $this->yummyservice->getRestaurantByIdAlt($_POST['id']);
             if (count($_FILES) > 0) {
-                for ($i = 1; $i <= 3; $i++) {
-                    if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
-                        $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
-                        $setMethod = "setImage" . $i;
-                        $newRestaurant->$setMethod($this->yummyservice->saveImage($imgData, $newRestaurant));
+                if (is_null($restaurant)) {
+
+                    for ($i = 1; $i <= 3; $i++) {
+                        if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
+                            $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
+                            $setMethod = "setImage" . $i;
+                            $newRestaurant->$setMethod($this->yummyservice->saveImage($imgData));
+                        }
+                    }
+                }
+                else {
+                    for ($i = 1; $i <= 3; $i++) {
+                        if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
+                            $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
+                            $setMethod = "setImage" . $i;
+                            $getmethod = "getImage" . $i;
+                            $newRestaurant->$setMethod($this->yummyservice->updateImage($imgData, $restaurant->$getmethod()));
+                        }
                     }
                 }
             }
@@ -130,16 +157,16 @@ class YummyController
 
             $reservation = new Reservation();
 
-            if (!isset($_POST['name']))
-                throw new Exception("Please enter the name you want the reservation to be on");
+            $sessionData = explode('-', $_POST['session']);
+            $selectedsession = $this->yummyservice->getSessionById($sessionData[0]);
+            $seats = $_POST['formguestsadult'] + $_POST['formguestskids'];
+
+            if ($selectedsession->getAvailable_seats() < $seats)
+                throw new Exception("There are not enough available seats for this session");
 
             $reservation->setName(htmlspecialchars($_POST['name']));
             $reservation->setRestaurantID($restaurantid);
-
-            $sessionData = explode('-', $_POST['session']);
-
             $reservation->setSessionID($sessionData[0]);
-            $seats = $_POST['formguestsadult'] + $_POST['formguestskids'];
             $reservation->setSeats($seats);
 
             $datetime = $_POST['date'] . " " . $sessionData[1];    //'Session' is required for both the session ID and the time of the reservation
@@ -171,10 +198,11 @@ class YummyController
                     window.location.href = '/login/index'
                     </script>";
             }
-
-            echo "<script>window.location.href = '/yummy'</script>";
         } catch (Exception $error) {
-            echo $error;
+
+            echo "<script>alert('" . $error->getMessage() . "')</script>";
+        } finally {
+            echo "<script>window.location.href = '/yummy'</script>";
         }
     }
 }
