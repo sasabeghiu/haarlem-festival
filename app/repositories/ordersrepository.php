@@ -251,9 +251,9 @@ class OrdersRepository
                 $updated = true;
             }
 
-            $stmt = $this->connection->prepare("UPDATE reservation
-                                            SET seats = seats - :qty
-                                            WHERE id = :product_id AND seats >= :qty");
+            $stmt = $this->connection->prepare("UPDATE food_session
+                                            SET available_seats = available_seats - :qty
+                                            WHERE id = :product_id AND available_seats >= :qty");
 
             $stmt->bindParam(":product_id", $product_id);
             $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
@@ -289,9 +289,9 @@ class OrdersRepository
                     SELECT id as event_id, 'History Event' as event_name, history_event.price as event_price, history_event.datetime as event_datetime, history_event.location as event_location, history_event.tickets_available as stock, 'history' as event_type
                     FROM history_event 
                     UNION
-                    SELECT reservation.id as event_id, CONCAT('Reservation at ', restaurant.name) as event_name, reservation.price as event_price, reservation.date as event_datetime, restaurant.name as event_location, reservation.seats as stock, 'food' as event_type
-                    FROM reservation 
-                    LEFT JOIN restaurant as restaurant on restaurant.id = reservation.restaurantID
+                    SELECT food_session.id as event_id, CONCAT('Reservation at ', restaurant.name) as event_name, food_session.price as event_price, reservation.starttime as event_datetime, restaurant.name as event_location, food_session.available_seats as stock, 'food' as event_type
+                    FROM food_session 
+                    LEFT JOIN restaurant as restaurant on restaurant.id = food_session.restaurantID
                 ) AS subq ON subq.event_id = ci.product_id
                 WHERE ci.user_id = :user_id");
 
