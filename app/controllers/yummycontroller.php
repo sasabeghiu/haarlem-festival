@@ -115,20 +115,20 @@ class YummyController
             if (count($_FILES) > 0) {
                 if (is_null($restaurant)) {
 
-                    for ($i = 1; $i <= 3; $i++) {
-                        if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
-                            $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
-                            $setMethod = "setImage" . $i;
+                    for ($imgnumber = 1; $imgnumber <= 3; $imgnumber++) {
+                        if (is_uploaded_file($_FILES['image' . $imgnumber]['tmp_name'])) {
+                            $imgData = file_get_contents($_FILES['image' . $imgnumber]['tmp_name']);
+                            $setMethod = "setImage" . $imgnumber;
                             $newRestaurant->$setMethod($this->yummyservice->saveImage($imgData));
                         }
                     }
                 }
                 else {
-                    for ($i = 1; $i <= 3; $i++) {
-                        if (is_uploaded_file($_FILES['image' . $i]['tmp_name'])) {
-                            $imgData = file_get_contents($_FILES['image' . $i]['tmp_name']);
-                            $setMethod = "setImage" . $i;
-                            $getmethod = "getImage" . $i;
+                    for ($imgnumber = 1; $imgnumber <= 3; $imgnumber++) {
+                        if (is_uploaded_file($_FILES['image' . $imgnumber]['tmp_name'])) {
+                            $imgData = file_get_contents($_FILES['image' . $imgnumber]['tmp_name']);
+                            $setMethod = "setImage" . $imgnumber;
+                            $getmethod = "getImage" . $imgnumber;
                             $newRestaurant->$setMethod($this->yummyservice->updateImage($imgData, $restaurant->$getmethod()));
                         }
                     }

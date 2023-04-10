@@ -44,8 +44,8 @@ require __DIR__ . '/../navbar.php';
 
             <p class="click2edit"><?= $pageCards[2]->getLink() ?></p>
         </div>
-        <div class="col" style="background-color: grey; padding-top: 20px;">
-            <h1 class="text-center click2edit">Place Holder for location<h1>
+        <div class="col">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.5192238179534!2d4.634674315670638!3d52.37913717978769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5ef6a3768f6c5%3A0x3e4a878bf70895c2!2sKleine%20Houtstraat%2013%2C%202011%20DD%20Haarlem!5e0!3m2!1snl!2snl!4v1681154941790!5m2!1snl!2snl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 </div>
@@ -138,9 +138,7 @@ require __DIR__ . '/../navbar.php';
         <div class="col">
             <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($pageCards[9]->getImage()) ?>" alt="Loading image..." class="image-fluid">
         </div>
-        <!-- <div class="col">
-            <img src="/images/jopenimg4.png" alt="Loading image..." class="image-fluid">
-        </div> -->
+        
     </div>
     <div class="row">
         <div class="col">
@@ -148,8 +146,8 @@ require __DIR__ . '/../navbar.php';
             <p><?= $pageCards[10]->getDescription() ?></p>
             <p><?= $pageCards[10]->getLink() ?></p>
         </div>
-        <div class="col" style="background-color: grey; padding-top: 20px;">
-            <h1 class="text-center">Place Holder for location<h1>
+        <div class="col" >
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.4046466912273!2d4.627542815670747!3d52.381214479788134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5ef14ed768603%3A0x5ff6ab7a87061c90!2sJopenkerk%20Haarlem!5e0!3m2!1snl!2snl!4v1681155061017!5m2!1snl!2snl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 </div>

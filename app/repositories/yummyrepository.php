@@ -303,7 +303,7 @@ class YummyRepository extends Repository
     public function addReservation(Reservation $reservation)
     {
         $stmt = $this->connection->prepare("INSERT INTO `reservation` (`name`, `restaurantID`, `sessionID`, `seats`, `date`, 
-                                            `request`, `price`, `status`) VALUES (:name, :restaurantID,:sessionID, :seats,
+                                            `request`, `price`, `status`) VALUES (:name, :restaurantID, :sessionID, :seats,
                                             :date, :request, :price, 1 )");
         $stmt->bindValue(':name', $reservation->getName());
         $stmt->bindValue(':restaurantID', $reservation->getRestaurantID());
