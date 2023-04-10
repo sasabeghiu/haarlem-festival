@@ -2,7 +2,7 @@
 This is the repository for Haarlem Festival Project of Group 6
 
 ## URL
-URL to live website: [Haarlem Festival](http://localhost/page/festival)
+URL to live website: [Haarlem Festival](https://hf6.000webhostapp.com/page/festival)
 
 ## Login Credentials
 ```
