@@ -37,47 +37,6 @@ include __DIR__ . '/../navbar.php';
 
         <div class="card-group d-flex flex-wrap justify-content-center" style="width:100%; display: flex;">
 
-            <div class="card click2edit mb-4 my-4" style="flex: 3; margin-right: 4rem;">
-                <div class="card-body">
-                    <h3 class="card-title">About</h3>
-                    <p class="card-text">Take a stroll through the History of Haarlem! Haarlem is a city with a rich history, the cultural influences of which can still be seen even today. From the awe-inspiring interior of the St. Bavo church to the works of many great artists displayed in the various museums located in the city, we at the festival want to give you the opportunity to experience the beauty of Haarlem's history for yourself.
-                        <br> </br>
-                        Use the schedule displayed below to see the timeslots for the tours we offer. Additional information such as the entry price and duration can be found there as well.
-                    </p>
-                    <h3 class="card-title">Important:</h3>
-                    <p class="card-text">Tours for the history event start at the St. Bavo church at the Grote markt in Haarlem.
-                        Look for the giant flag that marks the exact starting location. The minimum age for taking the tours is 12 years old.
-                        Usage of strollers is not allowed during the event.
-                        Please do not book an English tour if you are a Dutch or Dutch speaking citizen, we at the Haarlem festival would hate to turn down foreign visitors because the tour slots with their preferred language are full.</p>
-                </div>
-            </div>
-
-            <div class="card click2edit mb-4 my-4" style="flex: 2; margin-right: 4rem;">
-                <div class="card-body">
-                    <h3 class="card-title">Location</h3>
-                    <p class="card-text">Take some time to read up on the locations you will visit on our history tours.</p>
-                    <h6>The locations that will be visited are: </h6>
-                    <a href="/historyevent">Church of St.Bavo - Starting location</a>
-                    <br></br>
-                    <a href="/historyevent">De Hallen</a>
-                    <br></br>
-                    <a href="/historyevent">Proveniershof</a>
-                    <br></br>
-                    <a href="/historyevent">Jopenkerk - Break location</a>
-                    <br></br>
-                    <a href="/historyevent">Waalse kerk Haarlem</a>
-                    <br></br>
-                    <a href="/historyevent">Molen deAdriaan</a>
-                    <br></br>
-                    <a href="/historyevent">Amsterdamse poort</a>
-                    <br></br>
-                    <a href="/historyevent">Hof vanBakenes</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-group d-flex flex-wrap justify-content-center" style="width:100%; display: flex;">
-
             <?php
             foreach ($pagecards as $firstcards) {
             ?>
