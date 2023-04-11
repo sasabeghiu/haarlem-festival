@@ -14,12 +14,17 @@ class QrController
     {
         $this->ticketService = new TicketService();
     }
+    public function index()
+    {
+        require __DIR__ . '/../views/qr.php';
+    }
 
-    public function generateQr()
+    public function generateQr($uuid)
     {
         $qr = new QRGenerator();
         //pass ticket id to generate QR
-        $qr->generateQR("0x6ba7b8109dad11d180b400c04fd430c8");
+        $qrcode = $qr->generateQR($uuid);
+        return $qrcode;
     }
 
     public function scanQr()
@@ -34,5 +39,20 @@ class QrController
         $ticket = $this->ticketService->getTicketById("$uuid");
 
         require __DIR__ . '/../views/qr-scanner.php';
+    }
+
+    public function scan()
+    {
+        if ($_SESSION['role'] == 3) {
+            $uuid = $_GET['uuid'];
+            $ticket = $this->ticketService->checkIfTicketWasScanned($uuid);
+            if (!$ticket) {
+                //ticket was scanned or not existent in db.
+                echo "<script>alert('Ticket is invalid or was already scanned'); window.location = '/';</script>";
+            }
+            $this->ticketService->updateTicketStatus($uuid); //change status to scanned
+            echo "<script>alert('Ticket scanned successfully'); window.location = '/';</script>";
+        }
+        echo "<script>alert('You must be an employee to access this page!'); window.location = '/';</script>";
     }
 }
