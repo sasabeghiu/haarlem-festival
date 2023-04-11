@@ -84,9 +84,10 @@ class TicketRepository
     function createTicket($uuid)
     {
         try {
+            $uuid_binary = hex2bin(str_replace('0x', '', $uuid));
 
-            $stmt = $this->connection->prepare("INSERT INTO ticket (uuid) VALUES (:uuid)");
-            $stmt->bindParam(":uuid", hex2bin(str_replace('0x', '', $uuid)), PDO::PARAM_LOB);
+            $stmt = $this->connection->prepare("INSERT INTO ticket (uuid, status) VALUES (:uuid, 'not scanned')");
+            $stmt->bindParam(":uuid", $uuid_binary);
             $stmt->execute();
 
             $ticket = new Ticket();
@@ -101,8 +102,10 @@ class TicketRepository
     function validateUuid($uuid)
     {
         try {
+            $uuid_binary = hex2bin(str_replace('0x', '', $uuid));
+
             $stmt = $this->connection->prepare("SELECT COUNT(*) FROM ticket WHERE uuid = :uuid");
-            $stmt->bindParam(":uuid", hex2bin(str_replace('0x', '', $uuid)), PDO::PARAM_LOB);
+            $stmt->bindParam(":uuid", $uuid_binary);
             $stmt->execute();
 
             $count = $stmt->fetchColumn();

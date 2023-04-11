@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use PHPMailer\Mailer;
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
 
 require __DIR__ . '/../utils/mailer.php';
+require __DIR__ . '/../utils/qr-generator.php';
 require_once __DIR__ . "/../vendor/autoload.php";
 require __DIR__ . '/../services/ordersservice.php';
 require __DIR__ . '/../services/ticketservice.php';
@@ -54,9 +57,7 @@ class PaymentController
                 "metadata" => [
                     "order_id" => $orderId,
                 ],
-
             ]);
-
 
             $this->orderService->addPayment($orderId, $payment->id);
             header("Location: " . $payment->getCheckoutUrl(), true, 303);
@@ -77,21 +78,26 @@ class PaymentController
         $email = $order->getEmailAddress();
         $hiddenEmail = substr_replace($email, str_repeat('*', strpos($email, '@') - 2), 2, strpos($email, '@') - 2); //replaces after first 2 chars with *, until the @ sign.
 
-
         if (!$payment->isPaid()) {
             //if payment is older than 24hr cancel it straight away.
+            $paymentDateTime = new DateTime($payment->createdAt);
+            $currentDateTime = new DateTime();
+            $timeDiff = $currentDateTime->getTimestamp() - $paymentDateTime->getTimestamp();
+
+            if ($timeDiff > 86400) {
+                echo "<script>alert('Payment expired'); window.location = '/orders/cancel';</script>";
+            }
             require __DIR__ . '/../views/payment/paylater.php';
         } else {
-            phpinfo();
-
-            //prepare invoice
+            //prepare email
             $receiver = $email;
             $receiver_name = $order->getFirstName() . " " . $order->getLastName();
+            //invoice
             $subject = "Invoice - Haarlem Festival Support";
             $body_string = 'Thank you for your order, you will find the invoice attached to this email.';
             $invoice = $this->createInvoice($order);
 
-            //prepare tickets
+            //tickets
             $subject2 = "Tickets - Haarlem Festival Support";
             $body_string2 = 'Thank you for your order, you will find the tickets attached to this email.';
             $tickets = $this->createTickets($order);
@@ -166,6 +172,7 @@ class PaymentController
         $currentDate = date('d/m/Y');
 
         $tax = $total * 0.21;
+
         $subtotal = $tax + $total;
         $orderItems = $this->orderService->getOrderItemsByOrderId($order->getId());
 
@@ -195,14 +202,16 @@ class PaymentController
         foreach ($orderItems as $item) {
             $ticket = $this->orderService->getProductInfo($item->getProduct_id());
             $name = $ticket[0]['event_name'];
-            $price = $ticket[0]['event_price'];
-            $qty = $ticket[0]['qty'];
+            $price = intval($ticket[0]['event_price']);
+            $qty = intval($ticket[0]['qty']);
+            $displayPrice = $price * $qty;
+            $displayPriceStr = strval($displayPrice);
 
-            //echo $ticket;
+
             $html .= "<tr>
                     <td>$qty</td>
                     <td>$name</td>
-                    <td>$price €</td>
+                    <td>$displayPriceStr €</td>
                 </tr><br/>";
         }
 
@@ -230,12 +239,12 @@ class PaymentController
 
 
         // output the PDF as a file (you can also send it to a browser or save to a server)
-        $invoice = $pdf->Output('invoice.pdf', 'S');
-        return $invoice;
+        return $pdf->Output('invoice.pdf', 'S');
     }
 
     public function createTickets(Orders $order)
     {
+
         // create new PDF document
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -273,67 +282,59 @@ class PaymentController
         // add a page
         $pdf->AddPage();
 
-        // write the HTML content into the PDF
-        $html = "<h1>Haarlem Festival Tickets</h1>";
+        // Set font
+        $pdf->SetFont('helvetica', '', 14);
+
+        // Header
+        $pdf->Cell(0, 10, 'Haarlem Festival Tickets', 0, 1, 'C');
 
         foreach ($orderItems as $item) {
-            //get product info
+            // Get product info
             $ticket = $this->orderService->getProductInfo($item->getProduct_id());
             $name = $ticket[0]['event_name'];
             $dateTime = $ticket[0]['event_datetime'];
 
+            // Generate QR code
             $registry = $this->ticketService->createTicket();
             $uuid = $registry->getUuid();
-            $result = $this->generateQR($uuid);
+            $link = "https://hf6.000webhostapp.com/qr?uuid=$uuid";
 
-            //generate QR
-            $qr = $result->getDataUri();
+            // Client info
+            $pdf->Cell(0, 10, 'Client name: ' . $userName, 0, 1, 'L');
 
-            $html .= "<h1>Ticket #</h1>
-            <table>
-                <tr>
-                    <th>Client name:</th>
-                    <td>$userName</td>
-                </tr>
-                <tr>
-                    <th>Event name:</th>
-                    <td>$name</td>
-                </tr>
-                <tr>
-                    <th>Date &amp; time:</th>
-                    <td>$dateTime</td>
-                </tr>
-                <tr>
-                    <th>QR code:</th>
-                    <td>
-                        <div class='qr-code'>
-                        <img src='$qr'>
-                        </div>
-                    </td>
-                </tr>
-            </table>";
+            // Event info
+            $pdf->Cell(0, 10, 'Event name: ' . $name, 0, 1, 'L');
+            $pdf->Cell(0, 10, 'Date & time: ' . $dateTime, 0, 1, 'L');
+
+            // set style for barcode
+            $style = array(
+                'border' => 2,
+                'vpadding' => 'auto',
+                'hpadding' => 'auto',
+                'fgcolor' => array(0, 0, 0),
+                'bgcolor' => false, //array(255,255,255)
+                'module_width' => 1, // width of a single module in points
+                'module_height' => 1 // height of a single module in points
+            );
+            // QR code
+            //$pdf->Image($qrDataUri, 170, $pdf->GetY() + 5, 30, 30, 'PNG');
+            $pdf->write2DBarcode($link, 'QRCODE,H', 170, $pdf->GetY() + 5, 30, 30, $style, 'N');
+
+            // Separator
+            $pdf->Line(10, $pdf->GetY() + 15, 200, $pdf->GetY() + 15);
+
+            // Add space for next ticket
+            $pdf->Ln(20);
         }
-        $pdf->writeHTML($html, true, false, true, false, '');
 
-        // output the PDF as a file (you can also send it to a browser or save to a server)
-        $tickets = $pdf->Output('invoice.pdf', 'S');
-        return $tickets;
+        return $pdf->Output('tickets.pdf', 'S');
     }
 
-    function generateQR($uid)
+    public function generateQr($uuid)
     {
-        $qr = QrCode::create($uid);
-        $writer = new PngWriter();
-        $result = $writer->write($qr);
-
-        // (C1) SAVE TO FILE
-        //$result->saveToFile(__DIR__ . "/qr.png");
-
-        // (C2) DIRECT OUTPUT
-        //header("Content-Type: " . $result->getMimeType());
-        return $result;
-
-        // (C3) GENERATE DATA URI
-
+        $qr = new QRGenerator();
+        //pass ticket id to generate QR
+        $qrcode = $qr->generateQR($uuid);
+        return $qrcode;
     }
 }

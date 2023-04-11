@@ -15,15 +15,16 @@ class QRGenerator
         $qr = QrCode::create($uid);
         $writer = new PngWriter();
         $result = $writer->write($qr);
+        return $result;
 
         // (C1) SAVE TO FILE
-        $result->saveToFile(__DIR__ . "/qr.png");
+        //$result->saveToFile(__DIR__ . "/qr.png");
 
         // (C2) DIRECT OUTPUT
-        header("Content-Type: " . $result->getMimeType());
-        echo $result->getString();
+        //header("Content-Type: " . $result->getMimeType());
+        //echo $result->getString();
 
         // (C3) GENERATE DATA URI
-        echo "<img src='{$result->getDataUri()}'>";
+        //echo "<img src='{$result->getDataUri()}'>";
     }
 }
