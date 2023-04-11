@@ -53,7 +53,7 @@ require __DIR__ . '/../header.php';
                         <div class="col">
                             <label><b>Adults:</b> </label>
                             <select name="formguestsadult">
-                                <option value="1">1</option>
+                                <option value="1" selected="true">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
@@ -63,7 +63,7 @@ require __DIR__ . '/../header.php';
                         <div class="col">
                             <label><b>Children:</b> </label>
                             <select name="formguestskids">
-                                <option value="0">None</option>
+                                <option value="0" selected="true">None</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>

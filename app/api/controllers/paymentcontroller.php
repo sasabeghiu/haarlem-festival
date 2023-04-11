@@ -7,14 +7,14 @@ class PaymentController
 {
     private $orderservice;
     private $paymentservice;
+    private $mollie; // Add private property for Mollie API client
 
     function __construct()
     {
         $this->paymentservice = new PaymentService();
         $this->orderservice = new OrdersService();
         $this->mollie = new \Mollie\Api\MollieApiClient();
-        $this->mollie->setApiKey("
-        test_5jaAakyFRh8n9cNuC8p8aQR8gF3jp3");
+        $this->mollie->setApiKey("test_5jaAakyFRh8n9cNuC8p8aQR8gF3jp3"); // Set API key here
     }
 
     public function index()
