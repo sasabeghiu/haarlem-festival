@@ -348,28 +348,62 @@ class OrdersRepository
         }
     }
 
-    function getTicketInfo($productId) //
+    function getProductInfo($productId) //returns name, price and quantity of event matching product id
     {
         try {
-            $stmt = $this->connection->prepare("SELECT 
-            COALESCE(reservation.restaurantId, ticketpass.name, history_event.location, 
-                music_event.type) AS event_column_1, 
-            COALESCE(reservation.seats, ticketpass.type, history_event.tourguideID, 
-                CONCAT(music_event.artist, ' @ ', music_event.venue)) AS event_column_2
-        FROM (
-            SELECT id FROM reservation WHERE id = :productId
-            UNION SELECT id FROM ticketpass WHERE id = :productId
-            UNION SELECT id FROM history_event WHERE id = :productId
-            UNION SELECT id FROM music_event WHERE id = :productId
-        ) AS events
-        LEFT JOIN reservation ON reservation.id = events.id 
-        LEFT JOIN ticketpass ON ticketpass.id = events.id 
-        LEFT JOIN history_event ON history_event.id = events.id 
-        LEFT JOIN music_event ON music_event.id = events.id;
+            $stmt = $this->connection->prepare("SELECT subq.event_id AS id,
+            COALESCE(NULLIF(subq.event_name,''), 'History Event') AS event_name,
+            COALESCE(NULLIF(subq.event_price,''), 0) AS event_price,
+            subq.event_datetime AS event_datetime,
+            ci.qty
+     FROM orders_item ci
+     LEFT JOIN (
+         SELECT music_event.id AS event_id,
+                artist.name AS event_name,
+                music_event.ticket_price AS event_price,
+                music_event.datetime AS event_datetime,
+                venue.name AS event_location,
+                music_event.tickets_available AS stock,
+                music_event.type AS event_type
+         FROM music_event
+         LEFT JOIN venue AS venue ON venue.id = music_event.venue
+         LEFT JOIN artist AS artist ON artist.id = music_event.artist
+         UNION
+         SELECT id AS event_id,
+                ticketpass.name AS event_name,
+                ticketpass.price AS event_price,
+                ticketpass.datetime AS event_datetime,
+                'Haarlem' AS event_location,
+                'no limit' AS stock,
+                ticketpass.type AS event_type
+         FROM ticketpass
+         UNION
+         SELECT id AS event_id,
+                'History Event' AS event_name,
+                history_event.price AS event_price,
+                history_event.datetime AS event_datetime,
+                history_event.location AS event_location,
+                history_event.tickets_available AS stock,
+                'history' AS event_type
+         FROM history_event
+         UNION
+         SELECT reservation.id AS event_id,
+                CONCAT('Reservation at ', restaurant.name) AS event_name,
+                reservation.price AS event_price,
+                reservation.date AS event_datetime,
+                restaurant.name AS event_location,
+                reservation.seats AS stock,
+                'food' AS event_type
+         FROM reservation
+         LEFT JOIN restaurant AS restaurant ON restaurant.id = reservation.restaurantID
+     ) AS subq ON subq.event_id = ci.product_id
+     WHERE ci.product_id = :productId
+         
         ");
 
             $stmt->bindParam(':productId', $productId);
-            return $stmt->execute();
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e;
         }

@@ -80,4 +80,41 @@ class TicketRepository
             echo $e;
         }
     }
+
+    function createTicket($uuid)
+    {
+        try {
+            $uuid_binary = hex2bin(str_replace('0x', '', $uuid));
+
+            $stmt = $this->connection->prepare("INSERT INTO ticket (uuid, status) VALUES (:uuid, 'not scanned')");
+            $stmt->bindParam(":uuid", $uuid_binary);
+            $stmt->execute();
+
+            $ticket = new Ticket();
+            $ticket->setUuid($uuid);
+
+            return $ticket;
+        } catch (PDOException $e) {
+            echo "Error creating ticket with xUUID " . $uuid . ": " . $e->getMessage();
+        }
+    }
+
+    function validateUuid($uuid)
+    {
+        try {
+            $uuid_binary = hex2bin(str_replace('0x', '', $uuid));
+
+            $stmt = $this->connection->prepare("SELECT COUNT(*) FROM ticket WHERE uuid = :uuid");
+            $stmt->bindParam(":uuid", $uuid_binary);
+            $stmt->execute();
+
+            $count = $stmt->fetchColumn();
+            if ($count > 0) {
+                return false; //uuid exists
+            }
+            return true;
+        } catch (PDOException $e) {
+            echo "Error creating ticket with xUUID " . $uuid . ": " . $e->getMessage();
+        }
+    }
 }
