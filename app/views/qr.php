@@ -12,15 +12,6 @@ if ($isMobile) {
     echo "QR code scanning is not supported on this device.";
 }
 ?>
-<style>
-    .green {
-        background-color: green;
-    }
-
-    .red {
-        background-color: red;
-    }
-</style>
 <video id="camera-view" width="400" height="300"></video>
 <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 
