@@ -17,7 +17,7 @@ class Mailer
     }
 
     // this function (for sending email) needs editing the sender's email details
-    function sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment)
+    function sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment, $filename)
     {
 
         // SERVER SETTINGS
@@ -38,7 +38,7 @@ class Mailer
 
         //Attachment
         if (!empty($attachment)) {
-            $mail->addStringAttachment($attachment, 'invoice.pdf');
+            $mail->addStringAttachment($attachment, $filename . ".pdf");
         }
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
