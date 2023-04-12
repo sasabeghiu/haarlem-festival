@@ -14,7 +14,6 @@ class ShoppingcartController
     public function index()
     {
         if (isset($_SESSION['userId'])) {
-
             $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
             $count = $this->shoppingcartService->countProducts($_SESSION['userId']);
 

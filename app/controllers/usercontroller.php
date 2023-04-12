@@ -87,7 +87,7 @@ class UserController
                     echo "<script>alert('Password must be at least 6 characters long!'); window.location = '/user';</script>";
                 } else if ($this->userService->validateUser($newUser, $_POST['id'])) { //returns true if user.username and user.email do not exist in db excluding id
                     echo "<script>alert('Username or Email already in use!'); window.location = '/user';</script>";
-                } else if (!$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment)) {
+                } else if (!$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment, '')) {
                     echo "<script>alert('Error while sending confirmation email'); window.location = '/user';</script>";
                 } else if (!$this->userService->update($newUser)) {
                     echo "<script>alert('Failed to update User. '); window.location = '/user';</script>";
