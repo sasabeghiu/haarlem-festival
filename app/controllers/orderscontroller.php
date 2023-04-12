@@ -70,55 +70,6 @@ class OrdersController
         require __DIR__ . '/../views/cms/order/index.php';
     }
 
-    public function createinvoicecsv()
-    {
-        $order = $this->placeorderService->getOnePlacedOrder($_POST['exporttocsv']);
-        $filename = "invoice.csv";
-        header("Content-Type: text/csv");
-        header("Content-Disposition: attachment; filename=$filename");
-
-        // prep values
-        $name = $order->getFirstName() . " " . $order->getLastName();
-        $email = $order->getEmailAddress();
-        $address = $order->getStreetAddress();
-        $country = $order->getCountry();
-        $zipcode = $order->getZipCode();
-        $phone = $order->getPhoneNumber();
-        $orderItems = $this->placeorderService->getOrderItemsByOrderId($order->getId());
-        $data = array(
-            'Name,Email,Address,Zipcode,Country,Phone,Product,Price,Quantity,Total'
-        );
-
-        foreach ($orderItems as $item) {
-            $ticket = $this->placeorderService->getProductInfo($item->getProduct_id());
-            $eventName = $ticket[0]['event_name'];
-            $eventPrice = intval($ticket[0]['event_price']);
-            $qty = intval($ticket[0]['qty']);
-            $displayPrice = $eventPrice * $qty;
-            $displayPriceStr = strval($displayPrice);
-            $line = array(
-                $name,
-                $email,
-                $address,
-                $zipcode,
-                $country,
-                $phone,
-                $eventName,
-                $eventPrice,
-                $qty,
-                $displayPriceStr
-            );
-            array_push($data, implode(",", $line));
-        }
-
-        $fp = fopen('php://output', 'wb');
-        foreach ($data as $line) {
-            $val = explode(",", $line);
-            fputcsv($fp, $val);
-        }
-        fclose($fp);
-    }
-
 
     public function checkout()
     {
@@ -175,12 +126,20 @@ class OrdersController
                                 $orderItem->setProduct_id($ids);
                                 $orderItem->setQty($qty);
                                 $orderItem->setPrice($price * $qty);
+                                $orderItem->setUser_id($_SESSION['userId']);
 
-                                $this->placeorderService->placeOneOrderItem($orderItem);
 
-                                $this->placeorderService->updateTicketsAvailable($ids, $qty);
-
-                                //$countOrders = $this->placeorderService->countMyOrders($ids);
+                                $success = $this->placeorderService->updateTicketsAvailable($ids, $qty);
+                                if (!$success) {
+                                    // Display an error message
+                                    echo "<script>alert('Quantity is greater than the tickets availability, please add no more than avaiable tickets/seats!')</script>";
+                                    $this->placeorderService->deleteLastInsertedOrder();
+                                    echo "<script>window.location = '/shoppingcart'</script>";
+                                    //Stop processing the rest of the items if one fails
+                                    break;
+                                } else {
+                                    $this->placeorderService->placeOneOrderItem($orderItem);
+                                }
                             }
 
                             echo "<script>alert('Order placed successfully! ')</script>";
@@ -198,9 +157,6 @@ class OrdersController
                         echo "<script>window.location = '/event/jazzevents'</script>";
                     }
                 }
-
-                //if order was placed and all order items were placed - delete everything from cart where userid = this.userid(session(usserid))
-
             }
         }
     }
@@ -212,7 +168,9 @@ class OrdersController
             $cartItems = $this->shoppingcartService->getShoppingCartByUserId($_SESSION['userId']);
             $count = $this->shoppingcartService->countProducts($_SESSION['userId']);
 
-            //$myOrders = $this->placeorderService->getMyOrdersByProductId($ids);
+            $myOrders = $this->placeorderService->getMyOrdersByUserId($_SESSION['userId']);
+
+            $orderStatus = $this->placeorderService->getAllOrders();
 
             require __DIR__ . '/../views/orders/myorders.php';
         } else {

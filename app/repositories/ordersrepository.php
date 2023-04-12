@@ -40,6 +40,22 @@ class OrdersRepository
         }
     }
 
+    function deleteLastInsertedOrder()
+    {
+        try {
+            // Get the last inserted ID
+            $stmt = $this->connection->query("SELECT id FROM orders ORDER BY id DESC LIMIT 1");
+            $lastInsertedId = $stmt->fetchColumn();
+
+            // Delete the order with the last inserted ID
+            $stmt = $this->connection->prepare("DELETE FROM orders WHERE id = :id");
+            $stmt->bindParam(':id', $lastInsertedId);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function getOneOrderItem($id)
     {
         try {
@@ -111,7 +127,7 @@ class OrdersRepository
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Orders');
             $paidorders = $stmt->fetchAll();
 
-            if(!$paidorders || empty($paidorders))
+            if (!$paidorders || empty($paidorders))
                 return null;
 
             return $paidorders;
@@ -194,10 +210,10 @@ class OrdersRepository
     function placeOneOrderItem($orderItem)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO orders_item (order_id, product_id, qty, price) 
-                                                VALUES (?,?,?,?)");
+            $stmt = $this->connection->prepare("INSERT INTO orders_item (order_id, product_id, qty, price, user_id) 
+                                                VALUES (?,?,?,?,?)");
 
-            $stmt->execute([$orderItem->getOrder_id(), $orderItem->getProduct_id(), $orderItem->getQty(), $orderItem->getPrice()]);
+            $stmt->execute([$orderItem->getOrder_id(), $orderItem->getProduct_id(), $orderItem->getQty(), $orderItem->getPrice(), $orderItem->getUser_id()]);
 
             $orderItem->setId($this->connection->lastInsertId());
 
@@ -209,6 +225,7 @@ class OrdersRepository
 
     function updateTicketsAvailable($product_id, $qty)
     {
+        $updated = false;
         try {
             $stmt = $this->connection->prepare("UPDATE music_event
                                             SET tickets_available = tickets_available - :qty
@@ -218,6 +235,10 @@ class OrdersRepository
             $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
             $stmt->execute();
 
+            if ($stmt->rowCount() > 0) {
+                $updated = true;
+            }
+
             $stmt = $this->connection->prepare("UPDATE history_event
                                             SET tickets_available = tickets_available - :qty
                                             WHERE id = :product_id AND tickets_available >= :qty");
@@ -226,21 +247,29 @@ class OrdersRepository
             $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
             $stmt->execute();
 
-            $stmt = $this->connection->prepare("UPDATE reservation
-                                            SET seats = seats - :qty
-                                            WHERE id = :product_id AND seats >= :qty");
+            if ($stmt->rowCount() > 0) {
+                $updated = true;
+            }
+
+            $stmt = $this->connection->prepare("UPDATE food_session
+                                            SET available_seats = available_seats - :qty
+                                            WHERE id = :product_id AND available_seats >= :qty");
 
             $stmt->bindParam(":product_id", $product_id);
             $stmt->bindParam(":qty", $qty, PDO::PARAM_INT);
             $stmt->execute();
 
-            return true;
+            if ($stmt->rowCount() > 0) {
+                $updated = true;
+            }
+
+            return $updated;
         } catch (PDOException $e) {
             echo $e;
         }
     }
 
-    function getMyOrdersByProductId($product_id)
+    function getMyOrdersByUserId($user_id)
     {
         try {
             $stmt = $this->connection->prepare("SELECT subq.event_id as id,
@@ -260,14 +289,16 @@ class OrdersRepository
                     SELECT id as event_id, 'History Event' as event_name, history_event.price as event_price, history_event.datetime as event_datetime, history_event.location as event_location, history_event.tickets_available as stock, 'history' as event_type
                     FROM history_event 
                     UNION
-                    SELECT reservation.id as event_id, CONCAT('Reservation at ', restaurant.name) as event_name, reservation.price as event_price, reservation.date as event_datetime, restaurant.name as event_location, reservation.seats as stock, 'food' as event_type
+                    SELECT reservation.id as event_id, CONCAT('Reservation at ', restaurant.name) as event_name, reservation.price as event_price, reservation.date as event_datetime, restaurant.name as event_location, food_session.available_seats as stock, 'food' as event_type
                     FROM reservation 
                     LEFT JOIN restaurant as restaurant on restaurant.id = reservation.restaurantID
+                    LEFT JOIN food_session as food_session on food_session.restaurantid = restaurant.id
                 ) AS subq ON subq.event_id = ci.product_id
-                WHERE ci.product_id = :product_id
-            ");
+                WHERE ci.user_id = :user_id");
 
-            $stmt->bindParam(":product_id", $product_id);
+            $user_id = htmlspecialchars(strip_tags($user_id));
+
+            $stmt->bindParam(":user_id", $user_id);
 
             $stmt->execute();
 
