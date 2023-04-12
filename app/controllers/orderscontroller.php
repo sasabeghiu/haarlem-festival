@@ -70,55 +70,6 @@ class OrdersController
         require __DIR__ . '/../views/cms/order/index.php';
     }
 
-    public function createinvoicecsv()
-    {
-        $order = $this->placeorderService->getOnePlacedOrder($_POST['exporttocsv']);
-        $filename = "invoice.csv";
-        header("Content-Type: text/csv");
-        header("Content-Disposition: attachment; filename=$filename");
-
-        // prep values
-        $name = $order->getFirstName() . " " . $order->getLastName();
-        $email = $order->getEmailAddress();
-        $address = $order->getStreetAddress();
-        $country = $order->getCountry();
-        $zipcode = $order->getZipCode();
-        $phone = $order->getPhoneNumber();
-        $orderItems = $this->placeorderService->getOrderItemsByOrderId($order->getId());
-        $data = array(
-            'Name,Email,Address,Zipcode,Country,Phone,Product,Price,Quantity,Total'
-        );
-
-        foreach ($orderItems as $item) {
-            $ticket = $this->placeorderService->getProductInfo($item->getProduct_id());
-            $eventName = $ticket[0]['event_name'];
-            $eventPrice = intval($ticket[0]['event_price']);
-            $qty = intval($ticket[0]['qty']);
-            $displayPrice = $eventPrice * $qty;
-            $displayPriceStr = strval($displayPrice);
-            $line = array(
-                $name,
-                $email,
-                $address,
-                $zipcode,
-                $country,
-                $phone,
-                $eventName,
-                $eventPrice,
-                $qty,
-                $displayPriceStr
-            );
-            array_push($data, implode(",", $line));
-        }
-
-        $fp = fopen('php://output', 'wb');
-        foreach ($data as $line) {
-            $val = explode(",", $line);
-            fputcsv($fp, $val);
-        }
-        fclose($fp);
-    }
-
 
     public function checkout()
     {
