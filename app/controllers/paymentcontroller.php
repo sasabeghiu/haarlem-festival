@@ -20,6 +20,7 @@ class PaymentController
     private $mailer;
     function __construct()
     {
+        session_start();
         $this->mollie = new \Mollie\Api\MollieApiClient();
         $this->mollie->setApiKey("
         test_5jaAakyFRh8n9cNuC8p8aQR8gF3jp3");
@@ -102,7 +103,7 @@ class PaymentController
             $body_string2 = 'Thank you for your order, you will find the tickets attached to this email.';
             $tickets = $this->createTickets($order);
 
-            if ($this->mailer->sendEmail($receiver, $receiver_name, $subject, $body_string, $invoice) && $this->mailer->sendEmail($receiver, $receiver_name, $subject2, $body_string2, $tickets)) {
+            if ($this->mailer->sendEmail($receiver, $receiver_name, $subject, $body_string, $invoice, "invoice") && $this->mailer->sendEmail($receiver, $receiver_name, $subject2, $body_string2, $tickets, "tickets")) {
                 require __DIR__ . '/../views/payment/paymentsuccessful.php';
             }
         }
@@ -297,7 +298,6 @@ class PaymentController
             // Generate QR code
             $registry = $this->ticketService->createTicket();
             $uuid = $registry->getUuid();
-            $link = "https://hf6.000webhostapp.com/qr?uuid=$uuid";
 
             // Client info
             $pdf->Cell(0, 10, 'Client name: ' . $userName, 0, 1, 'L');
@@ -318,7 +318,7 @@ class PaymentController
             );
             // QR code
             //$pdf->Image($qrDataUri, 170, $pdf->GetY() + 5, 30, 30, 'PNG');
-            $pdf->write2DBarcode($link, 'QRCODE,H', 170, $pdf->GetY() + 5, 30, 30, $style, 'N');
+            $pdf->write2DBarcode($uuid, 'QRCODE,H', 170, $pdf->GetY() + 5, 30, 30, $style, 'N');
 
             // Separator
             $pdf->Line(10, $pdf->GetY() + 15, 200, $pdf->GetY() + 15);

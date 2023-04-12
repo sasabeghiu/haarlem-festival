@@ -12,6 +12,7 @@ class QrController
 
     function __construct()
     {
+        session_start();
         $this->ticketService = new TicketService();
     }
     public function index()
@@ -27,32 +28,19 @@ class QrController
         return $qrcode;
     }
 
-    public function scanQr()
-    {
-        //get qr img
-        $qrcode = new QrReader(__DIR__ . '/../utils/qr.png');
-        //return decoded uuid from QR Code
-        $uuid = $qrcode->text();
-        //display qr text
-        echo "This text's from QR is UUID: " . $uuid . '<br>';
-        //get ticket by qr text
-        $ticket = $this->ticketService->getTicketById("$uuid");
-
-        require __DIR__ . '/../views/qr-scanner.php';
-    }
-
     public function scan()
     {
-        if ($_SESSION['role'] == 3) {
-            $uuid = $_GET['uuid'];
+        if (isset($_SESSION['loggedin'])) {
+            $uuid = $_GET['qrCodeData'];
             $ticket = $this->ticketService->checkIfTicketWasScanned($uuid);
             if (!$ticket) {
                 //ticket was scanned or not existent in db.
-                echo "<script>alert('Ticket is invalid or was already scanned'); window.location = '/';</script>";
+                echo "<script>alert('Ticket is invalid or was already scanned'); window.location = '/qr';</script>";
             }
             $this->ticketService->updateTicketStatus($uuid); //change status to scanned
-            echo "<script>alert('Ticket scanned successfully'); window.location = '/';</script>";
+            echo "<script>alert('Ticket scanned successfully'); window.location = '/qr';</script>";
+        } else {
+            echo "<script>alert('You must be logged in to access this page!'); window.location = '/';</script>";
         }
-        echo "<script>alert('You must be an employee to access this page!'); window.location = '/';</script>";
     }
 }
