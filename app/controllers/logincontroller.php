@@ -112,7 +112,7 @@ class LoginController
                 $body_string = 'Click on the link to reset your password: ' . $link;
                 $attachment = "";
 
-                if (!$this->loginService->createVerificationCode($verificationCode, $user->getId()) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment)) {
+                if (!$this->loginService->createVerificationCode($verificationCode, $user->getId()) || !$this->mailer->sendEmail($receiver, $receiver_name,  $subject, $body_string, $attachment, '')) {
                     echo "<script>alert('Error while sending email'); window.location = '/login/createCode';</script>";
                 } else {
                     echo "<script>alert('Email sent successfully! You can now close this window'); window.location = '/login/';</script>";

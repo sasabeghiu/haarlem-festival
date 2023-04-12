@@ -145,7 +145,6 @@
                   QR
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="/qr/generateqr">Generate QR</a>
                   <a class="dropdown-item" href="/qr">Scan QR</a>
                 </div>
               </div>

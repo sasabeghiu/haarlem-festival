@@ -1,6 +1,9 @@
 # Haarlem Festival 
 This is the repository for Haarlem Festival Project of Group 6
 
+## Database
+We attached the zipped version of our database, since the file is too big.
+
 ## URL
 URL to live website: [Haarlem Festival](https://hf6.000webhostapp.com/page/festival)
 
